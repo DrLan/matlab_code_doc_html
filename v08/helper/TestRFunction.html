@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of TestRFunction</title>
+  <meta name="keywords" content="TestRFunction">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; TestRFunction.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>TestRFunction
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="ThreeDNetworkR.html" class="code" title="function rho=ThreeDNetworkR(fibermat,perc,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">ThreeDNetworkR</a>	%</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 clear all
+0002 clc
+0003 tic
+0004 fibermat=<span class="string">'fiberSEM.mat'</span>
+0005 perc=2.6e-6
+0006 <span class="comment">% fiberLen=1e-3</span>
+0007 beta=350
+0008 fiberRadius=2.6e-6
+0009 <span class="comment">% NumBreak=5</span>
+0010 <span class="comment">% Rc=36</span>
+0011 rf=1.8e-5
+0012 RBreakage=1e10
+0013 Para_fiberLen=[1e-3]'
+0014 Para_beta=[350]'
+0015 Para_Rc=[36]'
+0016 Para_NumBreak=[0 1 2 3 4 5]'
+0017 
+0018 <span class="keyword">for</span> ibeta=1:size(Para_beta,1)
+0019     beta=Para_beta(ibeta)
+0020     <span class="keyword">for</span> iRc=1:size(Para_Rc,1)
+0021         Rc=Para_Rc(iRc)
+0022         <span class="keyword">for</span> iNB=1:size(Para_NumBreak,1)
+0023             NumBreak=Para_NumBreak(iNB)
+0024             <span class="keyword">for</span> ifiberlen=1:size(Para_fiberLen,1)
+0025                 fiberLen=Para_fiberLen(ifiberlen)
+0026                 rho=<a href="ThreeDNetworkR.html" class="code" title="function rho=ThreeDNetworkR(fibermat,perc,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">ThreeDNetworkR</a>(fibermat,perc,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)
+0027                 toc
+0028             <span class="keyword">end</span>
+0029         <span class="keyword">end</span>
+0030     <span class="keyword">end</span>
+0031 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

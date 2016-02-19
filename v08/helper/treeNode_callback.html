@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of treeNode_callback</title>
+  <meta name="keywords" content="treeNode_callback">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; treeNode_callback.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>treeNode_callback
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function treeNode_callback( tree,ev,allHandles,allData ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a>	</li><li><a href="../../v08/Callbacks/addFiber_callback.html" class="code" title="function addFiber_callback(source,eventData,allHandles,allData)">addFiber_callback</a>	</li><li><a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a>	</li><li><a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a>	</li><li><a href="../../v08/Callbacks/addLaminate_callback.html" class="code" title="function addLaminate_callback(source,eventData,allHandles,allData)">addLaminate_callback</a>	</li><li><a href="../../v08/Callbacks/removeFiber_callback.html" class="code" title="function removeFiber_callback(source,eventData,allHandles,allData)">removeFiber_callback</a>	</li><li><a href="../../v08/Callbacks/removeLamina_callback.html" class="code" title="function removeLamina_callback(source,eventData,allHandles,allData)">removeLamina_callback</a>	</li><li><a href="../../v08/Callbacks/runSimulation_callback.html" class="code" title="function runSimulation_callback(source,eventData,selectedNode,allHandles,allData)">runSimulation_callback</a>	</li><li><a href="../../v08/Callbacks/showFiber.html" class="code" title="function  showFiber(selectedNode,allHandles,allData);">showFiber</a>	</li><li><a href="../../v08/Callbacks/showLamina.html" class="code" title="function  showLamina(selectedNode,allHandles,allData);">showLamina</a>	</li><li><a href="../../v08/m2html/@template/char.html" class="code" title="function s = char(tpl)">char</a>	TEMPLATE Convert a template object in a one line description string</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="showTree.html" class="code" title="function showTree(allHandles,allData) %materialBrowserLayout">showTree</a>	[mtree,treecontainer] = uitree('v0', 'Root',root);</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function p = node2path(node)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function treeNode_callback( tree,ev,allHandles,allData )</a>
+0002 fiberLibObj = allData.fiberLib;
+0003 laminaLibObj = allData.laminaLib;
+0004 laminateLibObj = allData.laminateLib;
+0005 nodes = tree.getSelectedNodes;
+0006 tableHandle =allHandles.materialPropertyTable;
+0007 choosePackOrderTable = allHandles.choosePackOrderTable;
+0008 chooseFiberTable =allHandles.chooseFiberTable;
+0009 <span class="comment">%chooseFiberTable =allHandles.chooseFiberTable;</span>
+0010 add2LibBtn = allHandles.add2LibBtn;
+0011 removeFromLibBtn = allHandles.removeFromLibBtn;
+0012  runBtn=allHandles.runSimulationBtn;
+0013  parameterTable = allHandles.simulationParameterTable;
+0014 <span class="keyword">if</span> ~isempty(nodes)
+0015     node = nodes(1);
+0016     p = <a href="#_sub1" class="code" title="subfunction p = node2path(node)">node2path</a>(node);
+0017     selectedNode = p{end};
+0018     <span class="keyword">if</span> length(p) == 2
+0019         runBtn.Visible=<span class="string">'off'</span>;
+0020         add2LibBtn.Visible = <span class="string">'off'</span>;<span class="comment">% show add2Lib btn. s</span>
+0021         removeFromLibBtn.Visible = <span class="string">'off'</span>;
+0022          parameterTable.Visible =<span class="string">'off'</span>;
+0023         <span class="keyword">switch</span> selectedNode
+0024             <span class="keyword">case</span> <span class="string">'Fiber'</span>
+0025                 choosePackOrderTable.Visible =<span class="string">'off'</span>;
+0026                 chooseFiberTable.Visible =<span class="string">'off'</span>;
+0027                 allData.fiberLib.showOnGui(tableHandle);
+0028             <span class="keyword">case</span> <span class="string">'Lamina'</span>
+0029                 allData.laminaLib.showOnGui(tableHandle);
+0030             <span class="keyword">case</span> <span class="string">'Laminate'</span>
+0031                 choosePackOrderTable.Visible =<span class="string">'off'</span>;
+0032                 chooseFiberTable.Visible =<span class="string">'off'</span>;
+0033                 allData.laminateLib.showOnGui(tableHandle);
+0034         <span class="keyword">end</span>
+0035     <span class="keyword">end</span>
+0036     
+0037     <span class="keyword">if</span> length(p)==3      
+0038         selectedNode =p{end};
+0039         <span class="keyword">switch</span> p{2}
+0040             <span class="keyword">case</span> <span class="string">'Fiber'</span>
+0041                 runBtn.Visible=<span class="string">'off'</span>;
+0042                 parameterTable.Visible =<span class="string">'off'</span>;
+0043                 <span class="keyword">if</span> strcmp(selectedNode, <span class="string">'Add Fiber'</span>)   
+0044                     <a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a>(allHandles,allData);
+0045                     add2LibBtn.Callback = {@<a href="../../v08/Callbacks/addFiber_callback.html" class="code" title="function addFiber_callback(source,eventData,allHandles,allData)">addFiber_callback</a>,allHandles,allData};                
+0046                 <span class="keyword">else</span>
+0047                     <a href="../../v08/Callbacks/showFiber.html" class="code" title="function  showFiber(selectedNode,allHandles,allData);">showFiber</a>(selectedNode,allHandles,allData)
+0048                     removeFromLibBtn.Callback = {@<a href="../../v08/Callbacks/removeFiber_callback.html" class="code" title="function removeFiber_callback(source,eventData,allHandles,allData)">removeFiber_callback</a>,allHandles,allData};
+0049                 <span class="keyword">end</span>              
+0050             <span class="keyword">case</span> <span class="string">'Lamina'</span>
+0051                 runBtn.Visible=<span class="string">'off'</span>;
+0052                 parameterTable.Visible =<span class="string">'off'</span>;
+0053                  <span class="keyword">if</span> strcmp(selectedNode, <span class="string">'Add Lamina'</span>)
+0054                      <a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a>(allHandles,allData);
+0055                  <span class="keyword">else</span>     
+0056                      <a href="../../v08/Callbacks/showLamina.html" class="code" title="function  showLamina(selectedNode,allHandles,allData);">showLamina</a>(selectedNode,allHandles,allData);
+0057                       removeFromLibBtn.Callback = {@<a href="../../v08/Callbacks/removeLamina_callback.html" class="code" title="function removeLamina_callback(source,eventData,allHandles,allData)">removeLamina_callback</a>,allHandles,allData};
+0058                  <span class="keyword">end</span>
+0059             <span class="keyword">case</span> <span class="string">'Laminate'</span>
+0060               
+0061                
+0062                 
+0063                 
+0064 <span class="comment">%                 choosePackOrderTable.Visible ='off';</span>
+0065 <span class="comment">%                 chooseFiberTable.Visible ='off';</span>
+0066                 <span class="keyword">if</span> strcmp(selectedNode, <span class="string">'Add Laminate'</span>)
+0067                       runBtn.Visible=<span class="string">'off'</span>;
+0068                       parameterTable.Visible =<span class="string">'on'</span>;
+0069                     <a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a>(selectedNode,allHandles,allData);
+0070                     add2LibBtn.Callback = {@<a href="../../v08/Callbacks/addLaminate_callback.html" class="code" title="function addLaminate_callback(source,eventData,allHandles,allData)">addLaminate_callback</a>,allHandles,allData};    
+0071                     tableHandle.ColumnEditable = true;        
+0072 <span class="comment">%</span>
+0073 <span class="comment">%                     add2LibBtn.Visible = 'on';% show add2Lib btn. s</span>
+0074 <span class="comment">%                     removeFromLibBtn.Visible ='off';</span>
+0075                             
+0076                    <span class="comment">% tableHandle = allHandles.materialPropertyTable;</span>
+0077                                 
+0078                    <span class="comment">% showAddFiber(selectedNode,handles,allData);</span>
+0079                 <span class="keyword">else</span>       
+0080                        runBtn.Visible=<span class="string">'on'</span>;
+0081                         runBtn.Callback = {@<a href="../../v08/Callbacks/runSimulation_callback.html" class="code" title="function runSimulation_callback(source,eventData,selectedNode,allHandles,allData)">runSimulation_callback</a>,selectedNode,allHandles,allData};
+0082                      add2LibBtn.Visible = <span class="string">'off'</span>;<span class="comment">% hide add2Lib btn. s</span>
+0083                      removeFromLibBtn.Visible =<span class="string">'on'</span>;
+0084                     [~,index]=ismember(selectedNode,laminateLibObj.itemNames)
+0085                     itemObj =laminateLibObj.itemArray(index);
+0086                     itemObj.showOnGui(allHandles);
+0087                  <span class="keyword">end</span>
+0088                 
+0089                 <span class="comment">%displayLaminateInfo(selectedNode,allHandles,allData);</span>
+0090                 
+0091         <span class="keyword">end</span>
+0092     <span class="keyword">end</span>
+0093     
+0094 <span class="keyword">end</span>
+0095     <a name="_sub1" href="#_subfunctions" class="code">function p = node2path(node)</a>
+0096         path = node.getPath;
+0097         <span class="keyword">for</span> i=1:length(path);
+0098             p{i} = <a href="../../v08/m2html/@template/char.html" class="code" title="function s = char(tpl)">char</a>(path(i).getName);
+0099             <span class="comment">% disp(p{i})</span>
+0100         <span class="keyword">end</span>
+0101         <span class="keyword">if</span> length(p) &gt; 1
+0102             path = fullfile(p{:});
+0103         <span class="keyword">else</span>
+0104             path = p{1};
+0105         <span class="keyword">end</span>
+0106         <span class="comment">%selectedNode =p{end};</span>
+0107     <span class="keyword">end</span>
+0108 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

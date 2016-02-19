@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Resistance</title>
+  <meta name="keywords" content="Resistance">
+  <meta name="description" content="[G1 indices]=removezeros(G1);">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Resistance.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Resistance
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>[G1 indices]=removezeros(G1);</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [resistance]=Resistance(fiber,i,j,R0) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">[G1 indices]=removezeros(G1);
+UNTITLED2 Summary of this function goes here
+   Detailed explanation goes here
+scale=918/90;
+Rm=1e17
+Rf=0.16
+ Rf=0.1067;
+ Rm=5;</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [resistance]=Resistance(fiber,i,j,R0)</a>
+0002 <span class="comment">%[G1 indices]=removezeros(G1);</span>
+0003 <span class="comment">%UNTITLED2 Summary of this function goes here</span>
+0004 <span class="comment">%   Detailed explanation goes here</span>
+0005 <span class="comment">%scale=918/90;</span>
+0006 <span class="comment">%Rm=1e17</span>
+0007 <span class="comment">%Rf=0.16</span>
+0008 <span class="comment">% Rf=0.1067;</span>
+0009 <span class="comment">% Rm=5;</span>
+0010 scale=1
+0011 <span class="comment">% scale=55.4/5.2;</span>
+0012 <span class="comment">% tunnelingdis=0.5</span>
+0013 dis1=sqrt((fiber(i).center(1)-fiber(j).center(1))^2+(fiber(i).center(2)-fiber(j).center(2))^2)/scale
+0014 <span class="comment">% diameter=(fiber(i).radius+fiber(j).radius)/scale</span>
+0015 <span class="comment">% radius=diameter/2</span>
+0016 <span class="comment">% dis2=dis1-diameter</span>
+0017 <span class="keyword">if</span> dis1&lt;=1.05
+0018    resistance=9.899*dis1-9.64965 
+0019 <span class="keyword">else</span>
+0020     resistance=5.36758*dis1-4.831236
+0021 <span class="comment">% if dis2&lt;0</span>
+0022 <span class="comment">%     resistance=Rf*dis1/diameter</span>
+0023 <span class="comment">% else</span>
+0024 <span class="comment">% % if(dis2&lt;tunnelingdis)</span>
+0025 <span class="comment">% %     resistance=R0*exp((dis2-5.6)/5.6)</span>
+0026 <span class="comment">% % else</span>
+0027 <span class="comment">% %     resistance=100*dis</span>
+0028 <span class="comment">% f=['1./(2*',num2str(Rf),'+',num2str(Rm),'.*(',num2str(dis1),'./(',num2str(radius),'.*sin(x))-2))'];</span>
+0029 <span class="comment">%</span>
+0030 <span class="comment">% %f='1./(1600000000000000000./(7.*sin(x)) - 199999999999999980)'</span>
+0031 <span class="comment">% %y=quad(f,0,pi/2)</span>
+0032 <span class="comment">% %yy=quad('1./(1600000000000000000./(7.*sin(x)) - 199999999999999980)',0,pi/2)</span>
+0033 <span class="comment">% yy=quad(f,0,pi/2);</span>
+0034 <span class="comment">% resistance=1/yy</span>
+0035 <span class="keyword">end</span>
+0036 <span class="keyword">end</span>
+0037 <span class="comment">%resistance=R0*exp(dis/10);</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Resistivity</title>
+  <meta name="keywords" content="Resistivity">
+  <meta name="description" content="Build R network">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Resistivity.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Resistivity
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Build R network</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function rho=Resistivity(fiber,VF,max_x,max_y,BoundX1,BoundX2,BoundY1,BoundY2,Rc,rf,RBreakage,fiberLen) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Build R network
+%% initialize network</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function rho=Resistivity(fiber,VF,max_x,max_y,BoundX1,BoundX2,BoundY1,BoundY2,Rc,rf,RBreakage,fiberLen)</a>
+0002 <span class="comment">% Build R network</span>
+0003 <span class="comment">%%% initialize network</span>
+0004 N=size(fiber,2);
+0005 R=cell(N,N);
+0006 <span class="keyword">for</span> i=1:N
+0007     <span class="keyword">for</span> j=1:N
+0008         NumRows=size(fiber(i).Contacts,2);
+0009         NumColumns=size(fiber(j).Contacts,2);
+0010         R{i,j}=zeros(NumRows,NumColumns);
+0011     <span class="keyword">end</span>
+0012 <span class="keyword">end</span>
+0013 G=R;       <span class="comment">% GV=K</span>
+0014 <span class="comment">% finish initializing</span>
+0015 
+0016 <span class="comment">%%% build fibers resistors and contact resistors</span>
+0017 <span class="keyword">for</span> i=1:N
+0018     NumContacts=size(fiber(i).Contacts,2); <span class="comment">% note Contacts is a row vector</span>
+0019     ContactVec=fiber(i).Contacts;
+0020     <span class="comment">% R matrix</span>
+0021     <span class="comment">% R for fiber sections</span>
+0022     <span class="keyword">for</span> j=1:NumContacts-1
+0023          RLen=fiber(i).Contacts(j+1)-fiber(i).Contacts(j);
+0024             A=pi*fiber(i).radius^2;
+0025             R{i,i}(j,j+1)=rf*RLen/A;
+0026             R{i,i}(j+1,j)=rf*RLen/A;    <span class="comment">% resistance between two sections on one fiber</span>
+0027             G{i,i}(j,j+1)=-1/R{i,i}(j,j+1);<span class="comment">% G(i,j)=-1/R</span>
+0028             G{i,i}(j+1,j)=-1/R{i,i}(j+1,j);<span class="comment">% G(i,j)=-1/R</span>
+0029     <span class="keyword">end</span>
+0030      <span class="comment">%%%% change R into a large value where fiber breakage happens.</span>
+0031      <span class="keyword">for</span> NumBP=1:size(fiber(i).Breakage,1)
+0032          BreakLoc=fiber(i).Breakage(NumBP);
+0033          R{i,i}(BreakLoc-1,BreakLoc)=RBreakage;
+0034          R{i,i}(BreakLoc,BreakLoc-1)=RBreakage;
+0035          G{i,i}(BreakLoc-1,BreakLoc)=-1/RBreakage;<span class="comment">% G(i,j)=-1/R</span>
+0036          G{i,i}(BreakLoc,BreakLoc-1)=-1/RBreakage;<span class="comment">% G(i,j)=-1/R</span>
+0037      <span class="keyword">end</span>
+0038     <span class="comment">% R for contacts</span>
+0039     <span class="keyword">for</span> j=1:NumContacts
+0040                   num_pt=size(fiber(i).pts{j},2);
+0041             <span class="keyword">for</span> k=1:num_pt
+0042                 neighbor_pt=fiber(i).pts{j}(k);
+0043                 ind=find(fiber(neighbor_pt).Contacts==ContactVec(j));
+0044                 R{i,neighbor_pt}(j,ind)=Rc; <span class="comment">%Contact Resistance between fibers</span>
+0045                 G{i,neighbor_pt}(j,ind)=-1/Rc;
+0046             <span class="keyword">end</span>
+0047             fiberi=R{i,i}(j,:);
+0048             fiberi=fiberi(fiberi~=0);
+0049             sum=0;
+0050             <span class="keyword">for</span> m=1:size(fiberi,2)
+0051                 sum=sum+1/fiberi(m);
+0052             <span class="keyword">end</span>
+0053             Gfiberi=sum;
+0054             sum1=0;
+0055             <span class="keyword">for</span> n=1:num_pt
+0056                 neighbor_pt=fiber(i).pts{j}(n);
+0057                 ind=find(fiber(neighbor_pt).Contacts==ContactVec(j));
+0058                 sum1=sum1+1/R{i,neighbor_pt}(j,ind);
+0059             <span class="keyword">end</span>
+0060             Gfiberj=sum1;
+0061             G{i,i}(j,j)=Gfiberi+Gfiberj;    
+0062     <span class="keyword">end</span>
+0063 <span class="keyword">end</span>
+0064 
+0065 <span class="comment">%%%% change R into a large value where fiber breakage happens.</span>
+0066 
+0067 <span class="comment">% change R into a matrix to apply Kirchoff's Law.</span>
+0068 
+0069 
+0070 <span class="comment">%%% Apply BC</span>
+0071 rous=[];
+0072 
+0073 K=cell(N,1);
+0074 BC1=5;
+0075 BC2=0;
+0076 <span class="keyword">for</span> i=1:N
+0077     K{i,1}=zeros(size(fiber(i).Contacts,2),1);
+0078 <span class="keyword">end</span>
+0079 <span class="comment">% K=zeros(size(R,1),1)</span>
+0080 <span class="keyword">for</span> i=1:size(BoundX1,2)
+0081     K{BoundX1(i),1}=BC1*ones(size(fiber(BoundX1(i)).Contacts,2),1);
+0082     fiberlabel=BoundX1(i);
+0083     <span class="keyword">for</span> j=1:N
+0084         <span class="keyword">if</span> j==fiberlabel
+0085             G{fiberlabel,j}=eye(size(fiber(fiberlabel).Contacts,2));
+0086         <span class="keyword">else</span>
+0087             G{fiberlabel,j}=zeros(size(fiber(fiberlabel).Contacts,2),size(fiber(j).Contacts,2));
+0088         <span class="keyword">end</span>
+0089     <span class="keyword">end</span>
+0090     <span class="comment">%     for j=1:size(fiber(BoundX1(i)).Contacts,1)</span>
+0091     <span class="comment">%     G{fiberlabel,fiberlabel}(j,j)=1;</span>
+0092     <span class="comment">%     end</span>
+0093 <span class="keyword">end</span>
+0094 <span class="keyword">for</span> i=1:size(BoundX2,2)
+0095     K{BoundX2(i),1}=BC2*ones(size(fiber(BoundX2(i)).Contacts,2),1);
+0096     fiberlabel=BoundX2(i);
+0097     <span class="keyword">for</span> j=1:N
+0098         <span class="keyword">if</span> j==fiberlabel
+0099             G{fiberlabel,j}=eye(size(fiber(fiberlabel).Contacts,2));
+0100         <span class="keyword">else</span>
+0101             G{fiberlabel,j}=zeros(size(fiber(fiberlabel).Contacts,2),size(fiber(j).Contacts,2));
+0102         <span class="keyword">end</span>
+0103     <span class="keyword">end</span>
+0104     <span class="comment">%     for j=1:size(fiber(BoundX2(i)).Contacts,1)</span>
+0105     <span class="comment">%     G{fiberlabel,fiberlabel}(j,j)=1;</span>
+0106     <span class="comment">%     end</span>
+0107 <span class="keyword">end</span>
+0108 K=cell2mat(K);
+0109 <span class="comment">%R=cell2mat(R);</span>
+0110 G=cell2mat(G);
+0111 Voltage2=G\K;
+0112 Mrow=zeros(N,1);
+0113 <span class="keyword">for</span> i=1:N
+0114     Mrow(i)=size(fiber(i).Contacts,2);
+0115 <span class="keyword">end</span>
+0116 Voltage3=mat2cell(Voltage2,Mrow);
+0117 
+0118 <span class="comment">%%% calculate currents</span>
+0119 <span class="comment">% 1. outgoing currents</span>
+0120 totcur1=0;
+0121 totcur2=0;
+0122 cur1=[];
+0123 cur2=[];
+0124 <span class="keyword">for</span> i=1:size(BoundX1,2)
+0125     fiberlabel=BoundX1(i);
+0126     num_pt=size(fiber(fiberlabel).Contacts,2);
+0127     <span class="keyword">for</span> j=1:num_pt
+0128         <span class="comment">%Vdiff=BC1-Voltage3{j}</span>
+0129         num_contact=size(fiber(fiberlabel).pts{j},2);
+0130         <span class="keyword">for</span> k=1:num_contact
+0131             neighbor_fiber=fiber(fiberlabel).pts{j}(k);
+0132             neighbor_pt=find(fiber(neighbor_fiber).Contacts==fiber(fiberlabel).Contacts(j));
+0133             Vdiff=BC1-Voltage3{neighbor_fiber}(neighbor_pt);
+0134             Res=R{fiberlabel,neighbor_fiber}(j,neighbor_pt);
+0135             cur1(end+1)=Vdiff/Res;
+0136             totcur1=totcur1+cur1(end);
+0137         <span class="keyword">end</span>
+0138     <span class="keyword">end</span>
+0139 <span class="keyword">end</span>
+0140 <span class="keyword">for</span> i=1:size(BoundX2,2)
+0141     fiberlabel=BoundX2(i);
+0142     num_pt=size(fiber(fiberlabel).Contacts,2);
+0143     <span class="keyword">for</span> j=1:num_pt
+0144         <span class="comment">%Vdiff=BC1-Voltage3{j}</span>
+0145         num_contact=size(fiber(fiberlabel).pts{j},2);
+0146         <span class="keyword">for</span> k=1:num_contact
+0147             neighbor_fiber=fiber(fiberlabel).pts{j}(k);
+0148             neighbor_pt=find(fiber(neighbor_fiber).Contacts==fiber(fiberlabel).Contacts(j));
+0149             Vdiff=Voltage3{neighbor_fiber}(neighbor_pt)-BC2;
+0150             Res=R{fiberlabel,neighbor_fiber}(j,neighbor_pt);
+0151             cur2(end+1)=Vdiff/Res;
+0152             totcur2=totcur2+cur2(end);
+0153         <span class="keyword">end</span>
+0154     <span class="keyword">end</span>
+0155 <span class="keyword">end</span>
+0156 totcur1
+0157 totcur2
+0158 Res=5/totcur1;
+0159 rho=fiberLen*Res*max_y/max_x;
+0160 <span class="comment">% rous=[rous;rou];</span>
+0161 <span class="comment">% % end</span>
+0162 <span class="comment">% rous</span>
+0163 <span class="comment">% rou=mean(rous);</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

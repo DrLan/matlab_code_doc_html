@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ResistorNetwork_COMSOL</title>
+  <meta name="keywords" content="ResistorNetwork_COMSOL">
+  <meta name="description" content="% Resistor Network Model in COMSOL">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ResistorNetwork_COMSOL.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ResistorNetwork_COMSOL
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Resistor Network Model in COMSOL</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Resistor Network Model in COMSOL
+% copyright  Hong Yu, hongyu.us@gmail.com
+ June, 2014
+%</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>	% square packing</li><li><a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>	UNTITLED2 Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% Resistor Network Model in COMSOL</span>
+0002 <span class="comment">%% copyright  Hong Yu, hongyu.us@gmail.com</span>
+0003 <span class="comment">% June, 2014</span>
+0004 <span class="comment">%%</span>
+0005 frow=5;
+0006 fcolumn=100;
+0007 VF=0.6;
+0008 beta=350;
+0009 fiberRadius=3.5e-6;
+0010 rad=fiberRadius;
+0011 fiber=<a href="SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>(frow,fcolumn,VF,fiberRadius);
+0012 a=rad*(sqrt(pi/(VF))-2); <span class="comment">% square packing</span>
+0013 fiberLen=fcolumn*(2*fiberRadius+a);
+0014 <span class="comment">% perc=1.2*rad;</span>
+0015 <span class="comment">% NumBreak=0;</span>
+0016 <span class="comment">%[fiber,VF,max_x,max_y,BoundX1,BoundX2,BoundY1,BoundY2]=FiberStructure(fiber,perc,fiberLen,beta,fiberRadius,NumBreak)</span>
+0017 
+0018 
+0019 
+0020 fiber.x=fiber.x';
+0021 fiber.y=fiber.y';
+0022 fiber.radius=fiber.radius';
+0023 <span class="comment">% Now fiber.x fiber.y and fiber.radius are column vectors.</span>
+0024 N=size(fiber.radius,1); <span class="comment">%</span>
+0025 
+0026 <span class="comment">% %% get VF and a</span>
+0027 minx=min(fiber.x)-fiberRadius;
+0028 miny=min(fiber.y)-fiberRadius;
+0029 maxx=max(fiber.x)+fiberRadius;
+0030 maxy=max(fiber.y)+fiberRadius;
+0031 <span class="comment">% !!! be careful, depending on the fiber.radius being a row vector or</span>
+0032 <span class="comment">% column vector, this command can be size(...,2) for row vector</span>
+0033 <span class="comment">%or size(...,1) for column vectors.</span>
+0034 fiber1= struct(<span class="string">'center'</span>,[], <span class="string">'radius'</span>,[], <span class="string">'nodes'</span>, []);
+0035 aveRad=mean(fiber.radius);
+0036 scale=aveRad/fiberRadius;
+0037 
+0038 fiber.x=fiber.x/scale;
+0039 fiber.y=fiber.y/scale;
+0040 fiber.radius=fiber.radius/scale;
+0041 
+0042 
+0043 <span class="keyword">for</span> i=1:N
+0044     fiber1(i).center(1)=fiber.x(i);
+0045     fiber1(i).center(2)=fiber.y(i);
+0046     fiber1(i).radius=fiber.radius(i);
+0047 <span class="keyword">end</span>
+0048 fiber=fiber1;
+0049 <span class="comment">%% find fiber neigbbors</span>
+0050 perc=1.2*fiberRadius;
+0051 
+0052 <span class="keyword">for</span> i=1:N
+0053     fiber(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber,i,perc,N);
+0054 <span class="keyword">end</span>
+0055 <span class="comment">% finish creating neighbors</span>
+0056 <span class="comment">% find floating fibers that are not connected to any fibers</span>
+0057 nullnodes=[];
+0058 <span class="keyword">for</span> i=1:N
+0059     <span class="keyword">if</span> size(fiber(i).nodes,2)==0
+0060         nullnodes(end+1)=i;
+0061     <span class="keyword">end</span>
+0062 <span class="keyword">end</span>
+0063 <span class="keyword">while</span> ~isempty(nullnodes)
+0064     fiber(nullnodes(1))=[];
+0065     N1=size(fiber,2);
+0066     <span class="keyword">for</span> i=1:N1
+0067         fiber(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber,i,perc,N1);
+0068     <span class="keyword">end</span>
+0069     nullnodes=[];
+0070     <span class="keyword">for</span> i=1:N1
+0071         <span class="keyword">if</span> size(fiber(i).nodes,2)==0
+0072             nullnodes(end+1)=i;            
+0073         <span class="keyword">end</span>
+0074     <span class="keyword">end</span>
+0075 <span class="keyword">end</span>
+0076 
+0077 
+0078 BoundX1=[];
+0079 BoundX2=[];
+0080 BoundY1=[];
+0081 BoundY2=[];
+0082 N=size(fiber,2);
+0083 <span class="keyword">for</span> i=1:N
+0084     <span class="keyword">if</span> (fiber(i).center(1)&lt;=minx+2*fiber(i).radius)
+0085 <span class="comment">%     if (fiber(i).center(1)&lt;=1.0*(2*a+fiber(i).radius))</span>
+0086         <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes 0]; %left boundary</span>
+0087         BoundX1(end+1)=i;
+0088     <span class="keyword">end</span>
+0089     <span class="keyword">if</span> (fiber(i).center(1)&gt;=maxx-2*fiber(i).radius)
+0090         <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes N+1]; % right boundary</span>
+0091         BoundX2(end+1)=i;
+0092     <span class="keyword">end</span>
+0093     <span class="keyword">if</span> (fiber(i).center(2)&lt;=miny+2*fiber(i).radius)
+0094         <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes 0]; %left boundary</span>
+0095         BoundY1(end+1)=i;
+0096     <span class="keyword">end</span>
+0097     <span class="keyword">if</span> (fiber(i).center(2)&gt;=maxy-2*fiber(i).radius)
+0098         <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes N+1]; % right boundary</span>
+0099         BoundY2(end+1)=i;
+0100     <span class="keyword">end</span>
+0101 <span class="keyword">end</span>
+0102 
+0103 <span class="comment">%%</span>
+0104 fiber(1).contactNeighbor=[];
+0105 fiber(1).Contacts=[];
+0106 fiber(1).pts=[];
+0107 N=size(fiber,2);
+0108 ContactLen=beta*a;
+0109 <span class="keyword">for</span> i=1:N
+0110     NumNeighbor=size(fiber(i).nodes,2);
+0111     allcontact=[];
+0112     <span class="keyword">for</span> j=1:NumNeighbor    <span class="comment">%contact pts with each neighbor</span>
+0113         contact=[];
+0114         NeighborNode=fiber(i).nodes(j);
+0115         <span class="keyword">if</span> NeighborNode&gt;i
+0116             startpt=rand*ContactLen;
+0117             endpt=startpt;
+0118 <span class="comment">%             for NCon=1:NumContacts</span>
+0119 <span class="comment">%                 contact(end+1)=endpt;</span>
+0120 <span class="comment">%                 endpt=endpt+ContactLen;</span>
+0121 <span class="comment">%             end</span>
+0122 <span class="comment">%             fiberLen(i)=endpt(end);</span>
+0123 <span class="comment">%             endpt=startpt;</span>
+0124             <span class="keyword">while</span> endpt&lt;=fiberLen
+0125                 contact(end+1)=endpt
+0126                 endpt=endpt+ContactLen
+0127             <span class="keyword">end</span>
+0128             
+0129             
+0130             
+0131 <span class="comment">%             NumContacts=floor(L/ContactLen);</span>
+0132 <span class="comment">%             previous=rand*ContactLen;</span>
+0133 <span class="comment">%             contact(1)=previous;</span>
+0134 <span class="comment">%             if NumContacts&gt;=2</span>
+0135 <span class="comment">%                 for m=2:NumContacts</span>
+0136 <span class="comment">%                     contact(m)=previous+ContactLen; %contact(m)=previous+ContactLen*normrnd(0,0.01);</span>
+0137 <span class="comment">%                     previous=contact(m);</span>
+0138 <span class="comment">%                 end</span>
+0139 <span class="comment">%             end</span>
+0140             
+0141             sizeb=size(contact,2);
+0142 <span class="comment">%             NumContacts=sizeb;</span>
+0143             allcontact=[allcontact,contact];  <span class="comment">% all contact points on fiber i</span>
+0144             fiber(i).contactNeighbor(end+1:end+sizeb)=NeighborNode;  <span class="comment">%</span>
+0145             fiber(NeighborNode).Contacts(end+1:end+sizeb)=contact;
+0146             fiber(NeighborNode).contactNeighbor(end+1:end+sizeb)=i;
+0147         <span class="keyword">end</span>
+0148     <span class="keyword">end</span>
+0149     allcontact=[fiber(i).Contacts,allcontact];  <span class="comment">% all contact pts including those inherited from previous fibers (NeighborNode&lt;i)</span>
+0150     allcontact1=unique(allcontact)
+0151     fiber(i).Contacts=allcontact1
+0152     <span class="comment">%fiberLen(i)=allcontact1(end);</span>
+0153     <span class="keyword">if</span> size(allcontact1,1)~=0
+0154         <span class="keyword">for</span> m=1:size(allcontact1,2)   <span class="comment">% find contact neighbors for each contact point.</span>
+0155             loc=find(allcontact==allcontact1(m));
+0156             fiber(i).pts{m}=fiber(i).contactNeighbor(loc);
+0157         <span class="keyword">end</span>
+0158     <span class="keyword">end</span>
+0159 <span class="keyword">end</span>    <span class="comment">%all fibers built</span>
+0160 <span class="comment">% SampleLen=max(fiberLen);  % sample length</span>
+0161 
+0162 <span class="comment">%</span>
+0163 <span class="comment">%</span>
+0164 <span class="comment">% % %% plot</span>
+0165 <span class="comment">% % clf</span>
+0166 <span class="comment">% % hold on</span>
+0167 <span class="comment">% % viscircles([fiber.x fiber.y],fiber.radius,'LineWidth',2);</span>
+0168 <span class="comment">% % % axis([minx maxx miny maxy]);</span>
+0169 <span class="comment">% % %% restruct data</span>
+0170 <span class="comment">% % for i=1:N</span>
+0171 <span class="comment">% %     fiber1(i).center(1)=fiber.x(i);</span>
+0172 <span class="comment">% %     fiber1(i).center(2)=fiber.y(i);</span>
+0173 <span class="comment">% %     fiber1(i).radius=fiber.radius(i);</span>
+0174 <span class="comment">% % end</span>
+0175 <span class="comment">% % fiber=fiber1;</span>
+0176 <span class="comment">% % %% find fiber neigbbors</span>
+0177 <span class="comment">% % perc=1.2*fiberRadius;</span>
+0178 <span class="comment">% %</span>
+0179 <span class="comment">% % for i=1:N</span>
+0180 <span class="comment">% %     fiber(i).nodes=createnode(fiber,i,perc,N);</span>
+0181 <span class="comment">% % end</span>
+0182 <span class="comment">% % % finish creating neighbors</span>
+0183 <span class="comment">% % % find floating fibers that are not connected to any fibers</span>
+0184 <span class="comment">% % nullnodes=[];</span>
+0185 <span class="comment">% % for i=1:N</span>
+0186 <span class="comment">% %     if size(fiber(i).nodes,2)==0</span>
+0187 <span class="comment">% %         nullnodes(end+1)=i;</span>
+0188 <span class="comment">% %     end</span>
+0189 <span class="comment">% % end</span>
+0190 <span class="comment">% % while ~isempty(nullnodes)</span>
+0191 <span class="comment">% %     fiber(nullnodes(1))=[];</span>
+0192 <span class="comment">% %     N1=size(fiber,2);</span>
+0193 <span class="comment">% %     for i=1:N1</span>
+0194 <span class="comment">% %         fiber(i).nodes=createnode(fiber,i,perc,N1);</span>
+0195 <span class="comment">% %     end</span>
+0196 <span class="comment">% %     nullnodes=[];</span>
+0197 <span class="comment">% %     for i=1:N1</span>
+0198 <span class="comment">% %         if size(fiber(i).nodes,2)==0</span>
+0199 <span class="comment">% %             nullnodes(end+1)=i;</span>
+0200 <span class="comment">% %         end</span>
+0201 <span class="comment">% %     end</span>
+0202 <span class="comment">% % end</span>
+0203 <span class="comment">%</span>
+0204 <span class="comment">% %fibermat='PerfectFiber1.mat'</span>
+0205 <span class="comment">% % PerfectFiber2=SquarePacking(frow,fcolumn,VF,fiberRadius);</span>
+0206 <span class="comment">%</span>
+0207 <span class="comment">% %</span>
+0208 <span class="comment">% % %function out = model</span>
+0209 <span class="comment">% % %</span>
+0210 <span class="comment">% % % ResistorNetwork_COMSOL.m</span>
+0211 <span class="comment">% % %</span>
+0212 <span class="comment">% % % Model exported on Jul 1 2014, 02:43 by COMSOL 4.4.0.150.</span>
+0213 <span class="comment">% %</span>
+0214 <span class="comment">% % import com.comsol.model.*</span>
+0215 <span class="comment">% % import com.comsol.model.util.*</span>
+0216 <span class="comment">% %</span>
+0217 <span class="comment">% % model = ModelUtil.create('Model');</span>
+0218 <span class="comment">% %</span>
+0219 <span class="comment">% % model.modelPath('/Users/yuhonghust/Google Drive/CCM Research/Boeing Project/Phase II');</span>
+0220 <span class="comment">% %</span>
+0221 <span class="comment">% % model.modelNode.create('comp1');</span>
+0222 <span class="comment">% %</span>
+0223 <span class="comment">% % model.geom.create('geom1', 3);</span>
+0224 <span class="comment">% %</span>
+0225 <span class="comment">% % model.mesh.create('mesh1', 'geom1');</span>
+0226 <span class="comment">% %</span>
+0227 <span class="comment">% % model.physics.create('cir', 'Circuit', 'geom1');</span>
+0228 <span class="comment">% %</span>
+0229 <span class="comment">% % model.study.create('std1');</span>
+0230 <span class="comment">% % model.study('std1').feature.create('stat', 'Stationary');</span>
+0231 <span class="comment">% % model.study('std1').feature('stat').activate('cir', true);</span>
+0232 <span class="comment">% %</span>
+0233 <span class="comment">% % model.geom('geom1').run;</span>
+0234 <span class="comment">% %</span>
+0235 <span class="comment">% % model.physics('cir').feature.create('R1', 'Resistor', -1);</span>
+0236 <span class="comment">% % model.physics('cir').feature('R1').set('DeviceName', 1, '1_1');</span>
+0237 <span class="comment">% % model.physics('cir').feature('R1').set('Connections', 1, 1, 'f1N1');</span>
+0238 <span class="comment">% % model.physics('cir').feature('R1').set('Connections', 2, 1, 'f1N2');</span>
+0239 <span class="comment">% %</span>
+0240 <span class="comment">% % model.probe.create('var1', 'GlobalVariable');</span>
+0241 <span class="comment">% % model.probe('var1').model('comp1');</span>
+0242 <span class="comment">% % model.probe('var1').set('expr', 'cir.R1_v');</span>
+0243 <span class="comment">% % model.probe('var1').set('descr', 'Voltage across device R1_1');</span>
+0244 <span class="comment">% % model.probe('var1').set('expr', 'cir.R1_1_v');</span>
+0245 <span class="comment">% %</span>
+0246 <span class="comment">% % model.physics('cir').feature('R1').set('Connections', 2, 1, '0');</span>
+0247 <span class="comment">% % model.physics('cir').feature.create('V1', 'VoltageSource', -1);</span>
+0248 <span class="comment">% % model.physics('cir').feature('V1').set('Connections', 1, 1, 'f1N1');</span>
+0249 <span class="comment">% %</span>
+0250 <span class="comment">% % model.sol.create('sol1');</span>
+0251 <span class="comment">% % model.sol('sol1').study('std1');</span>
+0252 <span class="comment">% % model.sol('sol1').feature.create('st1', 'StudyStep');</span>
+0253 <span class="comment">% % model.sol('sol1').feature('st1').set('study', 'std1');</span>
+0254 <span class="comment">% % model.sol('sol1').feature('st1').set('studystep', 'stat');</span>
+0255 <span class="comment">% % model.sol('sol1').feature.create('v1', 'Variables');</span>
+0256 <span class="comment">% % model.sol('sol1').feature('v1').set('control', 'stat');</span>
+0257 <span class="comment">% % model.sol('sol1').feature.create('s1', 'Stationary');</span>
+0258 <span class="comment">% % model.sol('sol1').feature('s1').feature.create('fc1', 'FullyCoupled');</span>
+0259 <span class="comment">% % model.sol('sol1').feature('s1').feature('fc1').set('linsolver', 'dDef');</span>
+0260 <span class="comment">% % model.sol('sol1').feature('s1').feature.remove('fcDef');</span>
+0261 <span class="comment">% % model.sol('sol1').attach('std1');</span>
+0262 <span class="comment">% %</span>
+0263 <span class="comment">% % model.probe('var1').genResult('none');</span>
+0264 <span class="comment">% %</span>
+0265 <span class="comment">% % model.sol('sol1').runAll;</span>
+0266 <span class="comment">% %</span>
+0267 <span class="comment">% % model.result.numerical('gev1').set('table', 'tbl1');</span>
+0268 <span class="comment">% % model.result.numerical('gev1').set('expr', 'cir.R1_1.v');</span>
+0269 <span class="comment">% % model.result.numerical('gev1').set('table', 'tbl1');</span>
+0270 <span class="comment">% % model.result.numerical('gev1').set('expr', 'cir.v_f1N1');</span>
+0271 <span class="comment">% % model.result.numerical('gev1').set('descr', 'Voltage at node f1N1');</span>
+0272 <span class="comment">% % model.result.numerical('gev1').set('table', 'tbl1');</span>
+0273 <span class="comment">% % model.result.numerical('gev1').setResult;</span>
+0274 <span class="comment">% % model.result.numerical('gev1').set('expr', 'cir.V1_i');</span>
+0275 <span class="comment">% % model.result.numerical('gev1').set('descr', 'Current through device V1');</span>
+0276 <span class="comment">% % model.result.numerical('gev1').set('table', 'tbl1');</span>
+0277 <span class="comment">% % model.result.numerical('gev1').appendResult;</span>
+0278 <span class="comment">% %</span>
+0279 <span class="comment">% % %out = model;</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

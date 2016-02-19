@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Sensitivity_Study_Taguchi</title>
+  <meta name="keywords" content="Sensitivity_Study_Taguchi">
+  <meta name="description" content="% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Sensitivity_Study_Taguchi.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Sensitivity_Study_Taguchi
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique
+% by Hong Yu, hongy@udel.edu  April 2014</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>	% Force at each contact point.</li><li><a href="../../v08/@Function/ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>	% Force at each contact point.</li><li><a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique</span>
+0002 <span class="comment">%% by Hong Yu, hongy@udel.edu  April 2014</span>
+0003 Resfid1=<span class="string">'Sensitivity_Diameter.txt'</span> <span class="comment">% Results file name</span>
+0004 fid=fopen(Resfid1,<span class="string">'a'</span>);
+0005 fprintf(fid,<span class="string">'Sensitivity Study _ Diameter \n'</span>); <span class="comment">% print simulation title</span>
+0006 Taguchi=[<span class="keyword">...</span>
+0007     1 1 1 1 1;<span class="keyword">...</span>
+0008     1 2 2 2 2;<span class="keyword">...</span>
+0009     1 3 3 3 3;<span class="keyword">...</span>
+0010     1 4 4 4 4;<span class="keyword">...</span>
+0011     2 1 2 3 4;<span class="keyword">...</span>
+0012     2 2 1 4 3;<span class="keyword">...</span>
+0013     2 3 4 1 2;<span class="keyword">...</span>
+0014     2 4 3 2 1;<span class="keyword">...</span>
+0015     3 1 3 4 2;<span class="keyword">...</span>
+0016     3 2 4 3 1;<span class="keyword">...</span>
+0017     3 3 1 2 4;<span class="keyword">...</span>
+0018     3 4 2 1 3;<span class="keyword">...</span>
+0019     4 1 4 2 3;<span class="keyword">...</span>
+0020     4 2 3 1 4;<span class="keyword">...</span>
+0021     4 3 2 4 1;<span class="keyword">...</span>
+0022     4 4 1 3 2;] <span class="comment">% Tqguchi Matrix, 5 parameters at 4 levels.</span>
+0023 Taguchi=[<span class="keyword">...</span>
+0024     1 2 2 3 3;<span class="keyword">...</span>
+0025     2 2 2 3 3;<span class="keyword">...</span>
+0026 <span class="comment">%     3 2 2 3 3;...</span>
+0027 <span class="comment">%     4 2 2 3 3;...</span>
+0028 <span class="comment">%     5 2 2 3 3;...</span>
+0029 <span class="comment">%     6 2 2 3 3;...</span>
+0030     3 2 2 3 3;] <span class="comment">% Tqguchi Matrix, 5 parameters at 4 levels.</span>
+0031 FDs=1e-6*[8.5 9 9.5]; <span class="comment">% fiber diameter</span>
+0032 PPs=1e5*[2 4 6 8]; <span class="comment">% processing pressure</span>
+0033 FWs=[100 300 500 700]; <span class="comment">% fiber waviness</span>
+0034 FRs=1e-5*[1.0 1.4 1.8 2.0]; <span class="comment">% fiber resistivity</span>
+0035 VFs=[0.45 0.5 0.55 0.6]; <span class="comment">% volume fraction</span>
+0036 fiberLen=1.5e-3; <span class="comment">% specimen length</span>
+0037 E=231e9; <span class="comment">%fiber modulus</span>
+0038 specimen=1;
+0039 NumBreak=0;
+0040 RBreakage=1e10;
+0041 <span class="keyword">for</span> i=1:size(Taguchi,1)
+0042     clf;
+0043     fiberRadius=0.5*FDs(Taguchi(i,1));
+0044     Pressure=PPs(Taguchi(i,2));
+0045     beta=FWs(Taguchi(i,3));
+0046     rf=FRs(Taguchi(i,4));
+0047     VF=VFs(Taguchi(i,5));
+0048     Fc = <a href="ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>(VF,beta,Pressure,fiberRadius);
+0049     Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(fiberRadius,Fc,E,rf);
+0050     fibermat=strcat(<span class="string">'vf_'</span>,num2str(VF),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0051     [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)
+0052     <span class="comment">%[rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);</span>
+0053 fid=fopen(Resfid1,<span class="string">'a'</span>);
+0054 fprintf(fid,<span class="keyword">...</span>
+0055     <span class="string">'%d %f %1.8f %f %f %f %f %f %d\n'</span>,<span class="keyword">...</span><span class="comment"> </span>
+0056     i,rho,fiberRadius,Pressure,beta,rf,VF,Rc,NumContacts);
+0057 <span class="comment">%     '%f %f %f %1.4f %f %2.10f %d %f\n',...</span>
+0058 <span class="comment">%     Pressure,rho,Rc,VF,fiberLen,fiberRadius,NumContacts,beta_mean);</span>
+0059 <span class="keyword">end</span>
+0060 
+0061         
+0062         
+0063         
+0064         
+0065         
+0066</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

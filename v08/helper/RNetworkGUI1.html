@@ -1,0 +1,1553 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of RNetworkGUI1</title>
+  <meta name="keywords" content="RNetworkGUI1">
+  <meta name="description" content="RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; RNetworkGUI1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>RNetworkGUI1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function varargout = RNetworkGUI1(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig
+      RNETWORKGUI1, by itself, creates a new RNETWORKGUI1 or raises the existing
+      singleton*.
+
+      H = RNETWORKGUI1 returns the handle to a new RNETWORKGUI1 or the handle to
+      the existing singleton*.
+
+      RNETWORKGUI1('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in RNETWORKGUI1.M with the given input arguments.
+
+      RNETWORKGUI1('Property','Value',...) creates a new RNETWORKGUI1 or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before RNetworkGUI1_OpeningFcn gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to RNetworkGUI1_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>	</li><li><a href="../../v08/@Function/ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="../../v08/@Function/Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>	</li><li><a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="HexPacking.html" class="code" title="function HexPacking(frow,fcolumn,VF,fiberRadius)">HexPacking</a>	% square packing</li><li><a href="RandomPacking.html" class="code" title="function PerfectFiber = RandomPacking(VF,fiberRadius)">RandomPacking</a>	</li><li><a href="SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>	% square packing</li><li><a href="../../v08/m2html/@template/display.html" class="code" title="function display(tpl)">display</a>	TEMPLATE Display a template object in Matlab window</li><li><a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>	TEMPLATE/GET Access data stored in a Template object</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function RNetworkGUI1_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = RNetworkGUI1_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function vfs_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function vfs_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function v0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function v0_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function va_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function va_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function beta_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function beta_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function e_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function e_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function fiberradius_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function fiberradius_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function rf_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function rf_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function fiberrad_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function fiberrad_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function solve1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function uitable10_CellEditCallback(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function edit_vfs_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function edit_vfs_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function edit_fiberradius_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function edit_fiberradius_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub25" class="code">function edit_fiberrad_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub26" class="code">function edit_fiberrad_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub27" class="code">function edit_beta_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub28" class="code">function edit_beta_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub29" class="code">function edit_va_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub30" class="code">function edit_va_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub31" class="code">function edit_e_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub32" class="code">function edit_e_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub33" class="code">function edit_v0_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub34" class="code">function edit_v0_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub35" class="code">function edit_rf_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub36" class="code">function edit_rf_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub37" class="code">function uitable11_CellEditCallback(hObject, eventdata, handles)</a></li><li><a href="#_sub38" class="code">function table_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub39" class="code">function edit18_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub40" class="code">function edit18_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub41" class="code">function edit19_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub42" class="code">function edit19_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub43" class="code">function edit20_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub44" class="code">function edit20_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub45" class="code">function numbreak_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub46" class="code">function numbreak_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub47" class="code">function rbreakage_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub48" class="code">function rbreakage_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub49" class="code">function fiberlen_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub50" class="code">function fiberlen_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub51" class="code">function edit24_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub52" class="code">function edit24_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub53" class="code">function betamean_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub54" class="code">function betamean_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub55" class="code">function edit27_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub56" class="code">function edit27_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub57" class="code">function betadev_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub58" class="code">function betadev_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub59" class="code">function edit29_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub60" class="code">function edit29_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub61" class="code">function edit30_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub62" class="code">function edit30_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub63" class="code">function fcolumntag_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub64" class="code">function fcolumntag_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub65" class="code">function frowtag_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub66" class="code">function frowtag_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub67" class="code">function enter_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub68" class="code">function enter_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub69" class="code">function popup_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub70" class="code">function popup_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub71" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub72" class="code">function axes2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub73" class="code">function pushbutton5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub74" class="code">function popup1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub75" class="code">function popup1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub76" class="code">function uitable1_CellEditCallback(hObject, eventdata, handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             <a name="_sub0" href="#_subfunctions" class="code">function varargout = RNetworkGUI1(varargin)</a>
+0002 <span class="comment">% RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig</span>
+0003 <span class="comment">%      RNETWORKGUI1, by itself, creates a new RNETWORKGUI1 or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = RNETWORKGUI1 returns the handle to a new RNETWORKGUI1 or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      RNETWORKGUI1('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in RNETWORKGUI1.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      RNETWORKGUI1('Property','Value',...) creates a new RNETWORKGUI1 or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before RNetworkGUI1_OpeningFcn gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to RNetworkGUI1_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help RNetworkGUI1</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 22-Jul-2015 17:22:37</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction RNetworkGUI1_OpeningFcn(hObject, eventdata, handles, varargin)">RNetworkGUI1_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = RNetworkGUI1_OutputFcn(hObject, eventdata, handles)">RNetworkGUI1_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before RNetworkGUI1 is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function RNetworkGUI1_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to RNetworkGUI1 (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for RNetworkGUI1</span>
+0056 handles.output = hObject;
+0057 
+0058 
+0059 <span class="comment">% data = get(handles.uitable1 ,'Data');</span>
+0060 <span class="comment">% %display(data)</span>
+0061 <span class="comment">% %data=str2num(data);</span>
+0062 <span class="comment">% data = cell2mat(data);</span>
+0063 <span class="comment">% %display(data)</span>
+0064 <span class="comment">% data = reshape(strtrim(cellstr(num2str(data(:)))), size(data));</span>
+0065 <span class="comment">% data(:,1) = cellfun(@(x) ['&lt;html&gt;&lt;table border=0 width=400 bgcolor=#FFF0000&gt;&lt;TR&gt;&lt;TD&gt;' x '&lt;/TD&gt;&lt;/TR&gt; &lt;/table&gt;&lt;/html&gt;'], data(:,1), 'UniformOutput', false);</span>
+0066 <span class="comment">% data(1,:) = cellfun(@(x) ['&lt;html&gt;&lt;table border=0 width=400 bgcolor=#FFF0000&gt;&lt;TR&gt;&lt;TD&gt;' x '&lt;/TD&gt;&lt;/TR&gt; &lt;/table&gt;&lt;/html&gt;'], data(1,:), 'UniformOutput', false);</span>
+0067 <span class="comment">%</span>
+0068 <span class="comment">% %set(handles.uitable1,'Data',data);</span>
+0069 axes(handles.axes1)
+0070 xlabel(<span class="string">'x'</span>)
+0071 ylabel(<span class="string">'y'</span>)
+0072 grid on 
+0073 title(<span class="string">'y vs x'</span>)
+0074 <span class="comment">% Update handles structure</span>
+0075 guidata(hObject, handles);
+0076 
+0077 <span class="comment">% UIWAIT makes RNetworkGUI1 wait for user response (see UIRESUME)</span>
+0078 <span class="comment">% uiwait(handles.figure1);</span>
+0079 
+0080 
+0081 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0082 <a name="_sub2" href="#_subfunctions" class="code">function varargout = RNetworkGUI1_OutputFcn(hObject, eventdata, handles) </a>
+0083 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0084 <span class="comment">% hObject    handle to figure</span>
+0085 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0086 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0087 
+0088 <span class="comment">% Get default command line output from handles structure</span>
+0089 varargout{1} = handles.output;
+0090 
+0091 
+0092 
+0093 <a name="_sub3" href="#_subfunctions" class="code">function vfs_Callback(hObject, eventdata, handles)</a>
+0094 <span class="comment">% hObject    handle to vfs (see GCBO)</span>
+0095 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0096 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0097 
+0098 <span class="comment">% Hints: get(hObject,'String') returns contents of vfs as text</span>
+0099 <span class="comment">%        str2double(get(hObject,'String')) returns contents of vfs as a double</span>
+0100 
+0101 
+0102 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0103 <a name="_sub4" href="#_subfunctions" class="code">function vfs_CreateFcn(hObject, eventdata, handles)</a>
+0104 <span class="comment">% hObject    handle to vfs (see GCBO)</span>
+0105 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0106 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0107 
+0108 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0109 <span class="comment">%       See ISPC and COMPUTER.</span>
+0110 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0111     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0112 <span class="keyword">end</span>
+0113 
+0114 
+0115 
+0116 <a name="_sub5" href="#_subfunctions" class="code">function v0_Callback(hObject, eventdata, handles)</a>
+0117 <span class="comment">% hObject    handle to v0 (see GCBO)</span>
+0118 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0119 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0120 
+0121 <span class="comment">% Hints: get(hObject,'String') returns contents of v0 as text</span>
+0122 <span class="comment">%        str2double(get(hObject,'String')) returns contents of v0 as a double</span>
+0123 
+0124 
+0125 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0126 <a name="_sub6" href="#_subfunctions" class="code">function v0_CreateFcn(hObject, eventdata, handles)</a>
+0127 <span class="comment">% hObject    handle to v0 (see GCBO)</span>
+0128 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0129 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0130 
+0131 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0132 <span class="comment">%       See ISPC and COMPUTER.</span>
+0133 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0134     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0135 <span class="keyword">end</span>
+0136 
+0137 
+0138 
+0139 <a name="_sub7" href="#_subfunctions" class="code">function va_Callback(hObject, eventdata, handles)</a>
+0140 <span class="comment">% hObject    handle to va (see GCBO)</span>
+0141 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0142 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0143 
+0144 <span class="comment">% Hints: get(hObject,'String') returns contents of va as text</span>
+0145 <span class="comment">%        str2double(get(hObject,'String')) returns contents of va as a double</span>
+0146 
+0147 
+0148 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0149 <a name="_sub8" href="#_subfunctions" class="code">function va_CreateFcn(hObject, eventdata, handles)</a>
+0150 <span class="comment">% hObject    handle to va (see GCBO)</span>
+0151 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0152 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0153 
+0154 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0155 <span class="comment">%       See ISPC and COMPUTER.</span>
+0156 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0157     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0158 <span class="keyword">end</span>
+0159 
+0160 
+0161 
+0162 <a name="_sub9" href="#_subfunctions" class="code">function beta_Callback(hObject, eventdata, handles)</a>
+0163 <span class="comment">% hObject    handle to beta (see GCBO)</span>
+0164 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0165 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0166 
+0167 <span class="comment">% Hints: get(hObject,'String') returns contents of beta as text</span>
+0168 <span class="comment">%        str2double(get(hObject,'String')) returns contents of beta as a double</span>
+0169 
+0170 
+0171 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0172 <a name="_sub10" href="#_subfunctions" class="code">function beta_CreateFcn(hObject, eventdata, handles)</a>
+0173 <span class="comment">% hObject    handle to beta (see GCBO)</span>
+0174 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0175 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0176 
+0177 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0178 <span class="comment">%       See ISPC and COMPUTER.</span>
+0179 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0180     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0181 <span class="keyword">end</span>
+0182 
+0183 
+0184 
+0185 <a name="_sub11" href="#_subfunctions" class="code">function e_Callback(hObject, eventdata, handles)</a>
+0186 <span class="comment">% hObject    handle to e (see GCBO)</span>
+0187 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0188 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0189 
+0190 <span class="comment">% Hints: get(hObject,'String') returns contents of e as text</span>
+0191 <span class="comment">%        str2double(get(hObject,'String')) returns contents of e as a double</span>
+0192 
+0193 
+0194 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0195 <a name="_sub12" href="#_subfunctions" class="code">function e_CreateFcn(hObject, eventdata, handles)</a>
+0196 <span class="comment">% hObject    handle to e (see GCBO)</span>
+0197 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0198 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0199 
+0200 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0201 <span class="comment">%       See ISPC and COMPUTER.</span>
+0202 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0203     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0204 <span class="keyword">end</span>
+0205 
+0206 
+0207 
+0208 <a name="_sub13" href="#_subfunctions" class="code">function fiberradius_Callback(hObject, eventdata, handles)</a>
+0209 <span class="comment">% hObject    handle to fiberradius (see GCBO)</span>
+0210 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0211 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0212 
+0213 <span class="comment">% Hints: get(hObject,'String') returns contents of fiberradius as text</span>
+0214 <span class="comment">%        str2double(get(hObject,'String')) returns contents of fiberradius as a double</span>
+0215 
+0216 
+0217 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0218 <a name="_sub14" href="#_subfunctions" class="code">function fiberradius_CreateFcn(hObject, eventdata, handles)</a>
+0219 <span class="comment">% hObject    handle to fiberradius (see GCBO)</span>
+0220 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0221 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0222 
+0223 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0224 <span class="comment">%       See ISPC and COMPUTER.</span>
+0225 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0226     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0227 <span class="keyword">end</span>
+0228 
+0229 
+0230 
+0231 <a name="_sub15" href="#_subfunctions" class="code">function rf_Callback(hObject, eventdata, handles)</a>
+0232 <span class="comment">% hObject    handle to rf (see GCBO)</span>
+0233 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0234 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0235 
+0236 <span class="comment">% Hints: get(hObject,'String') returns contents of rf as text</span>
+0237 <span class="comment">%        str2double(get(hObject,'String')) returns contents of rf as a double</span>
+0238 
+0239 
+0240 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0241 <a name="_sub16" href="#_subfunctions" class="code">function rf_CreateFcn(hObject, eventdata, handles)</a>
+0242 <span class="comment">% hObject    handle to rf (see GCBO)</span>
+0243 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0244 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0245 
+0246 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0247 <span class="comment">%       See ISPC and COMPUTER.</span>
+0248 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0249     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0250 <span class="keyword">end</span>
+0251 
+0252 
+0253 
+0254 <a name="_sub17" href="#_subfunctions" class="code">function fiberrad_Callback(hObject, eventdata, handles)</a>
+0255 <span class="comment">% hObject    handle to fiberrad (see GCBO)</span>
+0256 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0257 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0258 
+0259 <span class="comment">% Hints: get(hObject,'String') returns contents of fiberrad as text</span>
+0260 <span class="comment">%        str2double(get(hObject,'String')) returns contents of fiberrad as a double</span>
+0261 
+0262 
+0263 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0264 <a name="_sub18" href="#_subfunctions" class="code">function fiberrad_CreateFcn(hObject, eventdata, handles)</a>
+0265 <span class="comment">% hObject    handle to fiberrad (see GCBO)</span>
+0266 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0267 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0268 
+0269 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0270 <span class="comment">%       See ISPC and COMPUTER.</span>
+0271 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0272     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0273 <span class="keyword">end</span>
+0274 
+0275 
+0276 <span class="comment">% --- Executes on button press in solve1.</span>
+0277 <a name="_sub19" href="#_subfunctions" class="code">function solve1_Callback(hObject, eventdata, handles)</a>
+0278 <span class="comment">% hObject    handle to solve1 (see GCBO)</span>
+0279 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0280 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0281 data0 = <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(handles.uitable1 ,<span class="string">'Data'</span>);
+0282 <span class="comment">%display(data)</span>
+0283 data=cell2mat(data0);
+0284 <a href="../../v08/m2html/@template/display.html" class="code" title="function display(tpl)">display</a>(data)
+0285 <span class="comment">%data=str2num(data);</span>
+0286 allVF = data(:,1);
+0287 allV0 = data(:,2);
+0288 <span class="comment">% v0_1=V0(1);</span>
+0289 allVa = data(:,3);
+0290 allbeta = data(:,4);
+0291 allE = data(:,5);
+0292 allfiberRadius = data(:,6);
+0293 allFiberRad = data(:,7);
+0294 allrf = data(:,8);
+0295 allNumBreak = data(:,9);
+0296 allRBreakage =data(:,10);
+0297 allfiberLen =data(:,11);
+0298 allbeta_mean = data(:,12);
+0299 allbeta_dev =data(:,13);
+0300 allfrow = data(:,14);
+0301 allfcolumn = data(:,15);
+0302 
+0303 Enter = <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(handles.enter,<span class="string">'String'</span>);
+0304 
+0305 <span class="comment">%% bulid 3d structure based on various packing order (choose from GUI)</span>
+0306 <span class="comment">% popup-menu to choose the functions</span>
+0307 Packing = <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(handles.popup,<span class="string">'Value'</span>);
+0308 <span class="keyword">switch</span> Packing
+0309     <span class="keyword">case</span> 1 <span class="comment">%% blank</span>
+0310         h = msgbox(<span class="string">'Please Choose a function'</span>, <span class="string">'Error'</span>,<span class="string">'error'</span>);
+0311         
+0312     <span class="keyword">case</span> 2 <span class="comment">%% Random packing</span>
+0313         GenerateFibermat=@<a href="RandomPacking.html" class="code" title="function PerfectFiber = RandomPacking(VF,fiberRadius)">RandomPacking</a>; <span class="comment">% Now GenerateFibermat function is the same as SquarePakcing function. Will use function GenerateFibermat later on.</span>
+0314        <span class="comment">% specimen=1;</span>
+0315         <span class="comment">%fibermat=strcat('vf_',num2str(VF),'_spec',num2str(specimen),'.mat');</span>
+0316         
+0317     <span class="keyword">case</span> 3  <span class="comment">% Square Packing</span>
+0318         GenerateFibermat=@<a href="SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>; <span class="comment">% Now GenerateFibermat function is the same as SquarePakcing function. Will use function GenerateFibermat later on.</span>
+0319         <span class="comment">%SquarePacking(frow,fcolumn,VF,fiberRadius);</span>
+0320         <span class="comment">%fibermat='PerfectFiber.mat';</span>
+0321         
+0322     <span class="keyword">case</span> 4        <span class="comment">%Hexagonal Packing</span>
+0323         GenerateFibermat=@<a href="HexPacking.html" class="code" title="function HexPacking(frow,fcolumn,VF,fiberRadius)">HexPacking</a>; <span class="comment">% Now GenerateFibermat function is the same as HexPakcing function. Will use function GenerateFibermat later on.</span>
+0324         <span class="comment">%HexPacking(frow,fcolumn,VF,fiberRadius);</span>
+0325         <span class="comment">%fibermat='PerfectFiber.mat';</span>
+0326         
+0327     <span class="keyword">otherwise</span>
+0328 <span class="keyword">end</span>
+0329 
+0330 <span class="comment">%% Now choose input that will be used in calculation</span>
+0331 <span class="comment">% initialize input. Select the first value for all inputs by default</span>
+0332 VF=allVF(1);
+0333 V0=allV0(1);
+0334 Va=allVa(1);
+0335 beta=allbeta(1);
+0336 E=allE(1);
+0337 FiberRad=allFiberRad(1);
+0338 rf=allrf(1);
+0339 NumBreak=allNumBreak(1);
+0340 RBreakage=allRBreakage(1);
+0341 fiberLen=allfiberLen(1);
+0342 beta_mean=allbeta_mean(1);
+0343 beta_dev=allbeta_dev(1);
+0344 frow=allfrow(1);
+0345 fcolumn=allfcolumn(1);
+0346 <span class="comment">% create a vector to store calculation results</span>
+0347 rhos=[];
+0348 <span class="comment">% % create Table and Define Axes</span>
+0349 axes(handles.axes1)
+0350 grid on
+0351 
+0352 <span class="comment">%% popup-menu to choose plotting</span>
+0353 Variable= <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(handles.popup1,<span class="string">'Value'</span>);
+0354 <span class="keyword">switch</span> Variable
+0355     <span class="keyword">case</span> 1           <span class="comment">% VF vs rho</span>
+0356         <span class="keyword">for</span> i=1:length(allVF)
+0357             VF=allVF(i)  <span class="comment">% update VF here</span>
+0358             <span class="comment">%% get fiber structure (fibermat)</span>
+0359             <span class="keyword">if</span> (Packing==2)
+0360                 GenerateFibermat(VF,FiberRad);
+0361             <span class="keyword">else</span>
+0362                 GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0363             <span class="keyword">end</span>
+0364             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0365             <span class="comment">%% calculate Rc</span>
+0366             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0367             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0368             <span class="comment">%% calculate rho</span>
+0369             NetList=<span class="string">'Temp'</span>;
+0370             rho =<a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>(NetList,fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0371            <span class="comment">% [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);</span>
+0372             rhos(end+1)=rho;
+0373         <span class="keyword">end</span>
+0374         <span class="comment">% plotting</span>
+0375         plot(allVF,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0376         ylabel(<span class="string">'rho'</span>)
+0377         xlabel(<span class="string">'Volum fraction'</span>)
+0378         title(<span class="string">'rho vs Volum fraction'</span>)
+0379         
+0380         
+0381     <span class="keyword">case</span> 2       <span class="comment">% V0 vs rho</span>
+0382         <span class="keyword">for</span> i=1:length(allV0)
+0383             V0=allV0(i)  <span class="comment">% update V0 here</span>
+0384             <span class="comment">%% get fiber structure (fibermat)</span>
+0385             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0386             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0387             <span class="comment">%% calculate Rc</span>
+0388             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0389             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0390             <span class="comment">%% calculate rho</span>
+0391             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0392             rhos(end+1)=rho;
+0393         <span class="keyword">end</span>
+0394         plot(allV0,rhos)   <span class="comment">%% be careful of the sequence of X and Y!  proper use of plot: plot(X,Y), X should be first</span>
+0395         ylabel(<span class="string">'rho'</span>)
+0396         xlabel(<span class="string">'V0'</span>)
+0397         title(<span class="string">'rho vs V0'</span>)
+0398         
+0399         
+0400     <span class="keyword">case</span> 3           <span class="comment">% Va vs rho</span>
+0401         <span class="keyword">for</span> i=1:length(allVa)
+0402             Va=allVa(i)  <span class="comment">% update Va here</span>
+0403             <span class="comment">%% get fiber structure (fibermat)</span>
+0404             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0405             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0406             <span class="comment">%% calculate Rc</span>
+0407             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0408             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0409             <span class="comment">%% calculate rho</span>
+0410             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0411             rhos(end+1)=rho;
+0412         <span class="keyword">end</span>
+0413         plot(allVa,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0414         ylabel(<span class="string">'rho'</span>)
+0415         xlabel(<span class="string">'Va'</span>)
+0416         title(<span class="string">'rho vs Va'</span>)
+0417         
+0418         <span class="keyword">case</span> 4
+0419             <span class="keyword">for</span> i=1:length(allbeta)
+0420             beta=allbeta(i)  <span class="comment">% update beta here</span>
+0421             <span class="comment">%% get fiber structure (fibermat)</span>
+0422             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0423             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0424             <span class="comment">%% calculate Rc</span>
+0425             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0426             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0427             <span class="comment">%% calculate rho</span>
+0428             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0429             rhos(end+1)=rho;
+0430         <span class="keyword">end</span>
+0431         plot(allbeta,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0432         ylabel(<span class="string">'rho'</span>)
+0433         xlabel(<span class="string">'beta'</span>)
+0434         title(<span class="string">'rho vs beta'</span>)
+0435         
+0436     <span class="keyword">case</span> 5
+0437            <span class="keyword">for</span> i=1:length(allE)
+0438             E=allE(i)  <span class="comment">% update E here</span>
+0439             <span class="comment">%% get fiber structure (fibermat)</span>
+0440             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0441             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0442             <span class="comment">%% calculate Rc</span>
+0443             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0444             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0445             <span class="comment">%% calculate rho</span>
+0446             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0447             rhos(end+1)=rho;
+0448         <span class="keyword">end</span>
+0449         plot(allE,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0450         ylabel(<span class="string">'rho'</span>)
+0451         xlabel(<span class="string">'E'</span>)
+0452         title(<span class="string">'rho vs E'</span>)
+0453         
+0454     <span class="keyword">case</span> 6 
+0455            <span class="keyword">for</span> i=1:length(allFiberRad)
+0456             FiberRad=allFiberRad(i)  <span class="comment">% update beta here</span>
+0457             <span class="comment">%% get fiber structure (fibermat)</span>
+0458             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0459             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0460             <span class="comment">%% calculate Rc</span>
+0461             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0462             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0463             <span class="comment">%% calculate rho</span>
+0464             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0465             rhos(end+1)=rho;
+0466         <span class="keyword">end</span>
+0467         plot(allFiberRad,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0468         ylabel(<span class="string">'rho'</span>)
+0469         xlabel(<span class="string">'FiberRad'</span>)
+0470         title(<span class="string">'rho vs FiberRad'</span>)
+0471         
+0472     <span class="keyword">case</span> 7 
+0473         <span class="keyword">for</span> i=1:length(allNumBreak)
+0474          NumBreak=allNumBreak(i)  <span class="comment">% update beta here</span>
+0475             <span class="comment">%% get fiber structure (fibermat)</span>
+0476             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0477             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0478             <span class="comment">%% calculate Rc</span>
+0479             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0480             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0481             <span class="comment">%% calculate rho</span>
+0482             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0483             rhos(end+1)=rho;
+0484         <span class="keyword">end</span>
+0485         plot(allNumBreak,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0486         ylabel(<span class="string">'rho'</span>)
+0487         xlabel(<span class="string">'NumBreak'</span>)
+0488         title(<span class="string">'rho vs NumBreak'</span>)
+0489         
+0490         
+0491     <span class="keyword">case</span> 8 
+0492         <span class="keyword">for</span> i=1:length(allrf)
+0493         rf=allrf(i)  <span class="comment">% update beta here</span>
+0494             <span class="comment">%% get fiber structure (fibermat)</span>
+0495             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0496             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0497             <span class="comment">%% calculate Rc</span>
+0498             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0499             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0500             <span class="comment">%% calculate rho</span>
+0501             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0502             rhos(end+1)=rho;
+0503         <span class="keyword">end</span>
+0504         plot(allrf,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0505         ylabel(<span class="string">'rho'</span>)
+0506         xlabel(<span class="string">'rf'</span>)
+0507         title(<span class="string">'rho vs rf'</span>)
+0508         
+0509     <span class="keyword">case</span> 9 
+0510         <span class="keyword">for</span> i=1:length(allRBreakage)
+0511         RBreakage=allRBreakage(i)  <span class="comment">% update beta here</span>
+0512             <span class="comment">%% get fiber structure (fibermat)</span>
+0513             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0514             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0515             <span class="comment">%% calculate Rc</span>
+0516             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0517             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0518             <span class="comment">%% calculate rho</span>
+0519             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0520             rhos(end+1)=rho;
+0521         <span class="keyword">end</span>
+0522         plot(allRBreakage,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0523         ylabel(<span class="string">'rho'</span>)
+0524         xlabel(<span class="string">'RBreakage'</span>)
+0525         title(<span class="string">'rho vs RBreakage'</span>)
+0526         
+0527         
+0528         <span class="keyword">case</span> 10
+0529             <span class="keyword">for</span> i=1:length(allfiberLen)
+0530         fiberLen=allfiberLen(i)  <span class="comment">% update beta here</span>
+0531             <span class="comment">%% get fiber structure (fibermat)</span>
+0532             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0533             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0534             <span class="comment">%% calculate Rc</span>
+0535             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0536             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0537             <span class="comment">%% calculate rho</span>
+0538             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0539             rhos(end+1)=rho;
+0540         <span class="keyword">end</span>
+0541         plot(allfiberLen,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0542         ylabel(<span class="string">'rho'</span>)
+0543         xlabel(<span class="string">'fiberLen'</span>)
+0544         title(<span class="string">'rho vs fiberLen'</span>)
+0545         
+0546         
+0547         <span class="keyword">case</span> 11
+0548             <span class="keyword">for</span> i=1:length(allbeta_mean)
+0549         beta_mean=allbeta_mean(i)  <span class="comment">% update beta here</span>
+0550             <span class="comment">%% get fiber structure (fibermat)</span>
+0551             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0552             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0553             <span class="comment">%% calculate Rc</span>
+0554             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0555             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0556             <span class="comment">%% calculate rho</span>
+0557             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0558             rhos(end+1)=rho;
+0559         <span class="keyword">end</span>
+0560         plot(allbeta_mean,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0561         ylabel(<span class="string">'rho'</span>)
+0562         xlabel(<span class="string">'beta_mean'</span>)
+0563         title(<span class="string">'rho vs beta_mean'</span>)
+0564         
+0565         <span class="keyword">case</span> 12
+0566             <span class="keyword">for</span> i=1:length(allbeta_dev)
+0567         beta_dev=allbeta_dev(i)  <span class="comment">% update beta here</span>
+0568             <span class="comment">%% get fiber structure (fibermat)</span>
+0569             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0570             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0571             <span class="comment">%% calculate Rc</span>
+0572             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0573             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0574             <span class="comment">%% calculate rho</span>
+0575             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0576             rhos(end+1)=rho;
+0577         <span class="keyword">end</span>
+0578         plot(allbeta_dev,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0579         ylabel(<span class="string">'rho'</span>)
+0580         xlabel(<span class="string">'beta_dev'</span>)
+0581         title(<span class="string">'rho vs beta_dev'</span>)
+0582         
+0583         <span class="keyword">case</span> 13
+0584             <span class="keyword">for</span> i=1:length(allfrow)
+0585         frow=allfrow(i)  <span class="comment">% update beta here</span>
+0586             <span class="comment">%% get fiber structure (fibermat)</span>
+0587             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0588             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0589             <span class="comment">%% calculate Rc</span>
+0590             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0591             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0592             <span class="comment">%% calculate rho</span>
+0593             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0594             rhos(end+1)=rho;
+0595         <span class="keyword">end</span>
+0596         plot(allfrow,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0597         ylabel(<span class="string">'rho'</span>)
+0598         xlabel(<span class="string">'frow'</span>)
+0599         title(<span class="string">'rho vs frow'</span>)
+0600         
+0601         <span class="keyword">case</span> 14
+0602             <span class="keyword">for</span> i=1:length(allfcolumn)
+0603         fcolumn=allfcolumn(i)  <span class="comment">% update beta here</span>
+0604             <span class="comment">%% get fiber structure (fibermat)</span>
+0605             GenerateFibermat(frow,fcolumn,VF,FiberRad); <span class="comment">% Note that GenerateFibermat can be different functions based on the functions we selected before</span>
+0606             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0607             <span class="comment">%% calculate Rc</span>
+0608             [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,VF,beta,E,FiberRad);
+0609             Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(FiberRad,Fc,E,rf);
+0610             <span class="comment">%% calculate rho</span>
+0611             [rho,fiber,VF,NumContacts]=<a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>(fibermat,fiberLen,beta_mean,FiberRad,NumBreak,Rc,rf,RBreakage);
+0612             rhos(end+1)=rho;
+0613         <span class="keyword">end</span>
+0614         plot(allfcolumn,rhos)   <span class="comment">%% be careful of the sequence of rhos and VFs! proper use of plot: plot(X,Y)</span>
+0615         ylabel(<span class="string">'rho'</span>)
+0616         xlabel(<span class="string">'fcolumn'</span>)
+0617         title(<span class="string">'rho vs fcolumn'</span>)
+0618         
+0619        
+0620 <span class="keyword">end</span>
+0621 
+0622 guidata(hObject,handles);
+0623 
+0624 
+0625 
+0626 
+0627 
+0628 
+0629 
+0630 
+0631 
+0632 
+0633 
+0634 
+0635 <span class="comment">%</span>
+0636 <span class="comment">% %call the Inputs from the uitable</span>
+0637 <span class="comment">%</span>
+0638 <span class="comment">% data = get(handles.uitable1 ,'Data');</span>
+0639 <span class="comment">% allVFs = cell2mat(data(:,1));</span>
+0640 <span class="comment">% V0 = cell2mat(data(:,2));</span>
+0641 <span class="comment">% % v0_1=V0(1);</span>
+0642 <span class="comment">% Va = cell2mat(data(:,3));</span>
+0643 <span class="comment">% beta = cell2mat(data(:,4));</span>
+0644 <span class="comment">% E = cell2mat(data(:,5));</span>
+0645 <span class="comment">% fiberRadius = cell2mat(data(:,6));</span>
+0646 <span class="comment">% FiberRad = cell2mat(data(:,7));</span>
+0647 <span class="comment">% rf = cell2mat(data(:,8));</span>
+0648 <span class="comment">% NumBreak = cell2mat(data(:,9));</span>
+0649 <span class="comment">% RBreakage = cell2mat(data(:,10));</span>
+0650 <span class="comment">% fiberLen = cell2mat(data(:,11));</span>
+0651 <span class="comment">% beta_mean = cell2mat(data(:,12));</span>
+0652 <span class="comment">% beta_dev = cell2mat(data(:,13));</span>
+0653 <span class="comment">% frow = cell2mat(data(:,14));</span>
+0654 <span class="comment">% fcolumn = cell2mat(data(:,15));</span>
+0655 <span class="comment">%</span>
+0656 <span class="comment">% Enter = get(handles.enter,'String');</span>
+0657 <span class="comment">% % inputs for editbox</span>
+0658 <span class="comment">%</span>
+0659 <span class="comment">% % VFs = str2num(get(handles.vfs, 'String'));</span>
+0660 <span class="comment">% % V0 = get(handles.uitable1, 'Data');</span>
+0661 <span class="comment">% % Va = str2num (get(handles.va, 'String'));</span>
+0662 <span class="comment">% % beta = str2num (get(handles.beta, 'String'));</span>
+0663 <span class="comment">% % E = str2num (get(handles.e, 'String'));</span>
+0664 <span class="comment">% % fiberRadius = str2num (get(handles.fiberradius, 'String'));</span>
+0665 <span class="comment">% % FiberRad = str2num (get(handles.fiberrad, 'String'));</span>
+0666 <span class="comment">% % rf = str2num (get(handles.rf, 'String'));</span>
+0667 <span class="comment">% % NumBreak = str2num (get(handles.numbreak, 'String'));</span>
+0668 <span class="comment">% % RBreakage = str2num (get(handles.rbreakage, 'String'));</span>
+0669 <span class="comment">% % fiberLen = str2num (get(handles.fiberlen, 'String'));</span>
+0670 <span class="comment">% % beta_mean = str2num (get(handles.betamean, 'String'));</span>
+0671 <span class="comment">% % beta_dev = str2num (get(handles.betadev, 'String'));</span>
+0672 <span class="comment">% % frow = str2num (get(handles.frowtag, 'String'));</span>
+0673 <span class="comment">% % fcolumn = str2num (get(handles.fcolumntag, 'String'));</span>
+0674 <span class="comment">%</span>
+0675 <span class="comment">%</span>
+0676 <span class="comment">%</span>
+0677 <span class="comment">% % popup-menu to choose the functions</span>
+0678 <span class="comment">% rhos=[];</span>
+0679 <span class="comment">% for i=1:length(VFs)</span>
+0680 <span class="comment">%     VF=VFs(i);</span>
+0681 <span class="comment">%</span>
+0682 <span class="comment">%    x = get(handles.popup,'Value');</span>
+0683 <span class="comment">%</span>
+0684 <span class="comment">% switch x</span>
+0685 <span class="comment">%</span>
+0686 <span class="comment">%     case 1</span>
+0687 <span class="comment">%         h = msgbox('Please Choose a function', 'Error','error');</span>
+0688 <span class="comment">%</span>
+0689 <span class="comment">%</span>
+0690 <span class="comment">%     case 2</span>
+0691 <span class="comment">%</span>
+0692 <span class="comment">%</span>
+0693 <span class="comment">%         [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius);</span>
+0694 <span class="comment">%</span>
+0695 <span class="comment">% Rc = ContactR(fiberRadius,Fc,E,rf);</span>
+0696 <span class="comment">% %1. Random Packing</span>
+0697 <span class="comment">%</span>
+0698 <span class="comment">% specimen=1;</span>
+0699 <span class="comment">% fibermat=strcat('vf_',num2str(VF),'_spec',num2str(specimen),'.mat');</span>
+0700 <span class="comment">%</span>
+0701 <span class="comment">%     case 3</span>
+0702 <span class="comment">%</span>
+0703 <span class="comment">%         [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius);</span>
+0704 <span class="comment">% Rc = ContactR(fiberRadius,Fc,E,rf);</span>
+0705 <span class="comment">% %3. Square Packing</span>
+0706 <span class="comment">% SquarePacking(frow,fcolumn,VF,fiberRadius);</span>
+0707 <span class="comment">% fibermat='PerfectFiber.mat';</span>
+0708 <span class="comment">%</span>
+0709 <span class="comment">%     case 4</span>
+0710 <span class="comment">%</span>
+0711 <span class="comment">%         [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius);</span>
+0712 <span class="comment">% Rc = ContactR(fiberRadius,Fc,E,rf);</span>
+0713 <span class="comment">% %3. Hexagonal Packing</span>
+0714 <span class="comment">% HexPacking(frow,fcolumn,VF,fiberRadius);</span>
+0715 <span class="comment">% fibermat='PerfectFiber.mat';</span>
+0716 <span class="comment">%</span>
+0717 <span class="comment">%     otherwise</span>
+0718 <span class="comment">% end</span>
+0719 <span class="comment">%</span>
+0720 <span class="comment">% [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta_mean,fiberRadius,NumBreak,Rc,rf,RBreakage);</span>
+0721 <span class="comment">% rhos(end+1)=rho;</span>
+0722 <span class="comment">% end</span>
+0723 <span class="comment">%</span>
+0724 <span class="comment">%</span>
+0725 <span class="comment">% % % % create the Table</span>
+0726 
+0727 <span class="comment">% V0_1  = V0.*ones(1,length(VFs));</span>
+0728 <span class="comment">% Va_1 = Va.*ones(1,length(VFs));</span>
+0729 <span class="comment">% beta_1 = beta.*ones(1,length(VFs));</span>
+0730 <span class="comment">% E_1 = E.*ones(1,length(VFs));</span>
+0731 <span class="comment">% fiberRadius_1 = fiberRadius.*ones(1,length(VFs));</span>
+0732 <span class="comment">% FiberRad_1 = FiberRad.*ones(1,length(VFs));</span>
+0733 <span class="comment">% rf_1 = rf.*ones(1,length(VFs));</span>
+0734 <span class="comment">% fiberLen_1 = fiberLen.*ones(1,length(VFs));</span>
+0735 <span class="comment">% RBreakage_1 = RBreakage.*ones(1,length(VFs));</span>
+0736 <span class="comment">% NumBreak_1 = NumBreak.*ones(1,length(VFs));</span>
+0737 <span class="comment">% beta_mean_1 = beta_mean.*ones(1,length(VFs));</span>
+0738 <span class="comment">% beta_dev_1 = beta_dev.*ones(1,length(VFs));</span>
+0739 <span class="comment">% frow_1 = frow.*ones(1,length(VFs));</span>
+0740 <span class="comment">% fcolumn_1 = fcolumn.*ones(1,length(VFs));</span>
+0741 
+0742 A = [V0;Va;beta;E;fiberRadius;FiberRad;rf;fiberLen;RBreakage;NumBreak;beta_mean;beta_dev;frow;fcolumn;VF;rhos];
+0743 
+0744 fileID = fopen(Enter,<span class="string">'w'</span>);
+0745 fprintf(fileID,<span class="string">'%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%6s,%12s\r\n'</span>,<span class="string">'V0'</span>,<span class="string">'Va'</span>,<span class="string">'beta'</span>,<span class="string">'E'</span>,<span class="keyword">...</span>
+0746 <span class="string">'fiberRadius'</span>,<span class="string">'FiberRad'</span>,<span class="string">'rf'</span>,<span class="string">'fiberLen'</span>,<span class="string">'Rbreakage'</span>,<span class="string">'NumBreak'</span>,<span class="string">'beta_mean'</span>,<span class="string">'beta_dev'</span>,<span class="string">'frow'</span>,<span class="string">'fcolumn'</span>,<span class="string">'VFs'</span>,<span class="string">'rhos'</span>);
+0747 <span class="comment">% fprintf(fileID,'%6s %6s %6s %6s %6s %6s %6s %6s %6s %6s %6s %6s %6s %12s\n','V0','Va','beta','E',...</span>
+0748 <span class="comment">% 'fiberRadius','FiberRad','rf','fiberLen','RBreakage','NumBreak','beta_mean','beta_dev','VFs','rhoz');</span>
+0749 fprintf(fileID,<span class="string">'%6.2f,%6.2f,%6.2f,%2.10f,%2.10f,%2.20f,%2.20f,%6.2f,%6.2f,%6.2f,%6.2f,%6.2f,%6.2f,%6.2f,%6.2f,%12.8f\r\n'</span> ,A);
+0750 fclose(fileID);
+0751 
+0752 
+0753 
+0754 <span class="comment">% % % create Table end</span>
+0755 <span class="comment">% %</span>
+0756 <span class="comment">% % % Define Axes</span>
+0757 <span class="comment">%</span>
+0758 <span class="comment">% axes(handles.axes1)</span>
+0759 <span class="comment">%</span>
+0760 <span class="comment">% % popup-menu to choose plotting</span>
+0761 <span class="comment">%</span>
+0762 <span class="comment">% s = get(handles.popup1,'Value');</span>
+0763 <span class="comment">%</span>
+0764 <span class="comment">% switch s</span>
+0765 <span class="comment">%</span>
+0766 <span class="comment">%     case 1</span>
+0767 <span class="comment">%         plot(rhos,VFs)</span>
+0768 <span class="comment">%         xlabel('rho')</span>
+0769 <span class="comment">%         ylabel('Volumfraction')</span>
+0770 <span class="comment">%         title('Volumfraction vs rho')</span>
+0771 <span class="comment">%</span>
+0772 <span class="comment">%     case 2</span>
+0773 <span class="comment">%         plot(rhos,V0)</span>
+0774 <span class="comment">%         xlabel('rho')</span>
+0775 <span class="comment">%         ylabel('V0')</span>
+0776 <span class="comment">%         title('V0 vs rho')</span>
+0777 <span class="comment">%</span>
+0778 <span class="comment">%     case 3</span>
+0779 <span class="comment">%         plot(rhos,Va_1)</span>
+0780 <span class="comment">%         xlabel('rho')</span>
+0781 <span class="comment">%         ylabel('Va')</span>
+0782 <span class="comment">%         title('Va vs rho')</span>
+0783 <span class="comment">%</span>
+0784 <span class="comment">%</span>
+0785 <span class="comment">%     otherwise</span>
+0786 <span class="comment">% end</span>
+0787 <span class="comment">%</span>
+0788 <span class="comment">% grid on</span>
+0789 <span class="comment">% % xlabel('rho')</span>
+0790 <span class="comment">% % ylabel('Volumfraction')</span>
+0791 <span class="comment">% % title('Volumfraction vs rho')</span>
+0792 <span class="comment">% guidata(hObject,handles);</span>
+0793 
+0794 <span class="comment">% end Define Axes</span>
+0795  
+0796 <span class="comment">% --- Executes when entered data in editable cell(s) in uitable10.</span>
+0797 <a name="_sub20" href="#_subfunctions" class="code">function uitable10_CellEditCallback(hObject, eventdata, handles)</a>
+0798 <span class="comment">% hObject    handle to uitable10 (see GCBO)</span>
+0799 <span class="comment">% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)</span>
+0800 <span class="comment">%    Indices: row and column indices of the cell(s) edited</span>
+0801 <span class="comment">%    PreviousData: previous data for the cell(s) edited</span>
+0802 <span class="comment">%    EditData: string(s) entered by the user</span>
+0803 <span class="comment">%    NewData: EditData or its converted form set on the Data property. Empty if Data was not changed</span>
+0804 <span class="comment">%    Error: error string when failed to convert EditData to appropriate value for Data</span>
+0805 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0806 
+0807 data = <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject, <span class="string">'data'</span>);
+0808 
+0809 
+0810 
+0811 <a name="_sub21" href="#_subfunctions" class="code">function edit_vfs_Callback(hObject, eventdata, handles)</a>
+0812 <span class="comment">% hObject    handle to edit_vfs (see GCBO)</span>
+0813 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0814 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0815 
+0816 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_vfs as text</span>
+0817 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_vfs as a double</span>
+0818 
+0819 
+0820 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0821 <a name="_sub22" href="#_subfunctions" class="code">function edit_vfs_CreateFcn(hObject, eventdata, handles)</a>
+0822 <span class="comment">% hObject    handle to edit_vfs (see GCBO)</span>
+0823 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0824 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0825 
+0826 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0827 <span class="comment">%       See ISPC and COMPUTER.</span>
+0828 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0829     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0830 <span class="keyword">end</span>
+0831 
+0832 
+0833 
+0834 <a name="_sub23" href="#_subfunctions" class="code">function edit_fiberradius_Callback(hObject, eventdata, handles)</a>
+0835 <span class="comment">% hObject    handle to edit_fiberradius (see GCBO)</span>
+0836 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0837 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0838 
+0839 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_fiberradius as text</span>
+0840 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_fiberradius as a double</span>
+0841 
+0842 
+0843 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0844 <a name="_sub24" href="#_subfunctions" class="code">function edit_fiberradius_CreateFcn(hObject, eventdata, handles)</a>
+0845 <span class="comment">% hObject    handle to edit_fiberradius (see GCBO)</span>
+0846 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0847 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0848 
+0849 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0850 <span class="comment">%       See ISPC and COMPUTER.</span>
+0851 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0852     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0853 <span class="keyword">end</span>
+0854 
+0855 
+0856 
+0857 <a name="_sub25" href="#_subfunctions" class="code">function edit_fiberrad_Callback(hObject, eventdata, handles)</a>
+0858 <span class="comment">% hObject    handle to edit_fiberrad (see GCBO)</span>
+0859 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0860 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0861 
+0862 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_fiberrad as text</span>
+0863 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_fiberrad as a double</span>
+0864 
+0865 
+0866 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0867 <a name="_sub26" href="#_subfunctions" class="code">function edit_fiberrad_CreateFcn(hObject, eventdata, handles)</a>
+0868 <span class="comment">% hObject    handle to edit_fiberrad (see GCBO)</span>
+0869 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0870 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0871 
+0872 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0873 <span class="comment">%       See ISPC and COMPUTER.</span>
+0874 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0875     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0876 <span class="keyword">end</span>
+0877 
+0878 
+0879 
+0880 <a name="_sub27" href="#_subfunctions" class="code">function edit_beta_Callback(hObject, eventdata, handles)</a>
+0881 <span class="comment">% hObject    handle to edit_beta (see GCBO)</span>
+0882 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0883 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0884 
+0885 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_beta as text</span>
+0886 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_beta as a double</span>
+0887 
+0888 
+0889 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0890 <a name="_sub28" href="#_subfunctions" class="code">function edit_beta_CreateFcn(hObject, eventdata, handles)</a>
+0891 <span class="comment">% hObject    handle to edit_beta (see GCBO)</span>
+0892 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0893 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0894 
+0895 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0896 <span class="comment">%       See ISPC and COMPUTER.</span>
+0897 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0898     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0899 <span class="keyword">end</span>
+0900 
+0901 
+0902 
+0903 <a name="_sub29" href="#_subfunctions" class="code">function edit_va_Callback(hObject, eventdata, handles)</a>
+0904 <span class="comment">% hObject    handle to edit_va (see GCBO)</span>
+0905 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0906 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0907 
+0908 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_va as text</span>
+0909 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_va as a double</span>
+0910 
+0911 
+0912 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0913 <a name="_sub30" href="#_subfunctions" class="code">function edit_va_CreateFcn(hObject, eventdata, handles)</a>
+0914 <span class="comment">% hObject    handle to edit_va (see GCBO)</span>
+0915 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0916 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0917 
+0918 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0919 <span class="comment">%       See ISPC and COMPUTER.</span>
+0920 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0921     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0922 <span class="keyword">end</span>
+0923 
+0924 
+0925 
+0926 <a name="_sub31" href="#_subfunctions" class="code">function edit_e_Callback(hObject, eventdata, handles)</a>
+0927 <span class="comment">% hObject    handle to edit_e (see GCBO)</span>
+0928 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0929 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0930 
+0931 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_e as text</span>
+0932 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_e as a double</span>
+0933 
+0934 
+0935 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0936 <a name="_sub32" href="#_subfunctions" class="code">function edit_e_CreateFcn(hObject, eventdata, handles)</a>
+0937 <span class="comment">% hObject    handle to edit_e (see GCBO)</span>
+0938 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0939 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0940 
+0941 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0942 <span class="comment">%       See ISPC and COMPUTER.</span>
+0943 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0944     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0945 <span class="keyword">end</span>
+0946 
+0947 
+0948 
+0949 <a name="_sub33" href="#_subfunctions" class="code">function edit_v0_Callback(hObject, eventdata, handles)</a>
+0950 <span class="comment">% hObject    handle to edit_v0 (see GCBO)</span>
+0951 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0952 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0953 
+0954 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_v0 as text</span>
+0955 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_v0 as a double</span>
+0956 
+0957 
+0958 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0959 <a name="_sub34" href="#_subfunctions" class="code">function edit_v0_CreateFcn(hObject, eventdata, handles)</a>
+0960 <span class="comment">% hObject    handle to edit_v0 (see GCBO)</span>
+0961 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0962 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0963 
+0964 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0965 <span class="comment">%       See ISPC and COMPUTER.</span>
+0966 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0967     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0968 <span class="keyword">end</span>
+0969 
+0970 
+0971 
+0972 <a name="_sub35" href="#_subfunctions" class="code">function edit_rf_Callback(hObject, eventdata, handles)</a>
+0973 <span class="comment">% hObject    handle to edit_rf (see GCBO)</span>
+0974 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0975 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0976 
+0977 <span class="comment">% Hints: get(hObject,'String') returns contents of edit_rf as text</span>
+0978 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit_rf as a double</span>
+0979 
+0980 
+0981 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0982 <a name="_sub36" href="#_subfunctions" class="code">function edit_rf_CreateFcn(hObject, eventdata, handles)</a>
+0983 <span class="comment">% hObject    handle to edit_rf (see GCBO)</span>
+0984 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0985 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0986 
+0987 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0988 <span class="comment">%       See ISPC and COMPUTER.</span>
+0989 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0990     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0991 <span class="keyword">end</span>
+0992 
+0993 
+0994 <span class="comment">% --- Executes when entered data in editable cell(s) in uitable11.</span>
+0995 <a name="_sub37" href="#_subfunctions" class="code">function uitable11_CellEditCallback(hObject, eventdata, handles)</a>
+0996 <span class="comment">% hObject    handle to uitable11 (see GCBO)</span>
+0997 <span class="comment">% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)</span>
+0998 <span class="comment">%    Indices: row and column indices of the cell(s) edited</span>
+0999 <span class="comment">%    PreviousData: previous data for the cell(s) edited</span>
+1000 <span class="comment">%    EditData: string(s) entered by the user</span>
+1001 <span class="comment">%    NewData: EditData or its converted form set on the Data property. Empty if Data was not changed</span>
+1002 <span class="comment">%    Error: error string when failed to convert EditData to appropriate value for Data</span>
+1003 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1004 
+1005 
+1006 <span class="comment">% --- Executes on button press in table.</span>
+1007 <a name="_sub38" href="#_subfunctions" class="code">function table_Callback(hObject, eventdata, handles)</a>
+1008 <span class="comment">% hObject    handle to table (see GCBO)</span>
+1009 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1010 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1011 
+1012 
+1013  
+1014 <a name="_sub39" href="#_subfunctions" class="code">function edit18_Callback(hObject, eventdata, handles)</a>
+1015 <span class="comment">% hObject    handle to edit18 (see GCBO)</span>
+1016 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1017 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1018 
+1019 <span class="comment">% Hints: get(hObject,'String') returns contents of edit18 as text</span>
+1020 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit18 as a double</span>
+1021 
+1022 
+1023 
+1024 
+1025 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1026 <a name="_sub40" href="#_subfunctions" class="code">function edit18_CreateFcn(hObject, eventdata, handles)</a>
+1027 <span class="comment">% hObject    handle to edit18 (see GCBO)</span>
+1028 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1029 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1030 
+1031 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1032 <span class="comment">%       See ISPC and COMPUTER.</span>
+1033 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1034     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1035 <span class="keyword">end</span>
+1036 
+1037 
+1038 
+1039 <a name="_sub41" href="#_subfunctions" class="code">function edit19_Callback(hObject, eventdata, handles)</a>
+1040 <span class="comment">% hObject    handle to edit19 (see GCBO)</span>
+1041 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1042 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1043 
+1044 <span class="comment">% Hints: get(hObject,'String') returns contents of edit19 as text</span>
+1045 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit19 as a double</span>
+1046 
+1047 
+1048 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1049 <a name="_sub42" href="#_subfunctions" class="code">function edit19_CreateFcn(hObject, eventdata, handles)</a>
+1050 <span class="comment">% hObject    handle to edit19 (see GCBO)</span>
+1051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1052 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1053 
+1054 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1055 <span class="comment">%       See ISPC and COMPUTER.</span>
+1056 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1057     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1058 <span class="keyword">end</span>
+1059 
+1060 
+1061 
+1062 <a name="_sub43" href="#_subfunctions" class="code">function edit20_Callback(hObject, eventdata, handles)</a>
+1063 <span class="comment">% hObject    handle to edit20 (see GCBO)</span>
+1064 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1065 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1066 
+1067 <span class="comment">% Hints: get(hObject,'String') returns contents of edit20 as text</span>
+1068 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit20 as a double</span>
+1069 
+1070 
+1071 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1072 <a name="_sub44" href="#_subfunctions" class="code">function edit20_CreateFcn(hObject, eventdata, handles)</a>
+1073 <span class="comment">% hObject    handle to edit20 (see GCBO)</span>
+1074 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1075 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1076 
+1077 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1078 <span class="comment">%       See ISPC and COMPUTER.</span>
+1079 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1080     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1081 <span class="keyword">end</span>
+1082 
+1083 
+1084 
+1085 <a name="_sub45" href="#_subfunctions" class="code">function numbreak_Callback(hObject, eventdata, handles)</a>
+1086 <span class="comment">% hObject    handle to numbreak (see GCBO)</span>
+1087 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1088 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1089 
+1090 <span class="comment">% Hints: get(hObject,'String') returns contents of numbreak as text</span>
+1091 <span class="comment">%        str2double(get(hObject,'String')) returns contents of numbreak as a double</span>
+1092 
+1093 
+1094 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1095 <a name="_sub46" href="#_subfunctions" class="code">function numbreak_CreateFcn(hObject, eventdata, handles)</a>
+1096 <span class="comment">% hObject    handle to numbreak (see GCBO)</span>
+1097 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1098 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1099 
+1100 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1101 <span class="comment">%       See ISPC and COMPUTER.</span>
+1102 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1103     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1104 <span class="keyword">end</span>
+1105 
+1106 
+1107 
+1108 <a name="_sub47" href="#_subfunctions" class="code">function rbreakage_Callback(hObject, eventdata, handles)</a>
+1109 <span class="comment">% hObject    handle to rbreakage (see GCBO)</span>
+1110 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1111 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1112 
+1113 <span class="comment">% Hints: get(hObject,'String') returns contents of rbreakage as text</span>
+1114 <span class="comment">%        str2double(get(hObject,'String')) returns contents of rbreakage as a double</span>
+1115 
+1116 
+1117 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1118 <a name="_sub48" href="#_subfunctions" class="code">function rbreakage_CreateFcn(hObject, eventdata, handles)</a>
+1119 <span class="comment">% hObject    handle to rbreakage (see GCBO)</span>
+1120 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1121 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1122 
+1123 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1124 <span class="comment">%       See ISPC and COMPUTER.</span>
+1125 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1126     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1127 <span class="keyword">end</span>
+1128 
+1129 
+1130 
+1131 <a name="_sub49" href="#_subfunctions" class="code">function fiberlen_Callback(hObject, eventdata, handles)</a>
+1132 <span class="comment">% hObject    handle to fiberlen (see GCBO)</span>
+1133 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1134 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1135 
+1136 <span class="comment">% Hints: get(hObject,'String') returns contents of fiberlen as text</span>
+1137 <span class="comment">%        str2double(get(hObject,'String')) returns contents of fiberlen as a double</span>
+1138 
+1139 
+1140 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1141 <a name="_sub50" href="#_subfunctions" class="code">function fiberlen_CreateFcn(hObject, eventdata, handles)</a>
+1142 <span class="comment">% hObject    handle to fiberlen (see GCBO)</span>
+1143 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1144 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1145 
+1146 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1147 <span class="comment">%       See ISPC and COMPUTER.</span>
+1148 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1149     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1150 <span class="keyword">end</span>
+1151 
+1152 
+1153 
+1154 <a name="_sub51" href="#_subfunctions" class="code">function edit24_Callback(hObject, eventdata, handles)</a>
+1155 <span class="comment">% hObject    handle to edit24 (see GCBO)</span>
+1156 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1157 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1158 
+1159 <span class="comment">% Hints: get(hObject,'String') returns contents of edit24 as text</span>
+1160 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit24 as a double</span>
+1161 
+1162 
+1163 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1164 <a name="_sub52" href="#_subfunctions" class="code">function edit24_CreateFcn(hObject, eventdata, handles)</a>
+1165 <span class="comment">% hObject    handle to edit24 (see GCBO)</span>
+1166 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1167 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1168 
+1169 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1170 <span class="comment">%       See ISPC and COMPUTER.</span>
+1171 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1172     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1173 <span class="keyword">end</span>
+1174 
+1175 
+1176 
+1177 <a name="_sub53" href="#_subfunctions" class="code">function betamean_Callback(hObject, eventdata, handles)</a>
+1178 <span class="comment">% hObject    handle to betamean (see GCBO)</span>
+1179 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1180 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1181 
+1182 <span class="comment">% Hints: get(hObject,'String') returns contents of betamean as text</span>
+1183 <span class="comment">%        str2double(get(hObject,'String')) returns contents of betamean as a double</span>
+1184 
+1185 
+1186 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1187 <a name="_sub54" href="#_subfunctions" class="code">function betamean_CreateFcn(hObject, eventdata, handles)</a>
+1188 <span class="comment">% hObject    handle to betamean (see GCBO)</span>
+1189 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1190 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1191 
+1192 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1193 <span class="comment">%       See ISPC and COMPUTER.</span>
+1194 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1195     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1196 <span class="keyword">end</span>
+1197 
+1198 
+1199 
+1200 <a name="_sub55" href="#_subfunctions" class="code">function edit27_Callback(hObject, eventdata, handles)</a>
+1201 <span class="comment">% hObject    handle to edit27 (see GCBO)</span>
+1202 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1203 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1204 
+1205 <span class="comment">% Hints: get(hObject,'String') returns contents of edit27 as text</span>
+1206 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit27 as a double</span>
+1207 
+1208 
+1209 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1210 <a name="_sub56" href="#_subfunctions" class="code">function edit27_CreateFcn(hObject, eventdata, handles)</a>
+1211 <span class="comment">% hObject    handle to edit27 (see GCBO)</span>
+1212 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1213 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1214 
+1215 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1216 <span class="comment">%       See ISPC and COMPUTER.</span>
+1217 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1218     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1219 <span class="keyword">end</span>
+1220 
+1221 
+1222 
+1223 <a name="_sub57" href="#_subfunctions" class="code">function betadev_Callback(hObject, eventdata, handles)</a>
+1224 <span class="comment">% hObject    handle to betadev (see GCBO)</span>
+1225 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1226 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1227 
+1228 <span class="comment">% Hints: get(hObject,'String') returns contents of betadev as text</span>
+1229 <span class="comment">%        str2double(get(hObject,'String')) returns contents of betadev as a double</span>
+1230 
+1231 
+1232 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1233 <a name="_sub58" href="#_subfunctions" class="code">function betadev_CreateFcn(hObject, eventdata, handles)</a>
+1234 <span class="comment">% hObject    handle to betadev (see GCBO)</span>
+1235 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1236 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1237 
+1238 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1239 <span class="comment">%       See ISPC and COMPUTER.</span>
+1240 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1241     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1242 <span class="keyword">end</span>
+1243 
+1244 
+1245 
+1246 <a name="_sub59" href="#_subfunctions" class="code">function edit29_Callback(hObject, eventdata, handles)</a>
+1247 <span class="comment">% hObject    handle to edit29 (see GCBO)</span>
+1248 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1249 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1250 
+1251 <span class="comment">% Hints: get(hObject,'String') returns contents of edit29 as text</span>
+1252 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit29 as a double</span>
+1253 
+1254 
+1255 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1256 <a name="_sub60" href="#_subfunctions" class="code">function edit29_CreateFcn(hObject, eventdata, handles)</a>
+1257 <span class="comment">% hObject    handle to edit29 (see GCBO)</span>
+1258 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1259 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1260 
+1261 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1262 <span class="comment">%       See ISPC and COMPUTER.</span>
+1263 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1264     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1265 <span class="keyword">end</span>
+1266 
+1267 
+1268 
+1269 <a name="_sub61" href="#_subfunctions" class="code">function edit30_Callback(hObject, eventdata, handles)</a>
+1270 <span class="comment">% hObject    handle to edit30 (see GCBO)</span>
+1271 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1272 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1273 
+1274 <span class="comment">% Hints: get(hObject,'String') returns contents of edit30 as text</span>
+1275 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit30 as a double</span>
+1276 
+1277 
+1278 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1279 <a name="_sub62" href="#_subfunctions" class="code">function edit30_CreateFcn(hObject, eventdata, handles)</a>
+1280 <span class="comment">% hObject    handle to edit30 (see GCBO)</span>
+1281 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1282 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1283 
+1284 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1285 <span class="comment">%       See ISPC and COMPUTER.</span>
+1286 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1287     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1288 <span class="keyword">end</span>
+1289 
+1290 
+1291 
+1292 <a name="_sub63" href="#_subfunctions" class="code">function fcolumntag_Callback(hObject, eventdata, handles)</a>
+1293 <span class="comment">% hObject    handle to fcolumntag (see GCBO)</span>
+1294 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1295 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1296 
+1297 <span class="comment">% Hints: get(hObject,'String') returns contents of fcolumntag as text</span>
+1298 <span class="comment">%        str2double(get(hObject,'String')) returns contents of fcolumntag as a double</span>
+1299 
+1300 
+1301 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1302 <a name="_sub64" href="#_subfunctions" class="code">function fcolumntag_CreateFcn(hObject, eventdata, handles)</a>
+1303 <span class="comment">% hObject    handle to fcolumntag (see GCBO)</span>
+1304 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1305 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1306 
+1307 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1308 <span class="comment">%       See ISPC and COMPUTER.</span>
+1309 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1310     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1311 <span class="keyword">end</span>
+1312 
+1313 
+1314 
+1315 <a name="_sub65" href="#_subfunctions" class="code">function frowtag_Callback(hObject, eventdata, handles)</a>
+1316 <span class="comment">% hObject    handle to frowtag (see GCBO)</span>
+1317 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1318 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1319 
+1320 <span class="comment">% Hints: get(hObject,'String') returns contents of frowtag as text</span>
+1321 <span class="comment">%        str2double(get(hObject,'String')) returns contents of frowtag as a double</span>
+1322 
+1323 
+1324 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1325 <a name="_sub66" href="#_subfunctions" class="code">function frowtag_CreateFcn(hObject, eventdata, handles)</a>
+1326 <span class="comment">% hObject    handle to frowtag (see GCBO)</span>
+1327 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1328 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1329 
+1330 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1331 <span class="comment">%       See ISPC and COMPUTER.</span>
+1332 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1333     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1334 <span class="keyword">end</span>
+1335 
+1336 
+1337 
+1338 <a name="_sub67" href="#_subfunctions" class="code">function enter_Callback(hObject, eventdata, handles)</a>
+1339 <span class="comment">% hObject    handle to enter (see GCBO)</span>
+1340 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1341 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1342 
+1343 <span class="comment">% Hints: get(hObject,'String') returns contents of enter as text</span>
+1344 <span class="comment">%        str2double(get(hObject,'String')) returns contents of enter as a double</span>
+1345 
+1346 
+1347 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1348 <a name="_sub68" href="#_subfunctions" class="code">function enter_CreateFcn(hObject, eventdata, handles)</a>
+1349 <span class="comment">% hObject    handle to enter (see GCBO)</span>
+1350 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1351 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1352 
+1353 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+1354 <span class="comment">%       See ISPC and COMPUTER.</span>
+1355 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1356     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1357 <span class="keyword">end</span>
+1358 
+1359 
+1360 <span class="comment">% --- Executes on selection change in popup.</span>
+1361 <a name="_sub69" href="#_subfunctions" class="code">function popup_Callback(hObject, eventdata, handles)</a>
+1362 <span class="comment">% hObject    handle to popup (see GCBO)</span>
+1363 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1364 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1365 
+1366 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns popup contents as cell array</span>
+1367 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popup</span>
+1368 <span class="comment">%</span>
+1369 val=<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'value'</span>);
+1370 axes(handles.axes2);
+1371 
+1372 <span class="keyword">switch</span> val
+1373     
+1374     <span class="keyword">case</span> 1 
+1375          
+1376          cla(handles.axes2);
+1377          cla(handles.axes1);
+1378          
+1379     <span class="keyword">case</span> 2
+1380         
+1381         imshow(<span class="string">'Random.jpg'</span>);
+1382         cla(handles.axes1);
+1383         
+1384     <span class="keyword">case</span> 3
+1385         
+1386          imshow(<span class="string">'Square.jpg'</span>);
+1387          cla(handles.axes1);
+1388          
+1389     <span class="keyword">case</span> 4
+1390         
+1391         imshow(<span class="string">'Hexagonal.jpg'</span>);
+1392         cla(handles.axes1);
+1393         
+1394     <span class="keyword">otherwise</span>
+1395 <span class="keyword">end</span>
+1396 
+1397         guidata(hObject,handles);
+1398 
+1399         
+1400 
+1401 
+1402 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1403 <a name="_sub70" href="#_subfunctions" class="code">function popup_CreateFcn(hObject, eventdata, handles)</a>
+1404 <span class="comment">% hObject    handle to popup (see GCBO)</span>
+1405 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1406 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1407 
+1408 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+1409 <span class="comment">%       See ISPC and COMPUTER.</span>
+1410 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1411     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1412 <span class="keyword">end</span>
+1413 
+1414 
+1415 <span class="comment">% --------------------------------------------------------------------</span>
+1416 <a name="_sub71" href="#_subfunctions" class="code">function Untitled_1_Callback(hObject, eventdata, handles)</a>
+1417 <span class="comment">% hObject    handle to Untitled_1 (see GCBO)</span>
+1418 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1419 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1420 
+1421 
+1422 
+1423 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1424 <a name="_sub72" href="#_subfunctions" class="code">function axes2_CreateFcn(hObject, eventdata, handles)</a>
+1425 <span class="comment">% hObject    handle to axes2 (see GCBO)</span>
+1426 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1427 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1428 
+1429 <span class="comment">% Hint: place code in OpeningFcn to populate axes2</span>
+1430 
+1431 
+1432 <span class="comment">% end</span>
+1433 
+1434 
+1435 <span class="comment">% --- Executes on button press in pushbutton5.</span>
+1436 <a name="_sub73" href="#_subfunctions" class="code">function pushbutton5_Callback(hObject, eventdata, handles)</a>
+1437 <span class="comment">% hObject    handle to pushbutton5 (see GCBO)</span>
+1438 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1439 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1440 cla(handles.axes1);
+1441 
+1442 
+1443 <span class="comment">% --- Executes on selection change in popup1.</span>
+1444 <a name="_sub74" href="#_subfunctions" class="code">function popup1_Callback(hObject, eventdata, handles)</a>
+1445 <span class="comment">% hObject    handle to popup1 (see GCBO)</span>
+1446 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1447 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1448 
+1449 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns popup1 contents as cell array</span>
+1450 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popup1</span>
+1451 
+1452 
+1453 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+1454 <a name="_sub75" href="#_subfunctions" class="code">function popup1_CreateFcn(hObject, eventdata, handles)</a>
+1455 <span class="comment">% hObject    handle to popup1 (see GCBO)</span>
+1456 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+1457 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+1458 
+1459 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+1460 <span class="comment">%       See ISPC and COMPUTER.</span>
+1461 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+1462     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+1463 <span class="keyword">end</span>
+1464 
+1465 
+1466 <span class="comment">% --- Executes when entered data in editable cell(s) in uitable1.</span>
+1467 <a name="_sub76" href="#_subfunctions" class="code">function uitable1_CellEditCallback(hObject, eventdata, handles)</a>
+1468 <span class="comment">% hObject    handle to uitable1 (see GCBO)</span>
+1469 <span class="comment">% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)</span>
+1470 <span class="comment">%    Indices: row and column indices of the cell(s) edited</span>
+1471 <span class="comment">%    PreviousData: previous data for the cell(s) edited</span>
+1472 <span class="comment">%    EditData: string(s) entered by the user</span>
+1473 <span class="comment">%    NewData: EditData or its converted form set on the Data property. Empty if Data was not changed</span>
+1474 <span class="comment">%    Error: error string when failed to convert EditData to appropriate value for Data</span>
+1475 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+1476 
+1477 
+1478 q=eventdata.Indices;
+1479 X=<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(handles.uitable1,<span class="string">'Data'</span>);
+1480 <span class="keyword">if</span> q(1)== 1 || q(2) == 1
+1481     X(q(1),q(2)) = cellfun(@(x) [<span class="string">'&lt;html&gt;&lt;table border=0 width=400 bgcolor=#FFF000&gt;&lt;TR&gt;&lt;TD&gt;'</span> x <span class="string">'&lt;/TD&gt;&lt;/TR&gt; &lt;/table&gt;&lt;/html&gt;'</span>], X(q(1),q(2)), <span class="string">'UniformOutput'</span>, false);
+1482     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(handles.uitable1,<span class="string">'Data'</span>, X);
+1483 <span class="keyword">end</span>
+1484 
+1485</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

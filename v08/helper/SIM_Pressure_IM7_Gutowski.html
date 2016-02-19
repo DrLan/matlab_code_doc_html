@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of SIM_Pressure_IM7_Gutowski</title>
+  <meta name="keywords" content="SIM_Pressure_IM7_Gutowski">
+  <meta name="description" content="% Statistical representation: beta">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; SIM_Pressure_IM7_Gutowski.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>SIM_Pressure_IM7_Gutowski
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Statistical representation: beta</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Statistical representation: beta
+% 3D Resistor Network Modle by Hong Yu
+% copyright: Hong Yu,hongy@udel.edu 2013
+% IM7 random fiber</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>	</li><li><a href="../../v08/@Function/ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>	</li><li><a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="RNetwork_beta_Dis.html" class="code" title="function [rho,fiber,VF,NumContacts,betas]=RNetwork_beta_Dis(fibermat,fiberLen,beta_mean,beta_dev,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_beta_Dis</a>	% Important!!!  Before use, check in which direction the rho is calculated. (longitudinal or through-thickness)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% Statistical representation: beta</span>
+0002 <span class="comment">%% 3D Resistor Network Modle by Hong Yu</span>
+0003 <span class="comment">%% copyright: Hong Yu,hongy@udel.edu 2013</span>
+0004 <span class="comment">%% IM7 random fiber</span>
+0005 Resfid1=<span class="string">'Pressure_IM7_ExpPressure.txt'</span> <span class="comment">% Results file name</span>
+0006 fid=fopen(Resfid1,<span class="string">'a'</span>);
+0007 fprintf(fid,<span class="string">'Experimental Pressure VF relation with Gutowski eqn \n'</span>);
+0008 vfs=[0.4 0.45 0.5 0.55 0.6]; <span class="comment">%volume fractions</span>
+0009 <span class="comment">%% Input parameters</span>
+0010 <span class="comment">%% fiber property</span>
+0011 fiberRadius=3.5e-6; <span class="comment">% radius of fiber, 2.6um for IM7; 3.5 for AS4</span>
+0012 rf=1.6e-5;
+0013 E=238e9; <span class="comment">% carbon fiber modulus. IM7: 276 GPa</span>
+0014 <span class="comment">%% processing</span>
+0015 beta_mean=378*3;
+0016 beta=beta_mean;
+0017 beta_dev=0;
+0018 <span class="comment">%Pressure=0.5e5; % Processing pressure: 8 bar</span>
+0019 V0=0.4;
+0020 Va=0.85;
+0021 <span class="comment">%% model configuration parameter</span>
+0022 perc=1.5*fiberRadius;
+0023 <span class="comment">%ContactsPerFiber=5;</span>
+0024 NumBreak=0;
+0025 RBreakage=1e10;
+0026 fiberLen=2.5e-3;
+0027 <span class="keyword">for</span> vfi=1:length(vfs)
+0028     vf=vfs(vfi);
+0029     <span class="keyword">for</span> specimen=1:1
+0030         fibermat=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0031 <span class="comment">%         Fc = ContactForce_Exp(V0,Va,vf,beta,E);</span>
+0032         [Fc,Pressure] = <a href="ContactForce_Exp.html" class="code" title="function [Fc,Pressure] = ContactForce_Exp(V0,Va,VF,beta,E,fiberRadius)">ContactForce_Exp</a>(V0,Va,vf,beta,E,fiberRadius);
+0033         Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(fiberRadius,Fc,E,rf);
+0034         [rho,fiber,VF,NumContacts,betas]=<a href="RNetwork_beta_Dis.html" class="code" title="function [rho,fiber,VF,NumContacts,betas]=RNetwork_beta_Dis(fibermat,fiberLen,beta_mean,beta_dev,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_beta_Dis</a>(fibermat,fiberLen,beta_mean,beta_dev,fiberRadius,NumBreak,Rc,rf,RBreakage);
+0035         fid=fopen(Resfid1,<span class="string">'a'</span>);
+0036         fprintf(fid,<span class="keyword">...</span>
+0037             <span class="string">'%f %f %f %1.4f %f %2.10f %d %f\n'</span>,<span class="keyword">...</span>
+0038             Pressure,rho,Rc,VF,fiberLen,fiberRadius,NumContacts,beta_mean);
+0039     <span class="keyword">end</span>
+0040 <span class="keyword">end</span>
+0041 
+0042 
+0043 
+0044 
+0045 
+0046 <span class="comment">% for Nsim=1:8</span>
+0047 <span class="comment">% clear all</span>
+0048 <span class="comment">% clf</span>
+0049 <span class="comment">% Resfid1='SIM_Pressure_IM7.txt'; % Results file name</span>
+0050 <span class="comment">% %% Input parameters</span>
+0051 <span class="comment">% %% fiber property</span>
+0052 <span class="comment">% fiberRadius=2.6e-6; % radius of fiber, 2.6um for IM7; 3.5 for AS4</span>
+0053 <span class="comment">% rf=1.8e-5;</span>
+0054 <span class="comment">% E=276e9; % carbon fiber modulus. IM7: 276 GPa</span>
+0055 <span class="comment">% %% processing</span>
+0056 <span class="comment">% beta_mean=350;</span>
+0057 <span class="comment">% beta_dev=0;</span>
+0058 <span class="comment">% Pressure=0.5e5; % Processing pressure: 8 bar</span>
+0059 <span class="comment">% V0=0.3;</span>
+0060 <span class="comment">% Va=0.8;</span>
+0061 <span class="comment">% %% model configuration parameter</span>
+0062 <span class="comment">% perc=1.5*fiberRadius;</span>
+0063 <span class="comment">% %ContactsPerFiber=5;</span>
+0064 <span class="comment">% NumBreak=0;</span>
+0065 <span class="comment">% RBreakage=1e10;</span>
+0066 <span class="comment">% fiberLen=1e-3;</span>
+0067 <span class="comment">% VF=0.55</span>
+0068 <span class="comment">% %% model</span>
+0069 <span class="comment">% fibermat='vf_0.55_spec1.mat';</span>
+0070 <span class="comment">% % Fc = ContactForce(VF,beta_mean,Pressure,fiberRadius);</span>
+0071 <span class="comment">% Fc = ContactForce_Exp(V0,Va,VF,beta,E)</span>
+0072 <span class="comment">% Rc = ContactR(fiberRadius,Fc,E,rf);</span>
+0073 <span class="comment">% [rho,fiber,VF,NumContacts,betas]=RNetwork_beta_Dis(fibermat,fiberLen,beta_mean,beta_dev,fiberRadius,NumBreak,Rc,rf,RBreakage);</span>
+0074 <span class="comment">% fid=fopen(Resfid1,'a');</span>
+0075 <span class="comment">% fprintf(fid,...</span>
+0076 <span class="comment">%     '%f %f %f %1.4f %f %2.10f %d %f\n',...</span>
+0077 <span class="comment">%     Pressure,rho,Rc,VF,fiberLen,fiberRadius,NumContacts,beta_mean);</span>
+0078 <span class="comment">% end</span>
+0079 
+0080 
+0081 
+0082 <span class="comment">%         %     Resfid1=strcat('Res','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0083 <span class="comment">%         %     Resfid2=strcat('Res_ave','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0084 <span class="comment">%</span>
+0085 <span class="comment">%</span>
+0086 <span class="comment">% %tic</span>
+0087 <span class="comment">% %% input parameters</span>
+0088 <span class="comment">% % Resfid1='Stat_beta_IM7.txt' % Results file name</span>
+0089 <span class="comment">% % %Resfid2='CompareModels_ave.txt'</span>
+0090 <span class="comment">% % fid1=fopen(Resfid1,'a')</span>
+0091 <span class="comment">% % fprintf(fid1,'%s \n','Stat_beta_IM7')</span>
+0092 <span class="comment">% % % fid2=fopen(Resfid2,'a')</span>
+0093 <span class="comment">% % % fprintf(fid2,'%s \n','IM7-Random-a_ave')</span>
+0094 <span class="comment">% %</span>
+0095 <span class="comment">% % % Resfid1='Res_IM7_random_perc.txt' % Results file name</span>
+0096 <span class="comment">% % % Resfid2='Res_IM7_random_perc_ave.txt'</span>
+0097 <span class="comment">% % % Resfid3='DistanceDistribution.txt'</span>
+0098 <span class="comment">% % fiberRadius=2.6e-6; % radius of fiber, 2.6um for IM7; 3.5 for AS4</span>
+0099 <span class="comment">% % % fiberLen=2e-3;</span>
+0100 <span class="comment">% % perc=1.5*fiberRadius;</span>
+0101 <span class="comment">% % %beta=350;</span>
+0102 <span class="comment">% % NumBreak=0;</span>
+0103 <span class="comment">% % % Rc=36;</span>
+0104 <span class="comment">% % rf=1.8e-5;</span>
+0105 <span class="comment">% % RBreakage=1e10;</span>
+0106 <span class="comment">% % ContactsPerFiber=5;</span>
+0107 <span class="comment">% % Pressure=0.8e6; % Processing pressure: 8 bar</span>
+0108 <span class="comment">% % E=276e9; % carbon fiber modulus. IM7: 276 GPa</span>
+0109 <span class="comment">% %% input simulated fibers</span>
+0110 <span class="comment">% %vfmatrix=[0.55]; %volume fractions</span>
+0111 <span class="comment">% % tempsimsize=size(vfmatrix);</span>
+0112 <span class="comment">% % simsize=tempsimsize(2);</span>
+0113 <span class="comment">% simsize=size(vfmatrix,2);</span>
+0114 <span class="comment">% %final_result=zeros(10*simsize,2); %first column is vf second column is resistance</span>
+0115 <span class="comment">% %average_result=zeros(simsize,3);</span>
+0116 <span class="comment">% iteration=0;</span>
+0117 <span class="comment">%</span>
+0118 <span class="comment">%</span>
+0119 <span class="comment">%     Fc = ContactForce(VF,beta,Pressure,fiberRadius);</span>
+0120 <span class="comment">% Rc = ContactR(fiberRadius,Fc,E,rf);</span>
+0121 <span class="comment">% % fid=fopen(Resfid1,'a');</span>
+0122 <span class="comment">% % fprintf(fid,'\n');</span>
+0123 <span class="comment">% % fid=fopen(Resfid2,'a');</span>
+0124 <span class="comment">% % fprintf(fid,'\n');</span>
+0125 <span class="comment">% % tot_iter=simsize*10</span>
+0126 <span class="comment">% for simnumber=1:simsize</span>
+0127 <span class="comment">% %     fid=fopen(Resfid3,'a');</span>
+0128 <span class="comment">% %     fprintf(fid,'\n')</span>
+0129 <span class="comment">% %     fid=fopen(Resfid1,'a');</span>
+0130 <span class="comment">% %     fprintf(fid,'\n')</span>
+0131 <span class="comment">%</span>
+0132 <span class="comment">%     rhos=[];</span>
+0133 <span class="comment">%     Res_dist_all=[];</span>
+0134 <span class="comment">%     for specimen=1:1</span>
+0135 <span class="comment">%         vf=vfmatrix(simnumber);</span>
+0136 <span class="comment">% %         Rc=360/vf;</span>
+0137 <span class="comment">% %         Rc=(0.6-vf)*15+0.001;</span>
+0138 <span class="comment">% Rc=1e-6;</span>
+0139 <span class="comment">% %         Rc=0.02/(vf-0.4+0.02);</span>
+0140 <span class="comment">%         fibermat=strcat('vf_',num2str(vf),'_spec',num2str(specimen),'.mat');</span>
+0141 <span class="comment">%</span>
+0142 <span class="comment">% %         [rho0,fiber,VF,NumContacts,SampleLen,Res_dist]=RNetwork_Random(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);</span>
+0143 <span class="comment">%         [rho0,fiber,VF,NumContacts,SampleLen,a_value]=RNetwork_Random3(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);</span>
+0144 <span class="comment">%         rho0</span>
+0145 <span class="comment">% %         ave_a=mean(Res_dist);</span>
+0146 <span class="comment">% %         [rho0,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);</span>
+0147 <span class="comment">% %         rhos(specimen)=rho0;</span>
+0148 <span class="comment">%         rhos(end+1)=rho0;</span>
+0149 <span class="comment">% %         Res_dist_all=[Res_dist_all Res_dist];</span>
+0150 <span class="comment">%         iteration=iteration+1;</span>
+0151 <span class="comment">% %         progress=['progress:' num2str(iteration/tot_iter*100) ' %'];</span>
+0152 <span class="comment">% %         disp(progress)</span>
+0153 <span class="comment">% %         fid=fopen(Resfid1,'a');</span>
+0154 <span class="comment">% %         time1=toc;</span>
+0155 <span class="comment">% %         fprintf(fid,'%f %d %f %2.10f %d %f %f %d %f %f\n',VF,specimen,SampleLen,fiberRadius,NumContacts,ave_a,Rc,beta,rho0,time1);</span>
+0156 <span class="comment">% %         fprintf(fid,...</span>
+0157 <span class="comment">% %             '%1.4f %d %f %2.10f %d %f %f %f\n',...</span>
+0158 <span class="comment">% %             VF,specimen,fiberLen,fiberRadius,NumContacts,beta,rho0,time1);</span>
+0159 <span class="comment">%         %     Resfid1=strcat('Res','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0160 <span class="comment">%         %     Resfid2=strcat('Res_ave','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0161 <span class="comment">%     end</span>
+0162 <span class="comment">%     aveRho=mean(rhos);</span>
+0163 <span class="comment">% %     fid=fopen(Resfid1,'a');</span>
+0164 <span class="comment">% %     time2=toc;</span>
+0165 <span class="comment">% %     fprintf(fid,'%f %f %2.10f %d %f %f %d %f %f\n',VF,SampleLen,fiberRadius,NumContacts,ave_a,Rc,beta,aveRho,time2);</span>
+0166 <span class="comment">% %     fid=fopen(Resfid3,'a')</span>
+0167 <span class="comment">% %     dlmwrite(Resfid3,Res_dist_all,'-append')</span>
+0168 <span class="comment">% %     fprintf(fid,'%1.4f %f %2.10f %d %f %f %f \n',...</span>
+0169 <span class="comment">% %                   vf,fiberLen,fiberRadius,NumContacts,beta,aveRho,time2);</span>
+0170 <span class="comment">% end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

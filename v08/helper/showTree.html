@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of showTree</title>
+  <meta name="keywords" content="showTree">
+  <meta name="description" content="[mtree,treecontainer] = uitree('v0', 'Root',root);">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; showTree.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>showTree
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>[mtree,treecontainer] = uitree('v0', 'Root',root);</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function showTree(allHandles,allData) %materialBrowserLayout </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">[mtree,treecontainer] = uitree('v0', 'Root',root);</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="treeNode_callback.html" class="code" title="function treeNode_callback( tree,ev,allHandles,allData )">treeNode_callback</a>	</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/Callbacks/addFiber_callback.html" class="code" title="function addFiber_callback(source,eventData,allHandles,allData)">addFiber_callback</a>	</li><li><a href="../../v08/Callbacks/addLamina_callback.html" class="code" title="function addLamina_callback(source,eventData,allHandles,allData)">addLamina_callback</a>	</li><li><a href="../../v08/Callbacks/addLaminate_callback.html" class="code" title="function addLaminate_callback(source,eventData,allHandles,allData)">addLaminate_callback</a>	</li><li><a href="../../v08/Callbacks/removeFiber_callback.html" class="code" title="function removeFiber_callback(source,eventData,allHandles,allData)">removeFiber_callback</a>	</li><li><a href="../../v08/Callbacks/removeLamina_callback.html" class="code" title="function removeLamina_callback(source,eventData,allHandles,allData)">removeLamina_callback</a>	</li><li><a href="../../v08/GUI/CFRP_GUI_v08.html" class="code" title="function [allHandles,allData] = CFRP_GUI_v08( )">CFRP_GUI_v08</a>	GUI for 3D resistor network</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001  <a name="_sub0" href="#_subfunctions" class="code">function showTree(allHandles,allData) </a><span class="comment">%materialBrowserLayout</span>
+0002         <span class="comment">%[mtree,treecontainer] = uitree('v0', 'Root',root);</span>
+0003         mtree=allData.mtree
+0004         treecontainer = allData.treeContainer
+0005         <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(treecontainer,<span class="string">'Parent'</span>,allHandles.treePanel);
+0006         <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(mtree, <span class="string">'NodeSelectedCallback'</span>, {@<a href="treeNode_callback.html" class="code" title="function treeNode_callback( tree,ev,allHandles,allData )">treeNode_callback</a>,allHandles,allData})
+0007         root=mtree.Root;
+0008         mtree.expand(root);
+0009         <span class="comment">%mtree.expand(FiberNode);</span>
+0010     <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

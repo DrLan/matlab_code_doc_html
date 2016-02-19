@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of RNetworkGUI</title>
+  <meta name="keywords" content="RNetworkGUI">
+  <meta name="description" content="RNETWORKGUI MATLAB code for RNetworkGUI.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; RNetworkGUI.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>RNetworkGUI
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RNETWORKGUI MATLAB code for RNetworkGUI.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function varargout = RNetworkGUI(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> RNETWORKGUI MATLAB code for RNetworkGUI.fig
+      RNETWORKGUI, by itself, creates a new RNETWORKGUI or raises the existing
+      singleton*.
+
+      H = RNETWORKGUI returns the handle to a new RNETWORKGUI or the handle to
+      the existing singleton*.
+
+      RNETWORKGUI('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in RNETWORKGUI.M with the given input arguments.
+
+      RNETWORKGUI('Property','Value',...) creates a new RNETWORKGUI or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before RNetworkGUI_OpeningFcn gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to RNetworkGUI_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>	TEMPLATE/GET Access data stored in a Template object</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function RNetworkGUI_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = RNetworkGUI_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function pushbutton1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function slider1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function slider1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function radiobutton2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function pushbutton2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function edit1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function edit1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function popupmenu1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function popupmenu1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function listbox1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function listbox1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function togglebutton1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function Menu1_hy_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function New_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function ContMenu1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function listbox2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function listbox2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function popupmenu2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function popupmenu2_CreateFcn(hObject, eventdata, handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = RNetworkGUI(varargin)</a>
+0002 <span class="comment">% RNETWORKGUI MATLAB code for RNetworkGUI.fig</span>
+0003 <span class="comment">%      RNETWORKGUI, by itself, creates a new RNETWORKGUI or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = RNETWORKGUI returns the handle to a new RNETWORKGUI or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      RNETWORKGUI('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in RNETWORKGUI.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      RNETWORKGUI('Property','Value',...) creates a new RNETWORKGUI or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before RNetworkGUI_OpeningFcn gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to RNetworkGUI_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help RNetworkGUI</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 03-Nov-2013 21:35:04</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction RNetworkGUI_OpeningFcn(hObject, eventdata, handles, varargin)">RNetworkGUI_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = RNetworkGUI_OutputFcn(hObject, eventdata, handles)">RNetworkGUI_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before RNetworkGUI is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function RNetworkGUI_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to RNetworkGUI (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for RNetworkGUI</span>
+0056 handles.output = hObject;
+0057 
+0058 <span class="comment">% Update handles structure</span>
+0059 guidata(hObject, handles);
+0060 
+0061 <span class="comment">% UIWAIT makes RNetworkGUI wait for user response (see UIRESUME)</span>
+0062 <span class="comment">% uiwait(handles.figure1);</span>
+0063 
+0064 
+0065 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0066 <a name="_sub2" href="#_subfunctions" class="code">function varargout = RNetworkGUI_OutputFcn(hObject, eventdata, handles) </a>
+0067 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0068 <span class="comment">% hObject    handle to figure</span>
+0069 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0070 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0071 
+0072 <span class="comment">% Get default command line output from handles structure</span>
+0073 varargout{1} = handles.output;
+0074 
+0075 
+0076 <span class="comment">% --- Executes on button press in pushbutton1.</span>
+0077 <a name="_sub3" href="#_subfunctions" class="code">function pushbutton1_Callback(hObject, eventdata, handles)</a>
+0078 <span class="comment">% hObject    handle to pushbutton1 (see GCBO)</span>
+0079 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0080 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0081 
+0082 
+0083 <span class="comment">% --- Executes on button press in radiobutton1.</span>
+0084 <a name="_sub4" href="#_subfunctions" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a>
+0085 <span class="comment">% hObject    handle to radiobutton1 (see GCBO)</span>
+0086 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0087 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0088 
+0089 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton1</span>
+0090 
+0091 
+0092 <span class="comment">% --- Executes on slider movement.</span>
+0093 <a name="_sub5" href="#_subfunctions" class="code">function slider1_Callback(hObject, eventdata, handles)</a>
+0094 <span class="comment">% hObject    handle to slider1 (see GCBO)</span>
+0095 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0096 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0097 
+0098 <span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+0099 <span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+0100 
+0101 
+0102 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0103 <a name="_sub6" href="#_subfunctions" class="code">function slider1_CreateFcn(hObject, eventdata, handles)</a>
+0104 <span class="comment">% hObject    handle to slider1 (see GCBO)</span>
+0105 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0106 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0107 
+0108 <span class="comment">% Hint: slider controls usually have a light gray background.</span>
+0109 <span class="keyword">if</span> isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0110     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+0111 <span class="keyword">end</span>
+0112 
+0113 
+0114 <span class="comment">% --- Executes on button press in checkbox1.</span>
+0115 <a name="_sub7" href="#_subfunctions" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a>
+0116 <span class="comment">% hObject    handle to checkbox1 (see GCBO)</span>
+0117 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0118 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0119 
+0120 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox1</span>
+0121 
+0122 
+0123 <span class="comment">% --- Executes on button press in radiobutton2.</span>
+0124 <a name="_sub8" href="#_subfunctions" class="code">function radiobutton2_Callback(hObject, eventdata, handles)</a>
+0125 <span class="comment">% hObject    handle to radiobutton2 (see GCBO)</span>
+0126 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0127 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0128 
+0129 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton2</span>
+0130 
+0131 
+0132 <span class="comment">% --- Executes on button press in pushbutton2.</span>
+0133 <a name="_sub9" href="#_subfunctions" class="code">function pushbutton2_Callback(hObject, eventdata, handles)</a>
+0134 <span class="comment">% hObject    handle to pushbutton2 (see GCBO)</span>
+0135 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0136 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0137 
+0138 
+0139 
+0140 <a name="_sub10" href="#_subfunctions" class="code">function edit1_Callback(hObject, eventdata, handles)</a>
+0141 <span class="comment">% hObject    handle to edit1 (see GCBO)</span>
+0142 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0143 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0144 
+0145 <span class="comment">% Hints: get(hObject,'String') returns contents of edit1 as text</span>
+0146 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit1 as a double</span>
+0147 
+0148 
+0149 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0150 <a name="_sub11" href="#_subfunctions" class="code">function edit1_CreateFcn(hObject, eventdata, handles)</a>
+0151 <span class="comment">% hObject    handle to edit1 (see GCBO)</span>
+0152 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0153 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0154 
+0155 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0156 <span class="comment">%       See ISPC and COMPUTER.</span>
+0157 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0158     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0159 <span class="keyword">end</span>
+0160 
+0161 
+0162 <span class="comment">% --- Executes on selection change in popupmenu1.</span>
+0163 <a name="_sub12" href="#_subfunctions" class="code">function popupmenu1_Callback(hObject, eventdata, handles)</a>
+0164 <span class="comment">% hObject    handle to popupmenu1 (see GCBO)</span>
+0165 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0166 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0167 
+0168 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array</span>
+0169 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu1</span>
+0170 
+0171 
+0172 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0173 <a name="_sub13" href="#_subfunctions" class="code">function popupmenu1_CreateFcn(hObject, eventdata, handles)</a>
+0174 <span class="comment">% hObject    handle to popupmenu1 (see GCBO)</span>
+0175 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0176 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0177 
+0178 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0179 <span class="comment">%       See ISPC and COMPUTER.</span>
+0180 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0181     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0182 <span class="keyword">end</span>
+0183 
+0184 
+0185 <span class="comment">% --- Executes on selection change in listbox1.</span>
+0186 <a name="_sub14" href="#_subfunctions" class="code">function listbox1_Callback(hObject, eventdata, handles)</a>
+0187 <span class="comment">% hObject    handle to listbox1 (see GCBO)</span>
+0188 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0189 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0190 
+0191 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns listbox1 contents as cell array</span>
+0192 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from listbox1</span>
+0193 
+0194 
+0195 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0196 <a name="_sub15" href="#_subfunctions" class="code">function listbox1_CreateFcn(hObject, eventdata, handles)</a>
+0197 <span class="comment">% hObject    handle to listbox1 (see GCBO)</span>
+0198 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0199 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0200 
+0201 <span class="comment">% Hint: listbox controls usually have a white background on Windows.</span>
+0202 <span class="comment">%       See ISPC and COMPUTER.</span>
+0203 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0204     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0205 <span class="keyword">end</span>
+0206 
+0207 
+0208 <span class="comment">% --- Executes on button press in togglebutton1.</span>
+0209 <a name="_sub16" href="#_subfunctions" class="code">function togglebutton1_Callback(hObject, eventdata, handles)</a>
+0210 <span class="comment">% hObject    handle to togglebutton1 (see GCBO)</span>
+0211 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0212 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0213 
+0214 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of togglebutton1</span>
+0215 
+0216 
+0217 <span class="comment">% --------------------------------------------------------------------</span>
+0218 <a name="_sub17" href="#_subfunctions" class="code">function Menu1_hy_Callback(hObject, eventdata, handles)</a>
+0219 <span class="comment">% hObject    handle to Menu1_hy (see GCBO)</span>
+0220 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0221 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0222 
+0223 
+0224 <span class="comment">% --------------------------------------------------------------------</span>
+0225 <a name="_sub18" href="#_subfunctions" class="code">function New_Callback(hObject, eventdata, handles)</a>
+0226 <span class="comment">% hObject    handle to New (see GCBO)</span>
+0227 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0228 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0229 
+0230 
+0231 <span class="comment">% --------------------------------------------------------------------</span>
+0232 <a name="_sub19" href="#_subfunctions" class="code">function ContMenu1_Callback(hObject, eventdata, handles)</a>
+0233 <span class="comment">% hObject    handle to ContMenu1 (see GCBO)</span>
+0234 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0235 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0236 
+0237 
+0238 <span class="comment">% --- Executes on selection change in listbox2.</span>
+0239 <a name="_sub20" href="#_subfunctions" class="code">function listbox2_Callback(hObject, eventdata, handles)</a>
+0240 <span class="comment">% hObject    handle to listbox2 (see GCBO)</span>
+0241 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0242 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0243 
+0244 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns listbox2 contents as cell array</span>
+0245 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from listbox2</span>
+0246 
+0247 
+0248 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0249 <a name="_sub21" href="#_subfunctions" class="code">function listbox2_CreateFcn(hObject, eventdata, handles)</a>
+0250 <span class="comment">% hObject    handle to listbox2 (see GCBO)</span>
+0251 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0252 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0253 
+0254 <span class="comment">% Hint: listbox controls usually have a white background on Windows.</span>
+0255 <span class="comment">%       See ISPC and COMPUTER.</span>
+0256 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0257     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0258 <span class="keyword">end</span>
+0259 
+0260 
+0261 <span class="comment">% --- Executes on selection change in popupmenu2.</span>
+0262 <a name="_sub22" href="#_subfunctions" class="code">function popupmenu2_Callback(hObject, eventdata, handles)</a>
+0263 <span class="comment">% hObject    handle to popupmenu2 (see GCBO)</span>
+0264 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0265 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0266 
+0267 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array</span>
+0268 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu2</span>
+0269 
+0270 
+0271 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0272 <a name="_sub23" href="#_subfunctions" class="code">function popupmenu2_CreateFcn(hObject, eventdata, handles)</a>
+0273 <span class="comment">% hObject    handle to popupmenu2 (see GCBO)</span>
+0274 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0275 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0276 
+0277 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0278 <span class="comment">%       See ISPC and COMPUTER.</span>
+0279 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0280     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0281 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

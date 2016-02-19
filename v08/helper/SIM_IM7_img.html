@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of SIM_IM7_img</title>
+  <meta name="keywords" content="SIM_IM7_img">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; SIM_IM7_img.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>SIM_IM7_img
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="RNetwork_Random.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,Res_dist]=RNetwork_Random(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="readIMG.html" class="code" title="function readIMG(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio)">readIMG</a>	%</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 tic
+0002 clear all
+0003 clc
+0004 Resfid=<span class="string">'IM7_IMG.txt'</span>
+0005 Resfid2=<span class="string">'IM7_IMG_ave.txt'</span>
+0006 imgname=<span class="string">'laser4.png'</span>;
+0007 fid1=fopen(Resfid,<span class="string">'a'</span>)
+0008 fprintf(fid1,<span class="string">'%s \n'</span>,<span class="string">'IM7-IMG-Random'</span>)
+0009 fid2=fopen(Resfid2,<span class="string">'a'</span>)
+0010 fprintf(fid2,<span class="string">'%s \n'</span>,<span class="string">'IM7-IMG-Random'</span>)
+0011 
+0012 fiberRadius=2.6e-6;
+0013 ContactsPerFiber=5;
+0014 <span class="comment">% perc=fiberRadius;</span>
+0015 <span class="comment">% fiberLen=4e-3;</span>
+0016 beta=350;
+0017 NumBreak=0;
+0018 Rc=1e-6;
+0019 rf=1.8e-5;
+0020 RBreakage=1e10;
+0021 simnum=1;
+0022 xwindows=[1]';
+0023 ywindows=[1]';
+0024 <span class="comment">% xwindows=[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]';</span>
+0025 <span class="comment">% ywindows=[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]';</span>
+0026 xsize=size(xwindows,1);
+0027 ysize=size(ywindows,1);
+0028 finalRho=zeros(xsize,ysize);
+0029 finalVF=zeros(xsize,1);
+0030 iteration=0;
+0031 <span class="keyword">for</span> xw=1:xsize
+0032     <span class="keyword">for</span> yw=1:ysize
+0033         xwindow=xwindows(xw);
+0034         ywindow=ywindows(yw);
+0035         
+0036         xmin_ratio=(1-xwindow)/2;
+0037         xmax_ratio=(1-xwindow)/2+xwindow;
+0038         ymin_ratio=(1-ywindow)/2;
+0039         ymax_ratio=(1-ywindow)/2+ywindow;
+0040         
+0041         
+0042         <span class="comment">%%</span>
+0043         rhos=zeros(simnum,1);
+0044         <span class="keyword">for</span> ns=1:simnum
+0045             <a href="readIMG.html" class="code" title="function readIMG(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio)">readIMG</a>(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio);
+0046             <span class="comment">% load('fiberSEM2.mat');</span>
+0047             fibermat=<span class="string">'fiberSEM2.mat'</span>;
+0048             perc=1.5*fiberRadius;
+0049             [rho0,fiber,VF,NumContacts,SampleLen,Res_dist]=<a href="RNetwork_Random.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,Res_dist]=RNetwork_Random(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random</a>(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);
+0050 <span class="comment">%             [rho0,fiber,VF,NumContacts,SampleLen]=RNetwork_Square(fibermat,ContactsPerFiber,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)</span>
+0051             rhos(ns)=rho0;
+0052 <span class="comment">%             iteration=iteration+1;</span>
+0053 <span class="comment">%             progress=['progress:' num2str(iteration/(Nrow*simnum)*100) '%'];</span>
+0054 <span class="comment">%             disp(progress)</span>
+0055             fid=fopen(Resfid,<span class="string">'a'</span>);
+0056             time=toc;
+0057             fprintf(fid,<span class="string">'%f %2.10f %d %f %d %d %f %f %f \n'</span>,SampleLen,fiberRadius,NumContacts,Rc,beta,ns,VF,rho0,time);
+0058 <span class="comment">%             [rho0,fiber,VF]=RNetwork_IMG(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);</span>
+0059 <span class="comment">%             rhos(ns)=rho0;</span>
+0060 <span class="comment">%             iteration=iteration+1;</span>
+0061 <span class="comment">%             progress=['progress:' num2str(iteration/(xsize*ysize*simnum)*100) '%'];</span>
+0062 <span class="comment">%             disp(progress)</span>
+0063 <span class="comment">%             fid=fopen(Resfid,'a');</span>
+0064 <span class="comment">%             time=toc;</span>
+0065 <span class="comment">%             fprintf(fid,'%f %f %d %f %f %f \n',xwindow,ywindow,ns,VF,rho0,time);</span>
+0066 <span class="comment">% %             fprintf('progress %/d\n',progress)</span>
+0067 <span class="comment">%             toc</span>
+0068         <span class="keyword">end</span>
+0069 <span class="comment">%         finalVF(xw,yw)=VF;</span>
+0070         aveRho=mean(rhos);
+0071         fid2=fopen(Resfid2,<span class="string">'a'</span>);
+0072         time2=toc;
+0073         fprintf(fid,<span class="string">'%f %2.10f %d %f %f %f %f %f \n'</span>,SampleLen,fiberRadius,NumContacts,Rc,beta,VF,aveRho,time);
+0074 <span class="comment">%         fprintf(fid2,'%f %f %f %f %f \n',xwindow,ywindow,VF,aveRho,time2);</span>
+0075         
+0076 <span class="comment">%         finalRho(xw,yw)=aveRho;</span>
+0077     <span class="keyword">end</span>
+0078 <span class="keyword">end</span>
+0079 <span class="comment">% finalVF;</span>
+0080 <span class="comment">% finalRho;</span>
+0081 <span class="comment">%         fid = fopen(Resfid,'a');</span>
+0082 <span class="comment">%         fprintf(fid,'%f  %f',finalVF);</span>
+0083 <span class="comment">%         fclose(fid);</span>
+0084 <span class="comment">% fprintf(Resfid,finalVF,finalRho)</span>
+0085</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

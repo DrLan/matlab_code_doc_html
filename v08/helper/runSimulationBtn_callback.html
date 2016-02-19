@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of runSimulationBtn_callback</title>
+  <meta name="keywords" content="runSimulationBtn_callback">
+  <meta name="description" content="{">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; runSimulationBtn_callback.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>runSimulationBtn_callback
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>{</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function runSimulationBtn_callback(hObject, eventdata, handles,data) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">{</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001     <a name="_sub0" href="#_subfunctions" class="code">function runSimulationBtn_callback(hObject, eventdata, handles,data)</a>
+0002         <span class="comment">%{</span>
+0003         myCFRP =Laminate();
+0004         myCFRP.plyConnectivity = modelParameterTable.Data{2,2}
+0005         <span class="comment">%myCFRP.dimension</span>
+0006         myCFRP.towRhoArray =[3e-5 1 0.5]
+0007         <span class="comment">%myCFRP.towRhoArray = [detailTable.Data{1,4} detailTable.Data{1,5} detailTable.Data{1,6}]</span>
+0008         layUpArray =[0 0];
+0009 <span class="comment">%         layUpCell = detailTable.Data(:,2);</span>
+0010 <span class="comment">%         for i = 1:length(layUpCell)</span>
+0011 <span class="comment">%             layUpArray(end+1) =layUpCell{i};</span>
+0012 <span class="comment">%         end</span>
+0013         myCFRP.layUp = layUpArray;
+0014         voltageMatrix = cell2mat(voltageWaveformTable.Data);
+0015         myCFRP.voltageInputTable = reshape(voltageMatrix',1,numel(voltageMatrix));
+0016         <span class="comment">%myCFRP.contactSpan</span>
+0017         myCFRP.stopTime = simulationSettingsTable.Data{1,2}
+0018         <span class="comment">%</span>
+0019         data = myCFRP.compute;
+0020         timeArray = data(:,1)
+0021         voltageArray = data(:,2);
+0022         currentArray = data(:,3);
+0023         rhoArray = data(:,4)
+0024         <span class="comment">%}</span>
+0025         <span class="comment">% hold on</span>
+0026         <span class="comment">%clf</span>
+0027         dataArray0 = csvread(<span class="string">'resistivityData11132015.csv'</span>)'
+0028         dataArray = dataArray0(:,1:end-1);
+0029         timeArray = dataArray(1,:)
+0030         rhoArray =dataArray(2,:)
+0031         voltageArray = dataArray(3,:)
+0032         currentArray = dataArray(4,:)
+0033         hold on
+0034         plot(fig1,timeArray,rhoArray,<span class="string">'LineWidth'</span>,3)
+0035         xlabel(fig1,<span class="string">'time(s)'</span>)
+0036         ylabel(fig1,<span class="string">'Resistivity in Z direction (ohm*m)'</span>)
+0037         axis(<span class="string">'auto'</span>)
+0038         
+0039         <span class="comment">%hold off</span>
+0040         
+0041         
+0042         plot(fig2,timeArray,voltageArray,<span class="string">'LineWidth'</span>,3,<span class="string">'Color'</span>,<span class="string">'red'</span>)
+0043         hold on
+0044         plot(fig2,timeArray,currentArray,<span class="string">'LineWidth'</span>,3,<span class="string">'Color'</span>,<span class="string">'green'</span>)
+0045         <span class="comment">% legend(fig2,'Voltage','Current','Location','East')</span>
+0046         xlabel(<span class="string">'time(s)'</span>)
+0047         ylabel(<span class="string">'Voltage(v)  |  Current(A)'</span>)
+0048         axis(<span class="string">'auto'</span>)
+0049         <span class="comment">%          axis([0 1 0 10])</span>
+0050         hold off
+0051         <span class="comment">%disp(data)</span>
+0052     <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

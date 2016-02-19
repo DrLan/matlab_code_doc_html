@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Sim_RandomFiber</title>
+  <meta name="keywords" content="Sim_RandomFiber">
+  <meta name="description" content="% 3D Resistor Network Modle by Hong Yu">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Sim_RandomFiber.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Sim_RandomFiber
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% 3D Resistor Network Modle by Hong Yu</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% 3D Resistor Network Modle by Hong Yu
+% copyright: Hong Yu,hongy@udel.edu 2013
+% IM7 random fiber</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="RNetwork_Random3.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,distances]=RNetwork_Random2(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random3</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% 3D Resistor Network Modle by Hong Yu</span>
+0002 <span class="comment">%% copyright: Hong Yu,hongy@udel.edu 2013</span>
+0003 <span class="comment">%% IM7 random fiber</span>
+0004 clear all
+0005 clf
+0006 tic
+0007 <span class="comment">%% input parameters</span>
+0008 Resfid1=<span class="string">'CompareModels.txt'</span> <span class="comment">% Results file name</span>
+0009 Resfid2=<span class="string">'CompareModels_ave.txt'</span>
+0010 fid1=fopen(Resfid1,<span class="string">'a'</span>)
+0011 fprintf(fid1,<span class="string">'%s \n'</span>,<span class="string">'IM7-Random-a_ave'</span>)
+0012 fid2=fopen(Resfid2,<span class="string">'a'</span>)
+0013 fprintf(fid2,<span class="string">'%s \n'</span>,<span class="string">'IM7-Random-a_ave'</span>)
+0014 
+0015 Resfid1=<span class="string">'Res_IM7_random_perc.txt'</span> <span class="comment">% Results file name</span>
+0016 Resfid2=<span class="string">'Res_IM7_random_perc_ave.txt'</span>
+0017 Resfid3=<span class="string">'DistanceDistribution.txt'</span>
+0018 fiberRadius=2.6e-6; <span class="comment">% radius of fiber, 2.6um for IM7; 3.5 for AS4</span>
+0019 <span class="comment">% fiberLen=2e-3;</span>
+0020 
+0021 
+0022 perc=1.5*fiberRadius;
+0023 
+0024 
+0025 beta=350;
+0026 NumBreak=0;
+0027 <span class="comment">% Rc=36;</span>
+0028 rf=1.8e-5;
+0029 RBreakage=1e10;
+0030 ContactsPerFiber=5;
+0031 <span class="comment">%% input simulated fibers</span>
+0032 vfmatrix=[0.55]; <span class="comment">%volume fractions</span>
+0033 <span class="comment">% tempsimsize=size(vfmatrix);</span>
+0034 <span class="comment">% simsize=tempsimsize(2);</span>
+0035 simsize=size(vfmatrix,2);
+0036 final_result=zeros(10*simsize,2); <span class="comment">%first column is vf second column is resistance</span>
+0037 average_result=zeros(simsize,3);
+0038 iteration=0;
+0039 <span class="comment">% fid=fopen(Resfid1,'a');</span>
+0040 <span class="comment">% fprintf(fid,'\n');</span>
+0041 fid=fopen(Resfid2,<span class="string">'a'</span>);
+0042 fprintf(fid,<span class="string">'\n'</span>);
+0043 <span class="comment">% tot_iter=simsize*10</span>
+0044 <span class="keyword">for</span> simnumber=1:simsize
+0045 <span class="comment">%     fid=fopen(Resfid3,'a');</span>
+0046 <span class="comment">%     fprintf(fid,'\n')</span>
+0047 <span class="comment">%     fid=fopen(Resfid1,'a');</span>
+0048 <span class="comment">%     fprintf(fid,'\n')</span>
+0049     
+0050     rhos=[];
+0051     Res_dist_all=[];
+0052     <span class="keyword">for</span> specimen=3:3
+0053         vf=vfmatrix(simnumber);
+0054 <span class="comment">%         Rc=360/vf;</span>
+0055 <span class="comment">%         Rc=(0.6-vf)*15+0.001;</span>
+0056 Rc=1e-6;
+0057 <span class="comment">%         Rc=0.02/(vf-0.4+0.02);</span>
+0058         fibermat=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0059         
+0060 <span class="comment">%         [rho0,fiber,VF,NumContacts,SampleLen,Res_dist]=RNetwork_Random(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);</span>
+0061         [rho0,fiber,VF,NumContacts,SampleLen,a_value]=<a href="RNetwork_Random3.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,distances]=RNetwork_Random2(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random3</a>(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);
+0062         rho0
+0063 <span class="comment">%         ave_a=mean(Res_dist);</span>
+0064 <span class="comment">%         [rho0,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage);</span>
+0065 <span class="comment">%         rhos(specimen)=rho0;</span>
+0066         rhos(end+1)=rho0;
+0067 <span class="comment">%         Res_dist_all=[Res_dist_all Res_dist];</span>
+0068         iteration=iteration+1;
+0069 <span class="comment">%         progress=['progress:' num2str(iteration/tot_iter*100) ' %'];</span>
+0070 <span class="comment">%         disp(progress)</span>
+0071 <span class="comment">%         fid=fopen(Resfid1,'a');</span>
+0072 <span class="comment">%         time1=toc;</span>
+0073 <span class="comment">%         fprintf(fid,'%f %d %f %2.10f %d %f %f %d %f %f\n',VF,specimen,SampleLen,fiberRadius,NumContacts,ave_a,Rc,beta,rho0,time1);</span>
+0074 <span class="comment">%         fprintf(fid,...</span>
+0075 <span class="comment">%             '%1.4f %d %f %2.10f %d %f %f %f\n',...</span>
+0076 <span class="comment">%             VF,specimen,fiberLen,fiberRadius,NumContacts,beta,rho0,time1);</span>
+0077         <span class="comment">%     Resfid1=strcat('Res','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0078         <span class="comment">%     Resfid2=strcat('Res_ave','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0079     <span class="keyword">end</span>
+0080     aveRho=mean(rhos);
+0081 <span class="comment">%     fid=fopen(Resfid1,'a');</span>
+0082 <span class="comment">%     time2=toc;</span>
+0083 <span class="comment">%     fprintf(fid,'%f %f %2.10f %d %f %f %d %f %f\n',VF,SampleLen,fiberRadius,NumContacts,ave_a,Rc,beta,aveRho,time2);</span>
+0084 <span class="comment">%     fid=fopen(Resfid3,'a')</span>
+0085 <span class="comment">%     dlmwrite(Resfid3,Res_dist_all,'-append')</span>
+0086 <span class="comment">%     fprintf(fid,'%1.4f %f %2.10f %d %f %f %f \n',...</span>
+0087 <span class="comment">%                   vf,fiberLen,fiberRadius,NumContacts,beta,aveRho,time2);</span>
+0088 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

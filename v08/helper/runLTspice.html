@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of runLTspice</title>
+  <meta name="keywords" content="runLTspice">
+  <meta name="description" content="% Run LTSpice and reduce data">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; runLTspice.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>runLTspice
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Run LTSpice and reduce data</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [Vin,Is,data1] = runLTspice(NetList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Run LTSpice and reduce data</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>	function [LineContent,NVariables, NValues] = ReadRAW(filepath)</li><li><a href="ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>	function [LineContent,NVariables, NValues] = ReadRAW(filepath)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Function.html" class="code" title="">Function</a>	</li><li><a href="../../v08/@Laminate1/Laminate1.html" class="code" title="">Laminate1</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [Vin,Is,data1] = runLTspice(NetList)</a>
+0002 <span class="comment">%% Run LTSpice and reduce data</span>
+0003 NetListID= strcat(NetList,<span class="string">'.cir'</span>);
+0004 SystemCMD = [<span class="string">'scad3.exe'</span>,<span class="string">' -b -ascii '</span>,NetListID];
+0005 p=system(SystemCMD);
+0006 <span class="comment">% waitfor(p);</span>
+0007 filepath = [NetList,<span class="string">'.raw'</span>];
+0008 [Vin,Is,data1]=<a href="ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>(filepath);
+0009 <span class="comment">% current_out = str2num(getLastLine(filepath))</span>
+0010 <span class="comment">% Resistance = abs(1/current_out)</span>
+0011 <span class="comment">% switch Direction</span>
+0012 <span class="comment">%     case 1</span>
+0013 <span class="comment">%         Rho_x = Resistance*Spec_Th*Spec_Wid/Spec_Len</span>
+0014 <span class="comment">%         Rho=Rho_x;</span>
+0015 <span class="comment">%     case 2</span>
+0016 <span class="comment">%         Rho_y = Resistance*Spec_Th*Spec_Len/Spec_Wid</span>
+0017 <span class="comment">%         Rho=Rho_y;</span>
+0018 <span class="comment">%     case 3</span>
+0019 <span class="comment">%         Rho_z = Resistance*Spec_Len*Spec_Wid/Spec_Th</span>
+0020 <span class="comment">%         Rho=Rho_z;</span>
+0021 <span class="comment">% end</span>
+0022 
+0023 
+0024 <span class="comment">%% write results to txt file</span>
+0025 <span class="comment">% ResultID= [NetList,'-Results.txt'];</span>
+0026 <span class="comment">% fid=fopen(ResultID,'a'); % wt means overwrite existing file named with NetListID</span>
+0027 <span class="comment">% % To open a file in text mode, append 't' to the permission string,</span>
+0028 <span class="comment">% fprintf(fid,'%d %f %f %f %f %f %f \n',Direction,Resistance,Rho,Spec_Len,Spec_Wid,Spec_Th,Connectivity);</span>
+0029 <span class="comment">% ST = fclose(fid);</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

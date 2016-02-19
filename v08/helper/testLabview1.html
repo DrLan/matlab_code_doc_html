@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of testLabview1</title>
+  <meta name="keywords" content="testLabview1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; testLabview1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>testLabview1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="RNetwork_Labview.html" class="code" title="function [rho,VF]=RNetwork_Labview(fibermat,ContactsPerFiber,beta,Rc)">RNetwork_Labview</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 fibermat=[<span class="keyword">...</span>
+0002 2.6 2.6 2.6;
+0003 8.0 2.7 2.6;
+0004 13.5 2.6 2.6;
+0005 5.25 7.8 2.6;
+0006 10.55 7.8 2.6;
+0007 2.6 13 2.6;
+0008 8.0 12.5 2.6;
+0009 13.5 13 2.6]
+0010 
+0011 ContactsPerFiber=5
+0012 beta=300
+0013 Rc=0.1
+0014 
+0015 <span class="comment">% use above as input for Labview Matlab Script Node.</span>
+0016 <span class="comment">% fibermat is 9x3 matrix;</span>
+0017 
+0018 <span class="comment">% use below as script in Labview Matlab Script Node.</span>
+0019 
+0020 rho=<a href="RNetwork_Labview.html" class="code" title="function [rho,VF]=RNetwork_Labview(fibermat,ContactsPerFiber,beta,Rc)">RNetwork_Labview</a>(fibermat,ContactsPerFiber,beta,Rc)
+0021 
+0022 <span class="comment">% Remember to put RNework_Labview.m into Matlab working directory.</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

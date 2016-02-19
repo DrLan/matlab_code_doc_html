@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of R_VF_T800SC</title>
+  <meta name="keywords" content="R_VF_T800SC">
+  <meta name="description" content="% 3D Resistor Network Modle by Hong Yu">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; R_VF_T800SC.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>R_VF_T800SC
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% 3D Resistor Network Modle by Hong Yu</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% 3D Resistor Network Modle by Hong Yu
+% copyright: Hong Yu,hongy@udel.edu 2013</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% 3D Resistor Network Modle by Hong Yu</span>
+0002 <span class="comment">%% copyright: Hong Yu,hongy@udel.edu 2013</span>
+0003 clear all
+0004 clf
+0005 <span class="comment">%% input parameters</span>
+0006 Resfid1=<span class="string">'AS4_VF.txt'</span> <span class="comment">% Results file name</span>
+0007 Resfid2=<span class="string">'AS4_VF_ave.txt'</span>
+0008 fid=fopen(Resfid2,<span class="string">'a'</span>); 
+0009     fprintf(fid,<span class="string">'%s\n'</span>,<span class="string">'AS4'</span>)
+0010 fiberRadius=3.5e-6; <span class="comment">% radius of fiber, 2.6um for IM7; 3.5 for AS4</span>
+0011 fiberLen=3e-3; 
+0012 beta=400;
+0013 NumBreak=0;
+0014 Rc=200;
+0015 rf=1.7e-5;
+0016 RBreakage=1e10;
+0017 <span class="comment">%% input simulated fibers</span>
+0018 vfmatrix=[0.4 0.45 0.5 0.55 0.6]; <span class="comment">%volume fractions</span>
+0019 <span class="comment">% tempsimsize=size(vfmatrix);</span>
+0020 <span class="comment">% simsize=tempsimsize(2);</span>
+0021 simsize=size(vfmatrix,2);
+0022 <span class="comment">% final_result=zeros(10*simsize,2); %first column is vf second column is resistance</span>
+0023 <span class="comment">% average_result=zeros(simsize,3);</span>
+0024 iteration=0;
+0025 tot_iter=simsize*1
+0026 tic
+0027 <span class="keyword">for</span> simnumber=1:simsize
+0028     <span class="keyword">for</span> specimen=1:1
+0029         vf=vfmatrix(simnumber);
+0030         fibermat=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0031         [rho0,fiber,VF,NumContacts]=<a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);
+0032         rhos(specimen)=rho0;
+0033         iteration=iteration+1;
+0034         progress=[<span class="string">'progress:'</span> num2str(iteration/tot_iter*100) <span class="string">' %'</span>];
+0035         disp(progress)
+0036         fid=fopen(Resfid1,<span class="string">'a'</span>);
+0037         time1=toc;
+0038         fprintf(fid,<span class="keyword">...</span>
+0039             <span class="string">'%1.4f %f %f %d %f %2.10f %d %f %f\n'</span>,<span class="keyword">...</span>
+0040             VF,rho0,Rc,specimen,fiberLen,fiberRadius,NumContacts,beta,time1);
+0041         <span class="comment">%     Resfid1=strcat('Res','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0042         <span class="comment">%     Resfid2=strcat('Res_ave','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0043     <span class="keyword">end</span>
+0044     aveRho=mean(rhos);
+0045     fid=fopen(Resfid2,<span class="string">'a'</span>);
+0046     time2=toc;
+0047     fprintf(fid,<span class="string">'%1.4f %f %f %f %2.10f %d %f %f \n'</span>,vf,aveRho,Rc,fiberLen,fiberRadius,NumContacts,beta,time2);  
+0048 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

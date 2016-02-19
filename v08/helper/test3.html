@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of test3</title>
+  <meta name="keywords" content="test3">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; test3.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>test3
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="getfiber3.html" class="code" title="function getfiber3(frow,fcolumn,VF,fiberRadius)">getfiber3</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 tic
+0002 clear all
+0003 clc
+0004 Resfid=<span class="string">'PerfectFiberRes1.txt'</span>
+0005 Resfid2=<span class="string">'PerfectFiberRes2.txt'</span>
+0006 <span class="comment">% imgname='laser4.png';</span>
+0007 fiberRadius=2.6e-6;
+0008 <span class="comment">% perc=fiberRadius;</span>
+0009 fiberLen=4e-3;
+0010 beta=350;
+0011 NumBreak=0;
+0012 Rc=36;
+0013 rf=1.8e-5;
+0014 RBreakage=1e10;
+0015 simnum=1;
+0016 <span class="comment">% inputmatrix=[3 3 1;6 6 2;6 6 3;12 12 1; 12 12 3;15 15 3;15 15 4;15 15</span>
+0017 <span class="comment">% 5;15 15 6]</span>
+0018 
+0019 <span class="comment">% xwindows=[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]';</span>
+0020 <span class="comment">% ywindows=[0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]';</span>
+0021 
+0022 
+0023 VF0=0.5
+0024 frows=[18]'
+0025 fcolumns=[18]'
+0026 rowsize=size(frows,1);
+0027 columnsize=size(fcolumns,1);
+0028 finalRho=zeros(rowsize,columnsize);
+0029 finalVF=zeros(rowsize,1);
+0030 iteration=0;
+0031 <span class="keyword">for</span> row=1:rowsize
+0032     <span class="keyword">for</span> column=1:columnsize
+0033         frow=frows(row);
+0034         fcolumn=fcolumns(column);
+0035         
+0036 <span class="comment">%         xwindow=xwindows(xw);</span>
+0037 <span class="comment">%         ywindow=ywindows(yw);</span>
+0038 <span class="comment">%</span>
+0039 <span class="comment">%         xmin_ratio=(1-xwindow)/2;</span>
+0040 <span class="comment">%         xmax_ratio=(1-xwindow)/2+xwindow;</span>
+0041 <span class="comment">%         ymin_ratio=(1-ywindow)/2;</span>
+0042 <span class="comment">%         ymax_ratio=(1-ywindow)/2+ywindow;</span>
+0043         
+0044         
+0045         <span class="comment">%%</span>
+0046         rhos=zeros(simnum,1);
+0047         <span class="keyword">for</span> ns=1:simnum
+0048 <span class="comment">%             readIMG(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio);</span>
+0049             <a href="getfiber3.html" class="code" title="function getfiber3(frow,fcolumn,VF,fiberRadius)">getfiber3</a>(frow,fcolumn,VF0,fiberRadius);
+0050             fibermat=<span class="string">'PerfectFiber.mat'</span>;
+0051             <span class="comment">% load('fiberSEM2.mat');</span>
+0052 <span class="comment">%             fibermat='fiberSEM2.mat';</span>
+0053             [rho0,fiber,VF,NumContacts]=<a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);
+0054             rhos(ns)=rho0;
+0055             iteration=iteration+1;
+0056 <span class="comment">%             progress=['progress:' num2str(iteration/(xsize*ysize*simnum)*100) '%'];</span>
+0057 <span class="comment">%             disp(progress)</span>
+0058             fid=fopen(Resfid,<span class="string">'a'</span>);
+0059             time=toc;
+0060             fprintf(fid,<span class="string">'%f %f %f %d %d %f %f %f \n'</span>,frow,fcolumn,fiberLen,NumContacts,ns,VF,rho0,time);
+0061 <span class="comment">%             fprintf('progress %/d\n',progress)</span>
+0062 <span class="comment">%             toc</span>
+0063         <span class="keyword">end</span>
+0064         finalVF(row,column)=VF;
+0065         aveRho=mean(rhos);
+0066         fid2=fopen(Resfid2,<span class="string">'a'</span>);
+0067         time2=toc;
+0068         fprintf(fid2,<span class="string">'%f %f %f %d %f %f %f \n'</span>,frow,fcolumn,fiberLen,NumContacts,VF,aveRho,time2);
+0069         
+0070         finalRho(row,column)=aveRho;
+0071     <span class="keyword">end</span>
+0072 <span class="keyword">end</span>
+0073 finalVF;
+0074 finalRho;
+0075 <span class="comment">%         fid = fopen(Resfid,'a');</span>
+0076 <span class="comment">%         fprintf(fid,'%f  %f',finalVF);</span>
+0077 <span class="comment">%         fclose(fid);</span>
+0078 <span class="comment">% fprintf(Resfid,finalVF,finalRho)</span>
+0079</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ThreeDNetwork_triag_IM7_para</title>
+  <meta name="keywords" content="ThreeDNetwork_triag_IM7_para">
+  <meta name="description" content="aa=[1 2 3 5 9]">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ThreeDNetwork_triag_IM7_para.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ThreeDNetwork_triag_IM7_para
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>aa=[1 2 3 5 9]</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> aa=[1 2 3 5 9]
+ bb=[2 4 7 6]
+ c=[aa,bb]
+ %sort(c)
+ unique(c)
+ [lia,locaa]=ismember(aa,c)
+ [lia,locbb]=ismember(bb,c)
+%%%: This code is for triang config.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>	UNTITLED2 Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% aa=[1 2 3 5 9]</span>
+0002 <span class="comment">% bb=[2 4 7 6]</span>
+0003 <span class="comment">% c=[aa,bb]</span>
+0004 <span class="comment">% %sort(c)</span>
+0005 <span class="comment">% unique(c)</span>
+0006 <span class="comment">% [lia,locaa]=ismember(aa,c)</span>
+0007 <span class="comment">% [lia,locbb]=ismember(bb,c)</span>
+0008 <span class="comment">%%%%: This code is for triang config.</span>
+0009 clear all
+0010 clc
+0011 
+0012 tic
+0013 Para_nfrows=[5 10 15 20];
+0014 VF=0.65;
+0015 <span class="keyword">for</span> nfrow=1:4
+0016     frow=Para_nfrows(nfrow);
+0017     fcolumn=2*frow;
+0018     beta=350;
+0019     rf=1.8e-5;   <span class="comment">%resistivity of fiber</span>
+0020     Rc=10; <span class="comment">% contact resistance</span>
+0021     <span class="comment">% VFs=[0.5 0.52 0.55 0.57 0.6 0.62 0.65]</span>
+0022     rad=2.6e-6;
+0023     <span class="comment">%a=rad*(sqrt(pi/(4*VF))-1)  % square arragement of fibers</span>
+0024     <span class="comment">% a=rad*(sqrt(pi/(2*sqrt(3)*VF))-1)  % triangle arragement of fibers</span>
+0025     a=rad*(sqrt(2*pi/(sqrt(3)*VF))-2);  <span class="comment">% triangle arragement of fibers</span>
+0026     max_x=sqrt(3)*(a/2+rad)*(fcolumn-1);
+0027     max_y=(a/2+rad)*(frow-1);
+0028     <span class="comment">% max_x=(2*a+2*rad)*(fcolumn-1)</span>
+0029     <span class="comment">% max_y=sqrt(3)*(a+rad)*(frow-1)</span>
+0030     <span class="comment">% max_y=(2*a+2*rad)*(frow-1)</span>
+0031 
+0032     <span class="comment">%N=4</span>
+0033     ContactLen=beta*a;
+0034     Para_NumSections=[5 10 15 20];
+0035     <span class="keyword">for</span> iter_NumSections=1:4
+0036         NumSections=Para_NumSections(iter_NumSections);
+0037         L=NumSections*ContactLen; <span class="comment">% fiber length in m</span>
+0038         perc=2.5*a;
+0039 
+0040         NumSim=8;
+0041         rous=[];
+0042         <span class="keyword">for</span> ns=1:NumSim
+0043             <span class="comment">%%% input parameters</span>
+0044             <span class="comment">% frow=10;</span>
+0045             <span class="comment">% fcolumn=20;</span>
+0046             <span class="comment">% VF=0.7</span>
+0047 
+0048 
+0049             <span class="comment">%%% build fibers</span>
+0050             fiber= struct(<span class="string">'center'</span>,[], <span class="string">'radius'</span>,[], <span class="string">'nodes'</span>, [],<span class="string">'Contacts'</span>,[],<span class="string">'contactNeighbor'</span>,[],<span class="string">'pts'</span>,{});
+0051             <span class="keyword">for</span> i=1:frow
+0052                 <span class="keyword">for</span> j=1:fcolumn
+0053                     fnum=(i-1)*fcolumn+j;
+0054                      fiber(fnum).center=[sqrt(3)*(j-1)*(rad+a/2) (1-mod(i,2))*(rad+a/2)+(i-1)*2*(rad+a/2)];
+0055             <span class="comment">%         fiber(fnum).center=[(j-1)*(2*rad+2*a)+normrnd(0,a) (i-1)*(2*rad+2*a)++normrnd(0,a)];</span>
+0056             <span class="comment">%         fiber(fnum).center=[-(mod(i,2)-1)*(rad+a)+  (j-1)*(2*rad+2*a) (i-1)*(rad+a)*sqrt(3)];</span>
+0057             <span class="comment">%          fiber(fnum).center=[-(mod(i,2)-1)*(rad+a)+(j-1)*(2*rad+2*a)+normrnd(0,0.1*a) (i-1)*(rad+a)*sqrt(3)+normrnd(0,0.1*a)];</span>
+0058                     fiber(fnum).radius=rad;
+0059                 <span class="keyword">end</span>
+0060             <span class="keyword">end</span>
+0061 
+0062             <span class="comment">% create neighbors</span>
+0063 
+0064             N=size(fiber,2)
+0065             <span class="keyword">for</span> i=1:N
+0066                 fiber(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber,i,perc,N);
+0067             <span class="keyword">end</span>
+0068             <span class="comment">% finish creating neighbors</span>
+0069 
+0070             <span class="comment">% % deleting dangling bonds within electrodes:</span>
+0071             <span class="comment">% while(dangling(fiber,N,max_x))</span>
+0072             <span class="comment">% for i=1:N</span>
+0073             <span class="comment">%      num=size(fiber(i).nodes);</span>
+0074             <span class="comment">%     num_nodes=num(2);</span>
+0075             <span class="comment">%     if(num_nodes==1) &amp;&amp; (fiber(i).center(1)&gt;2*fiber(i).radius) &amp;&amp; (fiber(i).center(1)&lt;max_x-2*fiber(i).radius)</span>
+0076             <span class="comment">%         fiber=deletenode(fiber,i,N);</span>
+0077             <span class="comment">%     end</span>
+0078             <span class="comment">% end</span>
+0079             <span class="comment">% end</span>
+0080             <span class="comment">% % finish</span>
+0081 
+0082             <span class="keyword">for</span> i=1:N
+0083                 NumNeighbor=size(fiber(i).nodes,2);
+0084             <span class="comment">%     NumNeighbor=NumNeighbor(2);</span>
+0085                 allcontact=[];
+0086                 contact=[];
+0087             <span class="comment">%     contactNeighbor=[];</span>
+0088                 <span class="keyword">for</span> j=1:NumNeighbor    <span class="comment">%contact pts with each neighbor</span>
+0089                     NeighborNode=fiber(i).nodes(j);
+0090                     <span class="keyword">if</span> NeighborNode&gt;i
+0091 
+0092                         fiberDis=normrnd(a,0.2*a);
+0093                         ContactLen=beta*fiberDis;
+0094             <span class="comment">%             NumContacts=1</span>
+0095                         NumContacts=floor(L/ContactLen);
+0096                         startLen=mod(L,ContactLen);
+0097                         previous=rand*startLen;
+0098                        <span class="comment">% ContactLoc(j).contact(1)=rand*ContactLen;</span>
+0099                         <span class="comment">%contact(1)=rand*ContactLen</span>
+0100             <span class="comment">%             previous=rand*ContactLen;</span>
+0101                         contact(1)=previous;
+0102             <span class="comment">%             previous=0;</span>
+0103 
+0104 
+0105                         <span class="keyword">if</span> NumContacts&gt;=2
+0106                             <span class="keyword">for</span> m=2:NumContacts
+0107                                 contact(m)=previous+normrnd(ContactLen,1);
+0108 
+0109                 <span class="comment">%                 contact(m)=previous+abs(normrnd(ContactLen,1));</span>
+0110                                 <span class="comment">%contact(m)=contact(m-1)+abs(normrnd(ContactLen,1));</span>
+0111                                 previous=contact(m);
+0112                                 <span class="comment">%ContactLoc(j).con?tact(m)=ContactLoc(j).contact(m-1)+rand*ContactLen+normrnd(ContactLen,1);</span>
+0113                             <span class="keyword">end</span>
+0114                         <span class="keyword">end</span>
+0115             <span class="comment">%             sizea=size(fiber(i).Contacts,2);</span>
+0116                         sizeb=size(contact,2);
+0117                         allcontact=[allcontact,contact];  <span class="comment">% all contact points on fiber i</span>
+0118                         fiber(i).contactNeighbor(end+1:end+sizeb)=NeighborNode;  <span class="comment">%</span>
+0119 
+0120 
+0121             <span class="comment">%</span>
+0122             <span class="comment">%              fiber(i).Contacts(sizea+1:sizea+sizeb,1)=contact';</span>
+0123             <span class="comment">%              fiber(i).Contacts(sizea+1:sizea+sizeb,2)=NeighborNode;</span>
+0124             <span class="comment">%              sizeaa=size(fiber(NeighborNode).Contacts,1);</span>
+0125                         fiber(NeighborNode).Contacts(end+1:end+sizeb)=contact;
+0126                         fiber(NeighborNode).contactNeighbor(end+1:end+sizeb)=i;          
+0127                     <span class="keyword">end</span>          
+0128                 <span class="keyword">end</span>
+0129 
+0130                 allcontact=[fiber(i).Contacts,allcontact];  <span class="comment">% all contact pts including those inherited from previous fibers (NeighborNode&lt;i)</span>
+0131                 allcontact1=unique(allcontact);
+0132                 fiber(i).Contacts=allcontact1;
+0133 
+0134 
+0135             <span class="comment">%     if size(allcontact1,2)~=size(allcontact,2)</span>
+0136             <span class="keyword">if</span> size(allcontact1,1)~=0
+0137                 <span class="keyword">for</span> m=1:size(allcontact1,2)   <span class="comment">% find contact neighbors for each contact point.</span>
+0138                     loc=find(allcontact==allcontact1(m));
+0139                     fiber(i).pts{m}=fiber(i).contactNeighbor(loc);
+0140                 <span class="keyword">end</span>
+0141             <span class="keyword">end</span>
+0142             <span class="comment">%              fiber(NeighborNode).Contacts=allcontact1;</span>
+0143             <span class="comment">%              fiber(NeighborNode).pts{m}=contactNeighbor(loc);</span>
+0144 
+0145             <span class="comment">%     fiber(i).Contacts=unique(fiber(i).Contacts,'rows');</span>
+0146             <span class="keyword">end</span>    <span class="comment">%all fibers built</span>
+0147             <span class="comment">% finish finding contact points</span>
+0148 
+0149 
+0150             <span class="comment">%%% initialize network</span>
+0151 
+0152             R=cell(N,N);
+0153             <span class="keyword">for</span> i=1:N
+0154             <span class="comment">%     NumContacts=size(fiber(i).Contacts,1);</span>
+0155             <span class="comment">%     R{i,i}=zeros(NumContacts);</span>
+0156                 <span class="keyword">for</span> j=1:N
+0157                     NumRows=size(fiber(i).Contacts,2);
+0158                     NumColumns=size(fiber(j).Contacts,2);
+0159                     R{i,j}=zeros(NumRows,NumColumns);
+0160                 <span class="keyword">end</span>
+0161             <span class="comment">%     iContacts=fiber(i).Contacts;</span>
+0162             <span class="comment">%     for j=1:NumContacts</span>
+0163             <span class="comment">%         sizea=size(fiber(i).Contacts,1);</span>
+0164             <span class="comment">%         sizeb=size(fiber(iContacts(j,2)).Contacts,1);</span>
+0165             <span class="comment">%         R{i,iContacts(j,2)}=zeros(sizea,sizeb);</span>
+0166             <span class="comment">%     end</span>
+0167             <span class="keyword">end</span>
+0168 
+0169             G=R;  <span class="comment">% GV=K</span>
+0170             <span class="comment">% finish initializing</span>
+0171 
+0172             <span class="comment">% find BC nodes</span>
+0173             <span class="comment">% BoundZ1=[];</span>
+0174             <span class="comment">% BoundZ2=[];</span>
+0175             BoundX1=[];
+0176             BoundX2=[];
+0177             BoundY1=[];
+0178             BoundY2=[];
+0179 
+0180             <span class="keyword">for</span> i=1:N
+0181                 <span class="keyword">if</span> (fiber(i).center(1)&lt;=1.0*(2*a+fiber(i).radius)) 
+0182                     <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes 0]; %left boundary</span>
+0183                     BoundX1(end+1)=i;
+0184                 <span class="keyword">end</span>
+0185                 <span class="keyword">if</span> (fiber(i).center(1)&gt;=max_x-fiber(i).radius)
+0186                     <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes N+1]; % right boundary</span>
+0187                     BoundX2(end+1)=i;
+0188                 <span class="keyword">end</span>
+0189                 <span class="keyword">if</span> (fiber(i).center(2)&lt;=fiber(i).radius) 
+0190                     <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes 0]; %left boundary</span>
+0191                     BoundY1(end+1)=i;
+0192                 <span class="keyword">end</span>
+0193                 <span class="keyword">if</span> (fiber(i).center(1)&gt;=max_y-fiber(i).radius)
+0194                     <span class="comment">%fiber1(i).nodes=[fiber1(i).nodes N+1]; % right boundary</span>
+0195                     BoundY2(end+1)=i;
+0196                 <span class="keyword">end</span>
+0197             <span class="keyword">end</span>
+0198             <span class="comment">% finish finding BC nodes</span>
+0199 
+0200             <span class="comment">%%% build fibers resistors and contact resistors</span>
+0201             <span class="keyword">for</span> i=1:N
+0202                 NumContacts=size(fiber(i).Contacts,2); <span class="comment">% note Contacts is a row vector</span>
+0203             <span class="comment">%     NumNeighbor=NumNeighbor(1);</span>
+0204                 iContacts=fiber(i).Contacts;
+0205                 <span class="keyword">for</span> j=1:NumContacts
+0206                     <span class="keyword">if</span> j==NumContacts
+0207                         num_pt=size(fiber(i).pts{j},2);
+0208                         <span class="keyword">for</span> k=1:num_pt
+0209                             neighbor_pt=fiber(i).pts{j}(k);
+0210                             ind=find(fiber(neighbor_pt).Contacts==iContacts(j));
+0211                             R{i,neighbor_pt}(j,ind)=Rc; <span class="comment">%Contact Resistance between fibers</span>
+0212                             G{i,neighbor_pt}(j,ind)=-1/Rc;
+0213                         <span class="keyword">end</span>
+0214                         fiberi=R{i,i}(j,:);
+0215                         fiberi=fiberi(fiberi~=0);
+0216                         sum=0;
+0217                          <span class="keyword">for</span> m=1:size(fiberi,2)
+0218                             sum=sum+1/fiberi(m);
+0219                         <span class="keyword">end</span>
+0220                         Gfiberi=sum;
+0221                         sum1=0;
+0222                         <span class="keyword">for</span> n=1:num_pt
+0223                             neighbor_pt=fiber(i).pts{j}(n);
+0224                             ind=find(fiber(neighbor_pt).Contacts==iContacts(j));
+0225                             sum1=sum1+1/R{i,neighbor_pt}(j,ind);
+0226                         <span class="keyword">end</span>
+0227                         Gfiberj=sum1;
+0228                         G{i,i}(j,j)=Gfiberi+Gfiberj;
+0229 
+0230             <span class="comment">%</span>
+0231             <span class="comment">%             loc=find(iContacts(j)</span>
+0232             <span class="comment">% %             [boolen, ind]=ismember(iContacts(j,1),fiber(iContacts(j,2)).Contacts(:,1)); %</span>
+0233             <span class="comment">% %             R{i,iContacts(j,2)}(j,ind)=Rc; % Contact Resistance.</span>
+0234             <span class="comment">%             G{i,iContacts(j,2)}(j,ind)=-1/100;</span>
+0235             <span class="comment">%                       fiberi=R{i,i}(j,:);</span>
+0236             <span class="comment">%             fiberi=fiberi(fiberi~=0);</span>
+0237             <span class="comment">%             sum=0;</span>
+0238             <span class="comment">%             for m=1:size(fiberi,1)</span>
+0239             <span class="comment">%                 sum=sum+1/fiberi(m);</span>
+0240             <span class="comment">%             end</span>
+0241             <span class="comment">%             Gfiberi=sum</span>
+0242             <span class="comment">%             fiberj=R{i,iContacts(j,2)}(j,:)</span>
+0243             <span class="comment">%             Gfiberj=1/fiberj(fiberj~=0);</span>
+0244             <span class="comment">%             G{i,i}(j,j)=Gfiberi+Gfiberj;</span>
+0245 
+0246 
+0247 
+0248                     <span class="keyword">else</span>
+0249                         RLen=fiber(i).Contacts(j+1)-fiber(i).Contacts(j);
+0250                         A=pi*fiber(i).radius^2;
+0251                         R{i,i}(j,j+1)=rf*RLen/A;
+0252                         R{i,i}(j+1,j)=rf*RLen/A;    <span class="comment">% resistance between two sections on one fiber</span>
+0253                         G{i,i}(j,j+1)=-1/R{i,i}(j,j+1);<span class="comment">% G(i,j)=-1/R</span>
+0254                         G{i,i}(j+1,j)=-1/R{i,i}(j+1,j);<span class="comment">% G(i,j)=-1/R</span>
+0255 
+0256                         num_pt=size(fiber(i).pts{j},2);
+0257                         <span class="keyword">for</span> k=1:num_pt
+0258                             neighbor_pt=fiber(i).pts{j}(k);
+0259                             ind=find(fiber(neighbor_pt).Contacts==iContacts(j));
+0260                             R{i,neighbor_pt}(j,ind)=Rc; <span class="comment">%Contact Resistance.</span>
+0261                             G{i,neighbor_pt}(j,ind)=-1/Rc;  <span class="comment">% G(i,j)=-1/R</span>
+0262                         <span class="keyword">end</span>
+0263 
+0264                         fiberi=R{i,i}(j,:);
+0265                         fiberi=fiberi(fiberi~=0);
+0266                         sum=0;
+0267                         <span class="keyword">for</span> m=1:size(fiberi,2)
+0268                             sum=sum+1/fiberi(m);
+0269                         <span class="keyword">end</span>
+0270                         Gfiberi=sum;
+0271                         sum1=0;
+0272                         <span class="keyword">for</span> n=1:num_pt
+0273                             neighbor_pt=fiber(i).pts{j}(n);
+0274                             ind=find(fiber(neighbor_pt).Contacts==iContacts(j));
+0275                             sum1=sum1+1/R{i,neighbor_pt}(j,ind);
+0276                         <span class="keyword">end</span>
+0277                         Gfiberj=sum1;
+0278                         G{i,i}(j,j)=Gfiberi+Gfiberj;  <span class="comment">% elements on diagonal of G. G(i,i)=sum(1/R)</span>
+0279 
+0280             <span class="comment">%</span>
+0281             <span class="comment">%</span>
+0282             <span class="comment">%             [boolen, ind]=ismember(iContacts(j,1),fiber(iContacts(j,2)).Contacts(:,1));</span>
+0283             <span class="comment">%             R{i,iContacts(j,2)}(j,ind)=100;</span>
+0284             <span class="comment">%             G{i,iContacts(j,2)}(j,ind)=-1/R{i,iContacts(j,2)}(j,ind);</span>
+0285             <span class="comment">%             fiberi=R{i,i}(j,:);</span>
+0286             <span class="comment">%             fiberi=fiberi(fiberi~=0);</span>
+0287             <span class="comment">%</span>
+0288             <span class="comment">%             sum=0;</span>
+0289             <span class="comment">%             for m=1:size(fiberi,1)</span>
+0290             <span class="comment">%                 sum=sum+1/fiberi(m);</span>
+0291             <span class="comment">%             end</span>
+0292             <span class="comment">%             Gfiberi=sum;</span>
+0293             <span class="comment">%</span>
+0294             <span class="comment">%             fiberj=R{i,iContacts(j,2)}(j,:);</span>
+0295             <span class="comment">%</span>
+0296             <span class="comment">%             Gfiberj=1/fiberj(fiberj~=0);</span>
+0297             <span class="comment">%             G{i,i}(j,j)=Gfiberi+Gfiberj;</span>
+0298                     <span class="keyword">end</span>           
+0299                 <span class="keyword">end</span>
+0300             <span class="keyword">end</span>
+0301             <span class="comment">% change R into a matrix to apply Kirchoff's Law.</span>
+0302 
+0303             <span class="comment">%%% Apply BC</span>
+0304 
+0305             K=cell(N,1);
+0306             BC1=5;
+0307             BC2=0;
+0308             <span class="keyword">for</span> i=1:N
+0309                 K{i,1}=zeros(size(fiber(i).Contacts,2),1);
+0310             <span class="keyword">end</span>
+0311             <span class="comment">% K=zeros(size(R,1),1)</span>
+0312             <span class="keyword">for</span> i=1:size(BoundX1,2)
+0313                 K{BoundX1(i),1}=BC1*ones(size(fiber(BoundX1(i)).Contacts,2),1);
+0314                 fiberlabel=BoundX1(i);
+0315                 <span class="keyword">for</span> j=1:N
+0316                     <span class="keyword">if</span> j==fiberlabel
+0317                         G{fiberlabel,j}=eye(size(fiber(fiberlabel).Contacts,2));
+0318                     <span class="keyword">else</span>
+0319                         G{fiberlabel,j}=zeros(size(fiber(fiberlabel).Contacts,2),size(fiber(j).Contacts,2));
+0320                     <span class="keyword">end</span>
+0321                 <span class="keyword">end</span>
+0322             <span class="comment">%     for j=1:size(fiber(BoundX1(i)).Contacts,1)</span>
+0323             <span class="comment">%     G{fiberlabel,fiberlabel}(j,j)=1;</span>
+0324             <span class="comment">%     end</span>
+0325             <span class="keyword">end</span>
+0326             <span class="keyword">for</span> i=1:size(BoundX2,2)
+0327                 K{BoundX2(i),1}=BC2*ones(size(fiber(BoundX2(i)).Contacts,2),1);
+0328                     fiberlabel=BoundX2(i);
+0329                         <span class="keyword">for</span> j=1:N
+0330                     <span class="keyword">if</span> j==fiberlabel
+0331                         G{fiberlabel,j}=eye(size(fiber(fiberlabel).Contacts,2));
+0332                     <span class="keyword">else</span>
+0333                         G{fiberlabel,j}=zeros(size(fiber(fiberlabel).Contacts,2),size(fiber(j).Contacts,2));
+0334                     <span class="keyword">end</span>
+0335                 <span class="keyword">end</span>
+0336             <span class="comment">%     for j=1:size(fiber(BoundX2(i)).Contacts,1)</span>
+0337             <span class="comment">%     G{fiberlabel,fiberlabel}(j,j)=1;</span>
+0338             <span class="comment">%     end</span>
+0339             <span class="keyword">end</span>   
+0340             K=cell2mat(K);
+0341             <span class="comment">%R=cell2mat(R);</span>
+0342             G=cell2mat(G);
+0343             Voltage2=G\K;
+0344             Mrow=zeros(N,1);
+0345             <span class="keyword">for</span> i=1:N
+0346                 Mrow(i)=size(fiber(i).Contacts,2);
+0347             <span class="keyword">end</span>
+0348             Voltage3=mat2cell(Voltage2,Mrow);
+0349 
+0350             <span class="comment">%%% calculate currents</span>
+0351             <span class="comment">% 1. outgoing currents</span>
+0352             totcur1=0;
+0353             totcur2=0;
+0354             cur1=[];
+0355             cur2=[];
+0356             <span class="keyword">for</span> i=1:size(BoundX1,2)
+0357                 fiberlabel=BoundX1(i);
+0358                 num_pt=size(fiber(fiberlabel).Contacts,2);
+0359                 <span class="keyword">for</span> j=1:num_pt
+0360                     <span class="comment">%Vdiff=BC1-Voltage3{j}</span>
+0361                     num_contact=size(fiber(fiberlabel).pts{j},2);
+0362                     <span class="keyword">for</span> k=1:num_contact
+0363                         neighbor_fiber=fiber(fiberlabel).pts{j}(k);
+0364                         neighbor_pt=find(fiber(neighbor_fiber).Contacts==fiber(fiberlabel).Contacts(j));
+0365                         Vdiff=BC1-Voltage3{neighbor_fiber}(neighbor_pt);
+0366                         Res=R{fiberlabel,neighbor_fiber}(j,neighbor_pt);
+0367                         cur1(end+1)=Vdiff/Res;
+0368                         totcur1=totcur1+cur1(end);
+0369                     <span class="keyword">end</span>
+0370                 <span class="keyword">end</span>
+0371             <span class="keyword">end</span>
+0372             <span class="keyword">for</span> i=1:size(BoundX2,2)
+0373                 fiberlabel=BoundX2(i);
+0374                 num_pt=size(fiber(fiberlabel).Contacts,2);
+0375                 <span class="keyword">for</span> j=1:num_pt
+0376                     <span class="comment">%Vdiff=BC1-Voltage3{j}</span>
+0377                     num_contact=size(fiber(fiberlabel).pts{j},2);
+0378                     <span class="keyword">for</span> k=1:num_contact
+0379                         neighbor_fiber=fiber(fiberlabel).pts{j}(k);
+0380                         neighbor_pt=find(fiber(neighbor_fiber).Contacts==fiber(fiberlabel).Contacts(j));
+0381                         Vdiff=Voltage3{neighbor_fiber}(neighbor_pt)-BC2;
+0382                         Res=R{fiberlabel,neighbor_fiber}(j,neighbor_pt);
+0383                         cur2(end+1)=Vdiff/Res;
+0384                         totcur2=totcur2+cur2(end);
+0385                     <span class="keyword">end</span>
+0386                 <span class="keyword">end</span>
+0387             <span class="keyword">end</span>
+0388             totcur1
+0389             totcur2
+0390             Res=5/totcur1;
+0391             rou=L*Res*max_y/max_x;
+0392             rous=[rous;rou];
+0393             <span class="keyword">end</span>
+0394             rous
+0395             rou=mean(rous)
+0396             toc
+0397     <span class="keyword">end</span>
+0398 <span class="keyword">end</span>
+0399 toc
+0400 <span class="comment">% Results=[ContactLens(iter) rou];</span>
+0401 <span class="comment">% fid=fopen('threeD-RN.txt','a');</span>
+0402 <span class="comment">% fprintf(fid,'%f %d\n',Results);</span>
+0403 <span class="comment">% fclose(fid);</span>
+0404 <span class="comment">% end</span>
+0405     
+0406 <span class="comment">% G1=G;</span>
+0407 <span class="comment">% [G1 indices]=removezeros(G1);</span>
+0408 <span class="comment">% [G1 indices2]=removezeros(G1');</span>
+0409 <span class="comment">% G1=G1';</span>
+0410 <span class="comment">% voltages=(G1^-1)*(K(indices));</span>
+0411 <span class="comment">% Final_Voltages=zeros(1,N);</span>
+0412 <span class="comment">% Final_Voltages(indices)=voltages</span>
+0413 <span class="comment">%  %voltage=G\K</span>
+0414 <span class="comment">%</span>
+0415 <span class="comment">%</span>
+0416 <span class="comment">%</span>
+0417         
+0418         
+0419         
+0420         
+0421         
+0422</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
