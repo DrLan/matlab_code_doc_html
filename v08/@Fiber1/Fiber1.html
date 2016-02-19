@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Fiber1</title>
+  <meta name="keywords" content="Fiber1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Fiber1</a> &gt; Fiber1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Fiber1&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Fiber1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Fiber1.html" class="code" title="">Fiber1</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Fiber1.html" class="code" title="">Fiber1</a>	</li><li><a href="../../v08/@FiberLib/FiberLib.html" class="code" title="">FiberLib</a>	</li><li><a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a>	</li><li><a href="../../v08/Callbacks/addFiber_callback.html" class="code" title="function addFiber_callback(source,eventData,allHandles,allData)">addFiber_callback</a>	</li><li><a href="../../v08/Callbacks/removeFiber_callback.html" class="code" title="function removeFiber_callback(source,eventData,allHandles,allData)">removeFiber_callback</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = Fiber1(val)</a></li><li><a href="#_sub2" class="code">function showOnGui(obj,tableHandle)</a></li><li><a href="#_sub3" class="code">function obj = constructFromTable(obj,tableData)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Fiber1.html" class="code" title="">Fiber1</a>
+0002     <span class="comment">% Fiber : class representing fiber in composite materials.</span>
+0003     <span class="comment">% To check properites and methods of fiber, press &quot;tab&quot; button after</span>
+0004     <span class="comment">% typing &quot;Fiber1.&quot;</span>
+0005     <span class="comment">%</span>
+0006     <span class="comment">% usage example:</span>
+0007     <span class="comment">% a=Fiber('AS4')</span>
+0008     <span class="comment">% b=Fiber('IM7')</span>
+0009     <span class="comment">% AS4prop =a.property</span>
+0010     <span class="comment">%</span>
+0011     <span class="comment">% see also FiberLib</span>
+0012     <span class="comment">% -- copyright 2014-2016 Hong Yu, hongyu.us@gmail.com --</span>
+0013     
+0014     properties
+0015         propertyStruct ={};
+0016     <span class="keyword">end</span>
+0017 
+0018     methods
+0019         <a name="_sub0" href="#_subfunctions" class="code">function obj = Fiber1(val)</a>
+0020             obj.propertyStruct=struct;
+0021             obj.propertyStruct.name = <span class="string">'myFiber'</span>;
+0022             obj.propertyStruct.diameter = 7.1e-6;
+0023             obj.propertyStruct.electricalResistivity = 1.7e-5;
+0024             obj.propertyStruct.thermalConductivity = 10;
+0025             obj.propertyStruct.elasticModulus = 271e9;
+0026             obj.propertyStruct.beta = 350;
+0027             <span class="keyword">if</span> nargin&gt;0
+0028                 obj.propertyStruct.name = val;
+0029             <span class="keyword">end</span>
+0030             <span class="keyword">switch</span> obj.propertyStruct.name
+0031                 <span class="keyword">case</span> <span class="string">'AS4'</span>
+0032                     obj.propertyStruct.diameter = 7.1e-6;
+0033                     obj.propertyStruct.electricalResistivity = 1.7e-5;
+0034                     obj.propertyStruct.thermalConductivity = 10;
+0035                     obj.propertyStruct.elasticModulus = 271e9;
+0036                 <span class="keyword">case</span> <span class="string">'IM7'</span>
+0037                     obj.propertyStruct.diameter = 5.2e-6;
+0038                     obj.propertyStruct.electricalResistivity = 1.5e-5;
+0039                     obj.propertyStruct.thermalConductivity = 10;
+0040                     obj.propertyStruct.elasticModulus = 260e9;
+0041                 <span class="keyword">otherwise</span>
+0042             <span class="keyword">end</span>
+0043         <span class="keyword">end</span>
+0044         
+0045         <a name="_sub1" href="#_subfunctions" class="code">function showOnGui(obj,tableHandle)</a>
+0046             <span class="comment">%data = struct2cell(obj.propertyStruct);</span>
+0047             tempCell = struct2cell(obj.propertyStruct);
+0048             <span class="keyword">for</span> i = 1:length(tempCell)
+0049                 item = tempCell{i};
+0050                 <span class="keyword">if</span> isnumeric(item)
+0051                     tempCell{i} = num2str(item,<span class="string">'%3.5g'</span>);
+0052                 <span class="keyword">end</span>
+0053             <span class="keyword">end</span>
+0054             <span class="comment">%propertyValue =</span>
+0055             propertyUnit = {<span class="string">'string'</span>,<span class="string">'m'</span>,<span class="string">'ohm*m'</span>,<span class="string">'W/(mK)'</span>,<span class="string">'Pa'</span>,<span class="string">'number'</span>}';
+0056             tableHandle.Data=[tempCell propertyUnit];
+0057             tableHandle.ColumnName ={<span class="string">'Property Value'</span>,<span class="string">'Property Unit'</span>}
+0058             tableHandle.RowName ={<span class="string">'Fiber Name'</span>,<span class="string">'Diameter'</span>,<span class="string">'Electrical Resistivity'</span>,<span class="string">'Thermal Conductivty'</span>,<span class="keyword">...</span>
+0059                 <span class="string">'Elastic Modulus'</span>,<span class="string">'Beta Term'</span>}
+0060         <span class="keyword">end</span>
+0061         <a name="_sub2" href="#_subfunctions" class="code">function obj = constructFromTable(obj,tableData)</a>
+0062             tableData=tableData(:,1);
+0063             fieldNames = fieldnames(obj.propertyStruct);
+0064             obj.propertyStruct = cell2struct(tableData,fieldNames,1);
+0065         <span class="keyword">end</span>
+0066            <span class="comment">% properties =</span>
+0067             
+0068     <span class="keyword">end</span>
+0069 <span class="keyword">end</span>
+0070 
+0071     <span class="comment">%     properties (Dependent)</span>
+0072     <span class="comment">%         propertyTable = table();</span>
+0073     <span class="comment">%     end</span>
+0074 <span class="comment">%obj.propertyStructTable = struct2table(obj.propertyStruct)</span>
+0075 <span class="comment">% property = struct({'Name','Diameter','Electrical Resistivity'</span>
+0076 <span class="comment">%property = struct</span>
+0077 <span class="comment">%field='name'</span>
+0078 <span class="comment">%value='as4'</span>
+0079 <span class="comment">%property = struct(field,value)</span>
+0080 <span class="comment">%property.name ='AS4'</span>
+0081 <span class="comment">%          property.Diameter = 5e-5</span>
+0082 <span class="comment">%          property.ElectricalResistivity</span>
+0083 <span class="comment">%          property.ThermalConductivity</span>
+0084 <span class="comment">%          property.EModulus</span>
+0085 
+0086 <span class="comment">%             function obj= set.propertyTable(obj,tableObj)</span>
+0087 <span class="comment">%             obj.propertyTable = tableObj;</span>
+0088 <span class="comment">%         end</span>
+0089 <span class="comment">%         function val = get.propertyTable(obj)</span>
+0090 <span class="comment">%             tempCell = struct2cell(obj.propertyStruct);</span>
+0091 <span class="comment">%</span>
+0092 <span class="comment">%             for i = 1:length(tempCell)</span>
+0093 <span class="comment">%                 item = tempCell{i};</span>
+0094 <span class="comment">%                 if isnumeric(item)</span>
+0095 <span class="comment">%                     tempCell{i} = num2str(item,'%3.5g');</span>
+0096 <span class="comment">%                 end</span>
+0097 <span class="comment">%             end</span>
+0098 <span class="comment">%             val = cell2table(tempCell);</span>
+0099 <span class="comment">%         end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

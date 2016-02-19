@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of runLTspice</title>
+  <meta name="keywords" content="runLTspice">
+  <meta name="description" content="RUNLTSPICE call LTspice to solve resistor network.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Laminate1</a> &gt; runLTspice.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Laminate1&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>runLTspice
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RUNLTSPICE call LTspice to solve resistor network.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function raw_data = runLTspice(obj,NetList) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">RUNLTSPICE call LTspice to solve resistor network.
+ input: path to netlist file. ex. 'SPICE_InOut\netlistName.cir'
+ output is SPICE .raw file stored in the folder 'SPICE_InOut'
+-------copyright Hong Yu hongy@UDel.edu 2014-2016--------</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Function.html" class="code" title="">Function</a>	</li><li><a href="Laminate1.html" class="code" title="">Laminate1</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function raw_data = runLTspice(obj,NetList)</a>
+0002 <span class="comment">%RUNLTSPICE call LTspice to solve resistor network.</span>
+0003 <span class="comment">% input: path to netlist file. ex. 'SPICE_InOut\netlistName.cir'</span>
+0004 <span class="comment">% output is SPICE .raw file stored in the folder 'SPICE_InOut'</span>
+0005     <span class="comment">%-------copyright Hong Yu hongy@UDel.edu 2014-2016--------</span>
+0006 NetListID= [NetList <span class="string">'.cir'</span>];
+0007 SystemCMD = [<span class="string">'scad3.exe '</span>,NetListID,<span class="string">' -run -b'</span>]; <span class="comment">% scad3.exe -b -ascii     save data in ascii format</span>
+0008 system(SystemCMD);
+0009 <span class="comment">%waitfor(p);</span>
+0010 filename = [NetList,<span class="string">'.raw'</span>];
+0011 <span class="comment">%filepath = ['..\']</span>
+0012 <span class="comment">% switch obj.analysisType</span>
+0013 <span class="comment">%     case 'Transient'</span>
+0014 raw_data = Function.LTspice2Matlab(filename);
+0015 <span class="comment">%     case 'SteadyState'</span>
+0016 <span class="comment">%        %raw_data = Function.ReadRaw(filename);</span>
+0017 <span class="comment">%        [I_vinput,~,~]=Function.ReadRAW(filename);</span>
+0018 <span class="comment">%        raw_data = 1.0/abs(I_vinput);</span>
+0019 <span class="keyword">end</span>
+0020</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getfiber</title>
+  <meta name="keywords" content="getfiber">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; getfiber.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>getfiber
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 
+0002 clear all
+0003 <span class="comment">% fibermat='vf_0.5_spec2.mat';</span>
+0004 <span class="comment">% fibermat=['</span>
+0005 <span class="comment">% Resfid1='Vf.txt'</span>
+0006 <span class="comment">% Resfid2='PerfectFiberRes2_NumCont_IM7.txt'</span>
+0007 <span class="comment">%% input parameters</span>
+0008 Resfid1=<span class="string">'Res_SimFiber_VF.txt'</span>
+0009 Resfid2=<span class="string">'Res_ave_SimFiber_VF.txt'</span>
+0010 fiberRadius=2.6e-6;
+0011 fiberLen=2e-3;
+0012 beta=350;
+0013 NumBreak=0;
+0014 Rc=36;
+0015 rf=1.8e-5;
+0016 RBreakage=1e10;
+0017 <span class="comment">%% input simulated fibers</span>
+0018 vfmatrix=[0.4:0.1:0.6]; <span class="comment">%volume fractions</span>
+0019 <span class="comment">% tempsimsize=size(vfmatrix);</span>
+0020 <span class="comment">% simsize=tempsimsize(2);</span>
+0021 simsize=size(vfmatrix,2);
+0022 final_result=zeros(10*simsize,2); <span class="comment">%first column is vf second column is resistance</span>
+0023 average_result=zeros(simsize,3);
+0024 iteration=0;
+0025 tot_iter=simsize*10
+0026 <span class="keyword">for</span> simnumber=1:simsize
+0027     <span class="keyword">for</span> specimen=1:10
+0028         vf=vfmatrix(simnumber);
+0029         fibermat=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0030         [rho0,fiber,VF,NumContacts]=<a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);
+0031         rhos(specimen)=rho0;
+0032         iteration=iteration+1;
+0033         progress=[<span class="string">'progress:'</span> num2str(iteration/tot_iter*100) <span class="string">' %'</span>];
+0034         disp(progress)
+0035         fid=fopen(Resfid1,<span class="string">'a'</span>);
+0036         time1=toc;
+0037         fprintf(fid,<span class="string">'%1.4f %d %f %2.10f %d %f %f %f \n'</span>,VF,specimen,fiberLen,fiberRadius,NumContacts,beta,rho0,time1);
+0038         <span class="comment">%     Resfid1=strcat('Res','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0039         <span class="comment">%     Resfid2=strcat('Res_ave','vf_',num2str(vf),'_spec',num2str(specimen),'.txt');</span>
+0040     <span class="keyword">end</span>
+0041     aveRho=mean(rhos);
+0042     fid=fopen(Resfid2,<span class="string">'a'</span>);
+0043     time2=toc;
+0044     fprintf(fid,<span class="string">'%1.4f  %f      %2.10f        %d       %f   %f     %f \n'</span>,<span class="keyword">...</span>
+0045                   vf,fiberLen,fiberRadius,NumContacts,beta,aveRho,time2);  
+0046 <span class="keyword">end</span>
+0047 
+0048 <span class="comment">% load(filen);</span>
+0049 <span class="comment">%</span>
+0050 <span class="comment">% fiberRadius=2.6e-6;</span>
+0051 <span class="comment">% % perc=fiberRadius;</span>
+0052 <span class="comment">% fiberLen=4e-3;</span>
+0053 <span class="comment">% beta=350;</span>
+0054 <span class="comment">% NumBreak=0;</span>
+0055 <span class="comment">% Rc=36;</span>
+0056 <span class="comment">% rf=1.8e-5;</span>
+0057 <span class="comment">% RBreakage=1e10;</span>
+0058 <span class="comment">% %%</span>
+0059 <span class="comment">% Para_fiberLen=[1 2 3 4]'*1e-3</span>
+0060 <span class="comment">% % Para_beta=[350]'</span>
+0061 <span class="comment">% % Para_Rc=[36]'</span>
+0062 <span class="comment">% % Para_NumBreak=[0 1 2 3 4 5]'</span>
+0063 <span class="comment">% %%</span>
+0064 <span class="comment">% % simnum=1</span>
+0065 <span class="comment">% tic</span>
+0066 <span class="comment">% for pfl=1:size(Para_fiberLen,1)</span>
+0067 <span class="comment">%     fiberLen=Para_fiberLen(pfl)</span>
+0068 <span class="comment">%     for ns=1:simnum</span>
+0069 <span class="comment">%         [rho,fiber]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)</span>
+0070 <span class="comment">%         toc</span>
+0071 <span class="comment">%         fid=fopen(Resfid,'a');</span>
+0072 <span class="comment">%             time=toc;</span>
+0073 <span class="comment">%             fprintf(fid,'%f %f %f %d %d %f %f %f \n',frow,fcolumn,fiberLen,NumContacts,ns,VF,rho0,time);</span>
+0074 <span class="comment">%         % rho=Func_RNetwork(fiber,VF,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)</span>
+0075 <span class="comment">%         % rho=Func_RNetwork(fiber,perc,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)</span>
+0076 <span class="comment">%     end</span>
+0077 <span class="comment">% end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

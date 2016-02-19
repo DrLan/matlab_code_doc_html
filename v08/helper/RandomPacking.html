@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of RandomPacking</title>
+  <meta name="keywords" content="RandomPacking">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; RandomPacking.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>RandomPacking
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function PerfectFiber = RandomPacking(VF,fiberRadius) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="RNetworkGUI1.html" class="code" title="function varargout = RNetworkGUI1(varargin)">RNetworkGUI1</a>	RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function PerfectFiber = RandomPacking(VF,fiberRadius)</a>
+0002 VF=0.5
+0003 specimen = 1;
+0004 fibermat=strcat(<span class="string">'vf_'</span>,num2str(VF),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0005 load(fibermat)
+0006 fiber.x=fiber.x';
+0007 fiber.y=fiber.y';
+0008 fiber.radius=fiber.radius';
+0009 <span class="comment">% Now fiber.x fiber.y and fiber.radius are column vectors.</span>
+0010 N=size(fiber.radius,1); <span class="comment">%</span>
+0011 <span class="comment">% !!! be careful, depending on the fiber.radius being a row vector or</span>
+0012 <span class="comment">% column vector, this command can be size(...,2) for row vector</span>
+0013 <span class="comment">%or size(...,1) for column vectors.</span>
+0014 <span class="comment">%fiber1= struct('center',[], 'radius',[], 'nodes', []);</span>
+0015 aveRad=mean(fiber.radius);
+0016 scale=aveRad/fiberRadius;
+0017 
+0018 fiber.x=fiber.x/scale;
+0019 fiber.y=fiber.y/scale;
+0020 fiber.radius=fiber.radius/scale;
+0021 
+0022 PerfectFiber=fiber;
+0023 save PerfectFiber</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

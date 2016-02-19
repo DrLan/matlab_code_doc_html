@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of count_dist</title>
+  <meta name="keywords" content="count_dist">
+  <meta name="description" content="Resfid='DistanceDistribution_40p.txt'">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; count_dist.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>count_dist
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Resfid='DistanceDistribution_40p.txt'</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Resfid='DistanceDistribution_40p.txt'</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Resfid='DistanceDistribution_40p.txt'</span>
+0002 clear all
+0003 fiberRadius=2.6e-6; <span class="comment">% IM7</span>
+0004 vf=0.6;
+0005 specimen=10
+0006 <span class="comment">% vfmatrix=[0.4]; %volume fractions</span>
+0007 <span class="comment">% tempsimsize=size(vfmatrix);</span>
+0008 <span class="comment">% simsize=tempsimsize(2);</span>
+0009 <span class="comment">% final_result=zeros(10*simsize,2); %first column is vf second column is resistance</span>
+0010 <span class="comment">% average_result=zeros(simsize,3);</span>
+0011 <span class="comment">% runcount=0;</span>
+0012 <span class="comment">% for simnumber=1:simsize</span>
+0013 <span class="comment">% for specimen=1:1</span>
+0014 <span class="comment">% vf=vfmatrix(simnumber);</span>
+0015 filen=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0016 load(filen);
+0017 aveRad=mean(fiber.radius);
+0018 scale=fiberRadius/aveRad;
+0019 Np=size(fiber.x);
+0020 N=Np(2);
+0021 <span class="comment">% perc=0.7*fiber.radius(1); %percolation distance PARAMETER</span>
+0022 <span class="comment">% V_left=1; %left Voltage PARAMETER</span>
+0023 <span class="comment">% V_right=0;  %right voltage PARAMETER</span>
+0024 <span class="comment">% max_x=20; %Left boundary coordinates</span>
+0025 
+0026 fiber1(N) = struct(<span class="string">'center'</span>,[], <span class="string">'radius'</span>,[], <span class="string">'nodes'</span>, []);
+0027 
+0028 xmat=fiber.x;
+0029 ymat=fiber.y;
+0030 rmat=fiber.radius;
+0031 <span class="keyword">for</span> i=1:N
+0032     fiber1(i).center(1)=xmat(i)*scale;
+0033     fiber1(i).center(2)=ymat(i)*scale;
+0034     fiber1(i).radius=rmat(i)*scale;
+0035 <span class="keyword">end</span>
+0036 dist_matrix=[];
+0037 
+0038 <span class="keyword">for</span> i=1:N
+0039     temp_dist_matrix=[];
+0040     <span class="keyword">for</span> j=1:N
+0041         <span class="keyword">if</span>(i~=j)
+0042             fiber_d=sqrt((fiber1(i).center(1)-fiber1(j).center(1))^2+(fiber1(i).center(2)-fiber1(j).center(2))^2)-fiber1(i).radius-fiber1(j).radius;
+0043             temp_dist_matrix=[temp_dist_matrix fiber_d];
+0044         <span class="keyword">end</span>
+0045     <span class="keyword">end</span>
+0046     nearest_neighbours=sort(temp_dist_matrix);
+0047     nearest_neighbours=nearest_neighbours(1:6);
+0048     dist_matrix=[dist_matrix nearest_neighbours];
+0049 <span class="keyword">end</span>
+0050 Res_dist=dist_matrix';
+0051 <span class="comment">% end</span>
+0052 <span class="comment">% end</span>
+0053 <span class="comment">% fid=fopen(Resfid,'a');</span>
+0054 <span class="comment">% fprintf(fid,dist_matrix);</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

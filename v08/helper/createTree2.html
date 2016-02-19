@@ -1,0 +1,263 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of createTree2</title>
+  <meta name="keywords" content="createTree2">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; createTree2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>createTree2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function  [mtree,treecontainer] = createTree2(allData) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a>	</li><li><a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a>	</li><li><a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a>	</li><li><a href="displayFiberInfo.html" class="code" title="function displayFiberInfo(selectedNode,handles,allData)">displayFiberInfo</a>	% selectedNode is a string of fiber name, handles and allData are global struct</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/Callbacks/addFiber_callback.html" class="code" title="function addFiber_callback(source,eventData,allHandles,allData)">addFiber_callback</a>	</li><li><a href="../../v08/Callbacks/addLamina_callback.html" class="code" title="function addLamina_callback(source,eventData,allHandles,allData)">addLamina_callback</a>	</li><li><a href="../../v08/Callbacks/addLaminate_callback.html" class="code" title="function addLaminate_callback(source,eventData,allHandles,allData)">addLaminate_callback</a>	</li><li><a href="../../v08/Callbacks/removeFiber_callback.html" class="code" title="function removeFiber_callback(source,eventData,allHandles,allData)">removeFiber_callback</a>	</li><li><a href="../../v08/Callbacks/removeLamina_callback.html" class="code" title="function removeLamina_callback(source,eventData,allHandles,allData)">removeLamina_callback</a>	</li><li><a href="../../v08/GUI/CFRP_GUI_v08.html" class="code" title="function [allHandles,allData] = CFRP_GUI_v08( )">CFRP_GUI_v08</a>	GUI for 3D resistor network</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function addFiberNodes(FiberNode,fiberLibObj)</a></li><li><a href="#_sub2" class="code">function addLaminaNodes(LaminaNode,laminaLibObj);</a></li><li><a href="#_sub3" class="code">function addLaminateNodes(LaminateNode,laminateLibObj);</a></li><li><a href="#_sub4" class="code">function selected_cb( tree, ev )</a></li><li><a href="#_sub5" class="code">function displayFiberInfo(selectedNode)</a></li><li><a href="#_sub6" class="code">function displayLaminaInfo(selectedNode)</a></li><li><a href="#_sub7" class="code">function displayLaminateInfo(selectedNode)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001     <a name="_sub0" href="#_subfunctions" class="code">function  [mtree,treecontainer] = createTree2(allData)</a>
+0002     fiberLibObj = allData.fiberLib;
+0003     laminaLibObj = allData.laminaLib;
+0004     laminateLibObj =allData.laminateLib;
+0005         root = uitreenode(<span class="string">'v0'</span>, <span class="string">'MaterialLib'</span>, <span class="string">'Material Library'</span>, [], false);
+0006         FiberNode=uitreenode(<span class="string">'v0'</span>, <span class="string">'FiberNode'</span>, <span class="string">'Fiber'</span>, [],false);
+0007         LaminaNode= uitreenode(<span class="string">'v0'</span>, <span class="string">'LaminaNode'</span>, <span class="string">'Lamina'</span>, [],false);
+0008         LaminateNode=uitreenode(<span class="string">'v0'</span>, <span class="string">'LaminateNode'</span>, <span class="string">'Laminate'</span>, [],false);
+0009         root.add(FiberNode);
+0010         root.add(LaminaNode);
+0011         root.add(LaminateNode);
+0012         <a href="#_sub1" class="code" title="subfunction addFiberNodes(FiberNode,fiberLibObj)">addFiberNodes</a>(FiberNode,fiberLibObj);
+0013         <a href="#_sub2" class="code" title="subfunction addLaminaNodes(LaminaNode,laminaLibObj);">addLaminaNodes</a>(LaminaNode,laminaLibObj);
+0014         <a href="#_sub3" class="code" title="subfunction addLaminateNodes(LaminateNode,laminateLibObj);">addLaminateNodes</a>(LaminateNode,laminateLibObj);
+0015         <span class="comment">%mtree.expand(FiberNode);</span>
+0016 <span class="comment">%         LaminaNode.expand;</span>
+0017 <span class="comment">%         LaminateNode.expand;</span>
+0018          
+0019         <a name="_sub1" href="#_subfunctions" class="code">function addFiberNodes(FiberNode,fiberLibObj)</a>
+0020             fiberNames = fiberLibObj.itemNames
+0021             <span class="keyword">for</span> i = 1:length(fiberNames)
+0022                 fiberNodeName = fiberNames{i};
+0023                 fiberTagName =[<span class="string">'Fiber'</span> num2str(i)];
+0024                 fiberNodes(i) =uitreenode(<span class="string">'v0'</span>,fiberTagName,fiberNodeName,[],true);
+0025                 FiberNode.add(fiberNodes(i));
+0026             <span class="keyword">end</span>
+0027             <a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a> = uitreenode(<span class="string">'v0'</span>, <span class="string">'addFiber'</span>, <span class="string">'Add Fiber'</span>, [],false);
+0028             FiberNode.add(<a href="../../v08/Callbacks/addFiber.html" class="code" title="function addFiber(allHandles,allData)">addFiber</a>);
+0029         <span class="keyword">end</span>
+0030         <a name="_sub2" href="#_subfunctions" class="code">function addLaminaNodes(LaminaNode,laminaLibObj);</a>
+0031             laminaNames = laminaLibObj.getNames()
+0032             <span class="keyword">for</span> i = 1:length(laminaNames)
+0033                 NodeName = laminaNames{i};
+0034                 TagName =[<span class="string">'Lamina'</span> num2str(i)];
+0035                 laminaNodes(i) =uitreenode(<span class="string">'v0'</span>,TagName,NodeName,[],true);
+0036                 LaminaNode.add(laminaNodes(i));
+0037             <span class="keyword">end</span>
+0038             <a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a> = uitreenode(<span class="string">'v0'</span>, <span class="string">'addLamina'</span>, <span class="string">'Add Lamina'</span>, [],false);
+0039             LaminaNode.add(<a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a>);
+0040         <span class="keyword">end</span>
+0041         
+0042         <a name="_sub3" href="#_subfunctions" class="code">function addLaminateNodes(LaminateNode,laminateLibObj);</a>
+0043             laminateNames = laminateLibObj.getNames()
+0044             <span class="keyword">for</span> i = 1:length(laminateNames)
+0045                 NodeName = laminateNames{i};
+0046                 TagName =[<span class="string">'Laminate'</span> num2str(i)];
+0047                 laminateNodes(i) =uitreenode(<span class="string">'v0'</span>,TagName,NodeName,[],true);
+0048                 LaminateNode.add(laminateNodes(i));
+0049             <span class="keyword">end</span>
+0050             <a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a> = uitreenode(<span class="string">'v0'</span>, <span class="string">'addLaminate'</span>, <span class="string">'Add Laminate'</span>, [],false);
+0051             LaminateNode.add(<a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a>);
+0052         <span class="keyword">end</span>
+0053     [mtree,treecontainer] = uitree(<span class="string">'v0'</span>, <span class="string">'Root'</span>,root);
+0054     <span class="keyword">end</span>
+0055         
+0056 <span class="comment">%         [mtree treecontainer] = uitree('v0', 'Root',root);</span>
+0057 <span class="comment">%         mtree.expand(root);</span>
+0058 <span class="comment">%        set(mtree, 'NodeSelectedCallback', @selected_cb )</span>
+0059 
+0060 <span class="comment">%{</span>
+0061         <a name="_sub4" href="#_subfunctions" class="code">function selected_cb( tree, ev )</a>
+0062             nodes = tree.getSelectedNodes;
+0063             <span class="keyword">if</span> length(nodes)
+0064                 node = nodes(1);
+0065                 p = node2path(node);
+0066                 <span class="keyword">if</span> length(p)==3
+0067                     selectedNode =p{end};
+0068                     <span class="keyword">switch</span> p{2}
+0069                         <span class="keyword">case</span> <span class="string">'Fiber'</span>
+0070                             <a href="displayFiberInfo.html" class="code" title="function displayFiberInfo(selectedNode,handles,allData)">displayFiberInfo</a>(selectedNode);
+0071                         <span class="keyword">case</span> <span class="string">'Lamina'</span>
+0072                             <a href="#_sub6" class="code" title="subfunction displayLaminaInfo(selectedNode)">displayLaminaInfo</a>(selectedNode);
+0073                         <span class="keyword">case</span> <span class="string">'Laminate'</span>
+0074                             <a href="#_sub7" class="code" title="subfunction displayLaminateInfo(selectedNode)">displayLaminateInfo</a>(selectedNode);
+0075                             
+0076                     <span class="keyword">end</span>
+0077                 <span class="keyword">end</span>
+0078             <span class="keyword">end</span>
+0079         <span class="keyword">end</span>
+0080         
+0081         <a name="_sub5" href="#_subfunctions" class="code">function displayFiberInfo(selectedNode)</a>
+0082             [~,index] = ismember(selectedNode,fiberNames);
+0083             <span class="keyword">if</span> index
+0084                 detailTable.ColumnWidth = {80,80,50,<span class="string">'auto'</span>};
+0085                 calcRhoBtn.Visible = <span class="string">'off'</span>
+0086                 laminaTable2.Visible =<span class="string">'off'</span>
+0087                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[200 -1 -1 -1])
+0088                 detailTable.ColumnFormat = ({[],[],[],[],[]});
+0089                 
+0090                 
+0091                 selectedData = struct2cell(fiberLib(index));
+0092                 fiberPropertyNames = fieldnames(fiberLib);
+0093                 
+0094                 tableData = [fiberPropertyNames selectedData fiberUnits fiberDiscriptions];
+0095                 detailTable.Data = tableData;
+0096                 detailTable.RowName = [];
+0097                 detailTable.ColumnName = {<span class="string">'Properties'</span>,<span class="string">'Value'</span>, <span class="string">'Unit'</span>,<span class="string">'Description'</span>}';
+0098                 
+0099                 detailTable.ColumnFormat = ({[],[],[],[],[]});
+0100                 <span class="comment">% updateMaterialTable(selectedData);</span>
+0101                 add2ModelBtn.Visible =<span class="string">'off'</span>;
+0102             <span class="keyword">end</span>
+0103             <span class="keyword">if</span> strcmp(selectedNode,<span class="string">'Add Fiber'</span>)
+0104                 detailTable.ColumnWidth = {80,80,50,<span class="string">'auto'</span>};
+0105                 detailTable.ColumnEditable = [false true false true]
+0106                 calcRhoBtn.Visible = <span class="string">'off'</span>
+0107                 add2ModelBtn.Visible =<span class="string">'on'</span>;
+0108                 laminaTable2.Visible =<span class="string">'off'</span>
+0109                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[200 15 35 -1])
+0110                 detailTable.ColumnFormat = ({[],[],[],[]});
+0111                 
+0112                 
+0113                 
+0114                 setappdata(detailTable,<span class="string">'materialLevel'</span>,<span class="string">'Fiber'</span>)
+0115                 
+0116             <span class="keyword">end</span>
+0117             
+0118             <span class="keyword">if</span> strcmp(selectedNode,<span class="string">'Add Laminate'</span>)
+0119                 add2ModelBtn.Visible =<span class="string">'on'</span>;
+0120                 setappdata(detailTable,<span class="string">'materialLevel'</span>,<span class="string">'Laminate'</span>)
+0121             <span class="keyword">end</span>
+0122             
+0123         <span class="keyword">end</span>
+0124         
+0125         
+0126         <a name="_sub6" href="#_subfunctions" class="code">function displayLaminaInfo(selectedNode)</a>
+0127             
+0128             [~,index] = ismember(selectedNode,laminaNames)
+0129             <span class="keyword">if</span> index
+0130                 detailTable.ColumnWidth = {80,80,50,<span class="string">'auto'</span>};
+0131                 calcRhoBtn.Visible = <span class="string">'off'</span>
+0132                 laminaTable2.Visible =<span class="string">'off'</span>
+0133                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[300 -1 -1 -1])
+0134                 detailTable.ColumnFormat = ({[],[],[],[],[]});
+0135                 disp(<span class="string">'Look here!!!!!'</span>)
+0136                 index
+0137                 laminaLib(index)
+0138                 selectedData = struct2cell(laminaLib(index))
+0139                 PropertyNames = fieldnames(laminaLib)
+0140                 
+0141                 tableData = [PropertyNames selectedData laminaUnits laminaDiscriptions];
+0142                 detailTable.Data = tableData;
+0143                 detailTable.RowName = [];
+0144                 detailTable.ColumnName = {<span class="string">'Properties'</span>,<span class="string">'Value'</span>, <span class="string">'Unit'</span>,<span class="string">'Description'</span>}';
+0145                 
+0146                 <span class="comment">% updateMaterialTable(selectedData);</span>
+0147                 add2ModelBtn.Visible =<span class="string">'off'</span>;
+0148             <span class="keyword">end</span>
+0149             <span class="keyword">if</span> strcmp(selectedNode,<span class="string">'Add Lamina'</span>)
+0150                 add2ModelBtn.Visible =<span class="string">'on'</span>;
+0151                 calcRhoBtn.Visible = <span class="string">'on'</span>
+0152                 laminaTable2.Visible =<span class="string">'on'</span>
+0153                 <span class="comment">%detailTable.ColumnWidth = [100 100 100]</span>
+0154                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[100 100 40 -1])
+0155                 detailTable.ColumnWidth = {100,100,100,100};
+0156                 laminaTable2.ColumnWidth = {133,133,134};
+0157                 
+0158                 setappdata(detailTable,<span class="string">'materialLevel'</span>,<span class="string">'Lamina'</span>)
+0159                 
+0160                 newLamina.Name = <span class="string">'new Lamina'</span>;
+0161                 newLamina.Fiber = <span class="string">'AS4'</span>;
+0162                 newLamina.VF = 0.55;
+0163                 newLamina.PackingOrder = <span class="string">'Square'</span>;
+0164                 PackingOrderSelections = {<span class="string">'Square'</span>,<span class="string">'Hexagon'</span>,<span class="string">'Random'</span>}
+0165                 detailTable.ColumnName = fieldnames(newLamina)
+0166                 detailTable.Data = struct2cell(newLamina)'<span class="comment">%{'new Lamina','AS4'}</span>
+0167                 detailTable.ColumnFormat = ({[],fiberNames',<span class="string">'numeric'</span>,PackingOrderSelections});
+0168                 laminaTable2.Visible =<span class="string">'on'</span>
+0169                 laminaTable2.Data ={[] [] []}
+0170                 <span class="comment">%                 cNamesTable2 = {'X Resistivity','Y Resistivity','Z Resistivity'};</span>
+0171                 <span class="comment">%</span>
+0172                 <span class="comment">%                 laminaTable2 = uitable('Parent',detailLayout,'ColumnName',cNamesTable2); %'RowName',rnames</span>
+0173                 <span class="comment">%</span>
+0174             <span class="keyword">end</span>
+0175         <span class="keyword">end</span>
+0176         
+0177         <a name="_sub7" href="#_subfunctions" class="code">function displayLaminateInfo(selectedNode)</a>
+0178             [~,index] = ismember(selectedNode,laminateNames);
+0179             <span class="keyword">if</span> index
+0180                 detailTable.ColumnWidth = {80,80,<span class="string">'auto'</span>};
+0181                 calcRhoBtn.Visible = <span class="string">'off'</span>
+0182                 laminaTable2.Visible =<span class="string">'off'</span>
+0183                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[300 35 35 -1])
+0184                 LaminaSelections = laminaNames';
+0185                 cnames = {<span class="string">'Ply #'</span>,<span class="string">'Ply Angle'</span>,<span class="string">'Lamina'</span>}
+0186                 detailTable.ColumnName = cnames
+0187                 detailTable.RowName =[];
+0188                 detailTable.ColumnFormat = ({[],[],LaminaSelections});
+0189                 detailTable.ColumnEditable = [false,true,true]
+0190                 
+0191                 <span class="comment">% selectedData = struct2cell(laminateLib(index))'</span>
+0192                 <span class="comment">%PropertyNames = fieldnames(laminateLib);</span>
+0193                 T1 = struct2table(laminateLib(index))
+0194                 C1=table2cell(T1)
+0195                 detailTable.Data =C1
+0196                 
+0197                 
+0198                 <span class="comment">%tableData = [selectedData']</span>
+0199                 <span class="comment">%                 data1= struct2cell(laminateLib(index))</span>
+0200                 <span class="comment">%                 tableData = [data1.PlyNumber data1.PlyAngle data1.Lamina]</span>
+0201                 <span class="comment">%                 detailTable.Data = data1;</span>
+0202                 <span class="comment">%detailTable.RowName = [];</span>
+0203                 <span class="comment">%  detailTable.ColumnName = {'Ply #','Ply Angle', 'Lamina','Resistivity X','Resistivity Y','Resistivity Z'}';</span>
+0204                 <span class="comment">% updateMaterialTable(selectedData);</span>
+0205                 add2ModelBtn.Visible =<span class="string">'off'</span>;
+0206             <span class="keyword">end</span>
+0207             <span class="keyword">if</span> strcmp(selectedNode,<span class="string">'Add Laminate'</span>)
+0208                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[300 35 35 -1])
+0209                 add2ModelBtn.Visible =<span class="string">'on'</span>;
+0210                 setappdata(detailTable,<span class="string">'materialLevel'</span>,<span class="string">'Laminate'</span>)
+0211             <span class="keyword">end</span>
+0212         <span class="keyword">end</span>
+0213  <span class="comment">%}</span>
+0214</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

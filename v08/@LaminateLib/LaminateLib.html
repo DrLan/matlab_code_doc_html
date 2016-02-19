@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of LaminateLib</title>
+  <meta name="keywords" content="LaminateLib">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@LaminateLib</a> &gt; LaminateLib.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@LaminateLib&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>LaminateLib
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Laminate1/Laminate1.html" class="code" title="">Laminate1</a>	</li><li><a href="LaminateLib.html" class="code" title="">LaminateLib</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="LaminateLib.html" class="code" title="">LaminateLib</a>	</li><li><a href="../../v08/GUI/CFRP_GUI_v08.html" class="code" title="function [allHandles,allData] = CFRP_GUI_v08( )">CFRP_GUI_v08</a>	GUI for 3D resistor network</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = LaminateLib()</a></li><li><a href="#_sub2" class="code">function obj = addItem(obj,itemObj)</a></li><li><a href="#_sub3" class="code">function obj = deleteItem(obj,itemObj)</a></li><li><a href="#_sub4" class="code">function showOnGui(obj,tableHandle)</a></li><li><a href="#_sub5" class="code">function itemNames = getNames(obj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="LaminateLib.html" class="code" title="">LaminateLib</a>
+0002     <span class="comment">%%% table in the form:</span>
+0003     <span class="comment">%   Name      AS4        IM7</span>
+0004     <span class="comment">% beta           400         350</span>
+0005     <span class="comment">% resistivity   1.5e-5   1.6e-5</span>
+0006     <span class="comment">%   ...             ....          ....</span>
+0007     <span class="comment">%%%</span>
+0008     <span class="comment">%     properties %(Dependent)</span>
+0009     <span class="comment">%</span>
+0010     <span class="comment">%        %libTable =table; % fiberLib is a Table</span>
+0011     <span class="comment">%     end</span>
+0012     properties
+0013         itemNames ={}
+0014         itemArray=[]
+0015         <span class="comment">% libStruct = struct;</span>
+0016     <span class="keyword">end</span>
+0017     methods
+0018         <span class="comment">%         function obj = FiberLib()</span>
+0019         <span class="comment">%             %              fiberAS4 = Fiber1('AS4')</span>
+0020         <span class="comment">%             %              fiberIM7 = Fiber1('IM7')</span>
+0021         <span class="comment">%             %              fiberLibStruct = [fiberAS4.materialProperty fiberIM7.materialProperty]</span>
+0022         <span class="comment">%             obj.fiberLibTable = table</span>
+0023         <span class="comment">%         end</span>
+0024         <a name="_sub0" href="#_subfunctions" class="code">function obj = LaminateLib()            </a>
+0025             obj.itemArray = [<a href="../../v08/@Laminate1/Laminate1.html" class="code" title="">Laminate1</a>()];
+0026             obj.itemNames = {<span class="string">'AS4 [0]8'</span>,<span class="string">'IM7 [0/90]s'</span>};
+0027             <span class="keyword">for</span> i=1:length(obj.itemNames)
+0028                 itemName = obj.itemNames{i};
+0029                 itemObj=<a href="../../v08/@Laminate1/Laminate1.html" class="code" title="">Laminate1</a>(itemName);
+0030                 obj.itemArray(i)=itemObj;
+0031             <span class="keyword">end</span>
+0032         <span class="keyword">end</span>
+0033         
+0034         <a name="_sub1" href="#_subfunctions" class="code">function obj = addItem(obj,itemObj)</a>
+0035             itemName = itemObj.propertyStruct.name;
+0036             [hasItem,~] = ismember(itemName,obj.itemNames);
+0037             errMsg=[<span class="string">'NameError: laminate name &quot;'</span> itemName <span class="string">'&quot; already existed; please pick another name!'</span>];
+0038             assert(~hasItem,errMsg);
+0039             obj.itemNames{end+1} = itemName;
+0040             obj.itemArray(end+1) = itemObj;
+0041         <span class="keyword">end</span>
+0042         <a name="_sub2" href="#_subfunctions" class="code">function obj = deleteItem(obj,itemObj)</a>
+0043             <span class="comment">%[~,index]=ismember(fiberc</span>
+0044             itemName = itemObj.propertyStruct.name;
+0045             [hasItem,index] = ismember(itemName,obj.itemNames);
+0046             errMsg= <span class="string">'laminate to be deleted is not found in current laminate libary!'</span>;
+0047             assert(hasItem,errMsg)
+0048             obj.itemArray(index)=[];
+0049             obj.itemNames(index)=[];
+0050         <span class="keyword">end</span>
+0051         <a name="_sub3" href="#_subfunctions" class="code">function showOnGui(obj,tableHandle)</a>
+0052             data = obj.itemNames';
+0053             tableHandle.Data=data;
+0054             tableHandle.RowName = <span class="string">'numbered'</span>;
+0055             tableHandle.ColumnName={<span class="string">'Laminate Name'</span>};
+0056         <span class="keyword">end</span>
+0057         <a name="_sub4" href="#_subfunctions" class="code">function itemNames = getNames(obj)</a>
+0058             itemNames = obj.itemNames;
+0059         <span class="keyword">end</span>
+0060     <span class="keyword">end</span>
+0061 <span class="keyword">end</span>
+0062 
+0063 
+0064 <span class="comment">% classdef LaminateLib</span>
+0065 <span class="comment">%     %%% Table in the form:</span>
+0066 <span class="comment">%     %   Name      AS4        IM7</span>
+0067 <span class="comment">%     % beta           400         350</span>
+0068 <span class="comment">%     % resistivity   1.5e-5   1.6e-5</span>
+0069 <span class="comment">%     %   ...             ....          ....</span>
+0070 <span class="comment">%     %%%</span>
+0071 <span class="comment">%     properties</span>
+0072 <span class="comment">%        libTable =table % fiberLib is a Table</span>
+0073 <span class="comment">%        libStruct = struct</span>
+0074 <span class="comment">%     end</span>
+0075 <span class="comment">%     methods</span>
+0076 <span class="comment">%         function obj = LaminateLib()</span>
+0077 <span class="comment">%             laminate1 = Laminate1('laminate AS4')</span>
+0078 <span class="comment">%             laminate2= Laminate1('lamiante IM7')</span>
+0079 <span class="comment">%             libStruct = [laminate1.propertyStruct;laminate2.propertyStruct]</span>
+0080 <span class="comment">%             obj.libTable = [laminate1.propertyTable;laminate2.propertyTable];</span>
+0081 <span class="comment">%             %obj.libTable = struct2table(laminaLibStruct)</span>
+0082 <span class="comment">%         end</span>
+0083 <span class="comment">%         function obj = set.libTable(obj,tableObj)</span>
+0084 <span class="comment">%             obj.libTable = tableObj</span>
+0085 <span class="comment">%         end</span>
+0086 <span class="comment">%         function value = get.libTable(obj)</span>
+0087 <span class="comment">%             value = obj.libTable</span>
+0088 <span class="comment">%         end</span>
+0089 <span class="comment">%</span>
+0090 <span class="comment">%         function names = getNames(obj)</span>
+0091 <span class="comment">%             names = table2cell(obj.libTable(:,1));</span>
+0092 <span class="comment">%         end</span>
+0093 <span class="comment">%         function obj = addItem(obj,newItem)</span>
+0094 <span class="comment">%             prevTable = obj.Table</span>
+0095 <span class="comment">%             newItemTable = struct2table(newItem.materialProperty)</span>
+0096 <span class="comment">%             newTable = [prevTable;newItemTable]</span>
+0097 <span class="comment">%             obj.Table = newTable</span>
+0098 <span class="comment">%         end</span>
+0099 <span class="comment">%         function obj = deleteItem(obj)</span>
+0100 <span class="comment">%         end</span>
+0101 <span class="comment">%         function showOnGui(obj,panelHandle)</span>
+0102 <span class="comment">%         end</span>
+0103 <span class="comment">%</span>
+0104 <span class="comment">%     end</span>
+0105 <span class="comment">% end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

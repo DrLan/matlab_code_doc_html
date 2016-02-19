@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of FiberLib</title>
+  <meta name="keywords" content="FiberLib">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@FiberLib</a> &gt; FiberLib.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@FiberLib&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>FiberLib
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Fiber1/Fiber1.html" class="code" title="">Fiber1</a>	</li><li><a href="FiberLib.html" class="code" title="">FiberLib</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="FiberLib.html" class="code" title="">FiberLib</a>	</li><li><a href="../../v08/GUI/CFRP_GUI_v08.html" class="code" title="function [allHandles,allData] = CFRP_GUI_v08( )">CFRP_GUI_v08</a>	GUI for 3D resistor network</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = FiberLib()</a></li><li><a href="#_sub2" class="code">function obj = addItem(obj,fiberObj)</a></li><li><a href="#_sub3" class="code">function obj = deleteItem(obj,fiberObj)</a></li><li><a href="#_sub4" class="code">function showOnGui(obj,tableHandle)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="FiberLib.html" class="code" title="">FiberLib</a>
+0002     <span class="comment">%%% table in the form:</span>
+0003     <span class="comment">%   Name      AS4        IM7</span>
+0004     <span class="comment">% beta           400         350</span>
+0005     <span class="comment">% resistivity   1.5e-5   1.6e-5</span>
+0006     <span class="comment">%   ...             ....          ....</span>
+0007     <span class="comment">%%%</span>
+0008 <span class="comment">%     properties (Dependent)</span>
+0009 <span class="comment">%         libTable =table % fiberLib is a Table</span>
+0010 <span class="comment">%     end</span>
+0011     properties
+0012         itemArray = []
+0013         itemNames = {}
+0014     <span class="keyword">end</span>
+0015     methods        
+0016         <a name="_sub0" href="#_subfunctions" class="code">function obj = FiberLib()            </a>
+0017             obj.itemArray = [<a href="../../v08/@Fiber1/Fiber1.html" class="code" title="">Fiber1</a>()];
+0018             obj.itemNames = {<span class="string">'AS4'</span>,<span class="string">'IM7'</span>};
+0019             <span class="keyword">for</span> i=1:length(obj.itemNames)
+0020                 item = obj.itemNames{i};
+0021                 class(item)
+0022                 fiberObj=<a href="../../v08/@Fiber1/Fiber1.html" class="code" title="">Fiber1</a>(item);
+0023                 obj.itemArray(i)=fiberObj;                
+0024             <span class="keyword">end</span>
+0025         <span class="keyword">end</span>
+0026         <a name="_sub1" href="#_subfunctions" class="code">function obj = addItem(obj,fiberObj)</a>
+0027             itemName = fiberObj.propertyStruct.name;
+0028             [hasItem,~] = ismember(itemName,obj.itemNames);
+0029             errMsg=[<span class="string">'NameError: fiber name &quot;'</span> itemName <span class="string">'&quot; already existed; please pick another name!'</span>];
+0030             assert(~hasItem,errMsg);           
+0031             obj.itemNames{end+1} = itemName;
+0032             obj.itemArray(end+1) = fiberObj;
+0033         <span class="keyword">end</span>
+0034         <a name="_sub2" href="#_subfunctions" class="code">function obj = deleteItem(obj,fiberObj)</a>
+0035              <span class="comment">%[~,index]=ismember(fiberc</span>
+0036              itemName = fiberObj.propertyStruct.name;
+0037              [hasItem,index] = ismember(itemName,obj.itemNames);
+0038              <span class="keyword">if</span> ~hasItem
+0039                  disp <span class="string">'fiber to be deleted is not found in current fiber libary!'</span>
+0040              <span class="keyword">end</span>
+0041              obj.itemArray(index)=[];
+0042              obj.itemNames(index)=[];            
+0043      
+0044         <span class="keyword">end</span>
+0045         <a name="_sub3" href="#_subfunctions" class="code">function showOnGui(obj,tableHandle)            </a>
+0046             data = obj.itemNames';
+0047             tableHandle.Data=data;
+0048             tableHandle.RowName = <span class="string">'numbered'</span>;
+0049             tableHandle.ColumnName={<span class="string">'Fiber Name'</span>};         
+0050         <span class="keyword">end</span>
+0051         
+0052     <span class="keyword">end</span>
+0053 <span class="keyword">end</span>
+0054 
+0055 <span class="comment">%obj.libStruct(i)=fiberObj.propertyStruct;</span>
+0056 <span class="comment">%            for item=itemNames</span>
+0057 <span class="comment">%                class(item)</span>
+0058 <span class="comment">%            end</span>
+0059 <span class="comment">%obj.libStruct = [fiberAS4.propertyStruct fiberIM7.propertyStruct]</span>
+0060 <span class="comment">%obj.Table = struct2table(fiberLibStruct)</span>
+0061 
+0062 <span class="comment">%         function obj = set.libTable(obj,tableObj)</span>
+0063 <span class="comment">%             obj.libTable = tableObj</span>
+0064 <span class="comment">%         end</span>
+0065 <span class="comment">%         function value = get.libTable(obj)</span>
+0066 <span class="comment">%             value = struct2table(obj.libStruct)</span>
+0067 <span class="comment">%             %value = obj.Table</span>
+0068 <span class="comment">%         end</span>
+0069 <span class="comment">%</span>
+0070 <span class="comment">%         function names = getNames(obj)</span>
+0071 <span class="comment">%             %%% returns a cell</span>
+0072 <span class="comment">%             names = table2cell(obj.libTable(:,1));</span>
+0073 <span class="comment">%         end</span>
+0074 
+0075 
+0076 <span class="comment">%         function obj = FiberLib()</span>
+0077 <span class="comment">%             %              fiberAS4 = Fiber1('AS4')</span>
+0078 <span class="comment">%             %              fiberIM7 = Fiber1('IM7')</span>
+0079 <span class="comment">%             %              fiberLibStruct = [fiberAS4.propertyStruct fiberIM7.propertyStruct]</span>
+0080 <span class="comment">%             obj.fiberLibTable = table</span>
+0081 <span class="comment">%         end</span>
+0082 
+0083 <span class="comment">%             fiberAS4 = Fiber1('AS4')</span>
+0084 <span class="comment">%             fiberIM7 = Fiber1('IM7')</span>
+0085 <span class="comment">%             itemArray = [fiberAS4 fiberIM7]</span>
+0086 
+0087 <span class="comment">%             prevTable = obj.libTable</span>
+0088 <span class="comment">%             newItemTable = struct2table(newItem.propertyStruct)</span>
+0089 <span class="comment">%             newTable = [prevTable;newItemTable]</span>
+0090 <span class="comment">%             obj.libTable = newTable</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

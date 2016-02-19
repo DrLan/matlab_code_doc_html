@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Laminate1</title>
+  <meta name="keywords" content="Laminate1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Laminate1</a> &gt; Laminate1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Laminate1&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Laminate1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/runLTspice.html" class="code" title="function runLTspice(NetListID)">runLTspice</a>	RUNLTSPICE internal function, no need to call</li><li><a href="Laminate1.html" class="code" title="">Laminate1</a>	</li><li><a href="runLTspice.html" class="code" title="function raw_data = runLTspice(obj,NetList)">runLTspice</a>	RUNLTSPICE call LTspice to solve resistor network.</li><li><a href="transientNetlist11.html" class="code" title="function netlist= transientNetlist11(obj)">transientNetlist11</a>	TRANSIENTNETLIST1 Summary of this function goes here</li><li><a href="../../v08/helper/readTransientRAW.html" class="code" title="function result = readTransientRAW(rawData)">readTransientRAW</a>	readTransientRAW  method of Laminate; to read SPICE output .raw data and</li><li><a href="../../v08/helper/runLTspice.html" class="code" title="function [Vin,Is,data1] = runLTspice(NetList)">runLTspice</a>	% Run LTSpice and reduce data</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Laminate1.html" class="code" title="">Laminate1</a>	</li><li><a href="../../v08/@LaminateLib/LaminateLib.html" class="code" title="">LaminateLib</a>	</li><li><a href="../../v08/Callbacks/addLaminate.html" class="code" title="function addLaminate(selectedNode,allHandles,allData)">addLaminate</a>	</li><li><a href="../../v08/Callbacks/addLaminate_callback.html" class="code" title="function addLaminate_callback(source,eventData,allHandles,allData)">addLaminate_callback</a>	</li><li><a href="../../v08/demo1.html" class="code" title="">demo1</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = Laminate1(val)</a></li><li><a href="#_sub2" class="code">function showOnGui(obj,allHandles)</a></li><li><a href="#_sub3" class="code">function xResistivity = getXResistivity(obj)</a></li><li><a href="#_sub4" class="code">function yResistivity = getYResistivity(obj)</a></li><li><a href="#_sub5" class="code">function zResistivity = getZResistivity(obj)</a></li><li><a href="#_sub6" class="code">function  resistivityTensor = getResistivityTensor(obj)</a></li><li><a href="#_sub7" class="code">function [voltage,current,resistance] = transientAnalysis(obj)</a></li><li><a href="#_sub8" class="code">function results = compute(obj)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Laminate1.html" class="code" title="">Laminate1</a>
+0002     <span class="comment">%% usage example:</span>
+0003     <span class="comment">% a=Fiber('AS4')</span>
+0004     <span class="comment">% b= Fiber('IM7')</span>
+0005     <span class="comment">% AS4prop =a.property</span>
+0006     properties
+0007         propertyCell = {};
+0008         parameterCell = {};
+0009         propertyStruct = struct;
+0010         parameterStruct = struct;
+0011         propertyTable = table
+0012     <span class="keyword">end</span>
+0013     methods
+0014         netlist = <a href="transientNetlist11.html" class="code" title="function netlist= transientNetlist11(obj)">transientNetlist11</a>(obj);
+0015         <a name="_sub0" href="#_subfunctions" class="code">function obj = Laminate1(val)</a>
+0016             <span class="comment">%obj.propertyStruct=struct;</span>
+0017             <span class="keyword">if</span> nargin&gt;0
+0018                 obj.propertyStruct.name = val;
+0019             <span class="keyword">else</span>
+0020                 obj.propertyStruct.name =<span class="string">'myLaminate1'</span>;
+0021             <span class="keyword">end</span>
+0022             obj.propertyStruct.pressure=<span class="string">'8.0e5'</span>;
+0023             obj.propertyStruct.dimension = <span class="string">'[1e-2 1e-3 1e-3]'</span>;
+0024             obj.propertyStruct.laminaArray = {<span class="string">'AS4 VF=0.5'</span>;<span class="string">'AS4 VF=0.5'</span>;<span class="string">'AS4 VF=0.5'</span>;<span class="string">'AS4 VF=0.5'</span>};
+0025             obj.propertyStruct.layupArray = {0;0;0;0};
+0026             obj.propertyStruct.connectivityArray ={0.1;0.1;0.1;0.1};
+0027             
+0028             obj.parameterStruct.analysisType = <span class="string">'Transient'</span>;
+0029             obj.parameterStruct.voltageInputTable = <span class="string">'0 0 10u 117 20u 141 30u 143 40u 137 50u 117 60u 93 70u 69 80u 43 90u 23 100u 0'</span>;
+0030             obj.parameterStruct.stopTime = <span class="string">'50u'</span>;
+0031             obj.parameterStruct.breakdownTemperature = <span class="string">'1000'</span>;
+0032         <span class="keyword">end</span>
+0033 
+0034         rawData=<a href="runLTspice.html" class="code" title="function raw_data = runLTspice(obj,NetList)">runLTspice</a>(obj,NetList)
+0035         <a name="_sub1" href="#_subfunctions" class="code">function showOnGui(obj,allHandles)</a>
+0036             <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(allHandles.materialPropertyLayout,<span class="string">'Height'</span>,[-1,-1,5])
+0037             table1 = allHandles.materialPropertyTable;
+0038             table1.ColumnEditable = [];
+0039             table1.Visible = <span class="string">'on'</span>;
+0040             table1Data = {obj.propertyStruct.name;obj.propertyStruct.pressure;obj.propertyStruct.dimension};
+0041             table1.Data = table1Data;
+0042             table1.ColumnName ={<span class="string">'Property Value'</span>,<span class="string">'Description'</span>}
+0043             table1.RowName = {<span class="string">'Laminate Name'</span>,<span class="string">'Processing Pressure (Pa)'</span>,<span class="string">'Dimension (m)'</span>};
+0044             
+0045             
+0046             table2 =  allHandles.chooseFiberTable;
+0047             table2.ColumnEditable = false;
+0048             table2.RowName =<span class="string">'numbered'</span>;
+0049             
+0050             table2.Visible =<span class="string">'on'</span>;
+0051             propertyData =[obj.propertyStruct.laminaArray,obj.propertyStruct.layupArray,obj.propertyStruct.connectivityArray];
+0052             table2.Data = propertyData;
+0053             parameterTable = allHandles.simulationParameterTable;
+0054             
+0055             
+0056             table2.ColumnName = {<span class="string">'Lamina'</span>,<span class="string">'Layup'</span>,<span class="string">'Ply Connectivity'</span>};
+0057             <span class="comment">%ColumnName =[];</span>
+0058             parameterTable.Visible =<span class="string">'on'</span>;
+0059             parameterTable.ColumnEditable = true;
+0060             parameterTable.Data = struct2cell(obj.parameterStruct);
+0061             parameterTable.RowName = {<span class="string">'Analysis Type'</span>,<span class="string">'Voltage Waveform'</span>,<span class="string">'Stop Time (s)'</span>,<span class="keyword">...</span>
+0062                 <span class="string">'Breakdown Temperature'</span>};
+0063             
+0064         <span class="keyword">end</span>
+0065         
+0066         <span class="comment">%</span>
+0067         <span class="comment">%showOnGui  :method of Laminate1; to display data on GUI</span>
+0068         <span class="comment">%obj.showOnGui(tableHandle)</span>
+0069         <span class="comment">% tableHandle is the handle of uitable where data is to be</span>
+0070         <span class="comment">% plotted</span>
+0071         <span class="comment">% % Example:</span>
+0072         <span class="comment">%  L =Laminate1()</span>
+0073         <span class="comment">%  figure</span>
+0074         <span class="comment">%  t1 = uitable</span>
+0075         <span class="comment">%  L.showOnGui(t1)</span>
+0076         <span class="comment">% see also uitable</span>
+0077         <span class="comment">% ---copyright 2014-2016 Hong Yu,hongy@udel.edu ----</span>
+0078         <span class="comment">%</span>
+0079         
+0080     
+0081         <a name="_sub2" href="#_subfunctions" class="code">function xResistivity = getXResistivity(obj)</a>
+0082             xResistivity =rand()/1000;
+0083         <span class="keyword">end</span>
+0084         <a name="_sub3" href="#_subfunctions" class="code">function yResistivity = getYResistivity(obj)</a>
+0085             <span class="keyword">if</span> 1
+0086                 yResistivity = rand()
+0087                 <span class="comment">%pause(0.9)</span>
+0088                 <span class="keyword">return</span>
+0089             <span class="keyword">end</span>
+0090             yResistivity = obj.getZResistivity;
+0091         <span class="keyword">end</span>
+0092         <a name="_sub4" href="#_subfunctions" class="code">function zResistivity = getZResistivity(obj)</a>
+0093             <span class="keyword">if</span> 1
+0094                 zResistivity = rand()
+0095                 <span class="keyword">return</span>
+0096             <span class="keyword">end</span>
+0097         <span class="keyword">end</span>
+0098         <a name="_sub5" href="#_subfunctions" class="code">function  resistivityTensor = getResistivityTensor(obj)</a>
+0099             xResistivity = obj.getXResistivity;
+0100             yResistivity = obj.getYResistivity;
+0101             zResistivity =obj.getZResistivity;
+0102             resistivityTensor =[xResistivity yResistivity zResistivity];
+0103         <span class="keyword">end</span>
+0104         <a name="_sub6" href="#_subfunctions" class="code">function [voltage,current,resistance] = transientAnalysis(obj)</a>
+0105             voltage = obj.propertyStruct.inputTable
+0106         <span class="keyword">end</span>
+0107         
+0108         <a name="_sub7" href="#_subfunctions" class="code">function results = compute(obj)</a>
+0109             <span class="comment">%COMPUTE : method of Laminate; compute through-thickness resistivty</span>
+0110             <span class="comment">% no input required.</span>
+0111             <span class="comment">% Example:</span>
+0112             <span class="comment">% L = Laminate()</span>
+0113             <span class="comment">% L.compute()</span>
+0114             <span class="comment">%</span>
+0115             <span class="comment">% first write SPICE netlist with Laminate.transientNetList</span>
+0116             <span class="comment">% then solve it by calling LTSPICE with Laminate.runLTspice</span>
+0117             <span class="comment">% at last reduce data with readTransientRAW</span>
+0118             <span class="comment">%</span>
+0119             <span class="comment">% see also Laminate, transientNetList, runLTspice,readTransientRAW</span>
+0120             netlist = obj.transientNetlist11;  <span class="comment">% save .cir in SPICE_I nOut folder</span>
+0121             <span class="comment">%netlist = 'laminateNetlist'</span>
+0122             NetList =[<span class="string">'SPICE\'</span>,netlist];
+0123             rawData = obj.runLTspice(NetList);
+0124             results = <a href="../../v08/helper/readTransientRAW.html" class="code" title="function result = readTransientRAW(rawData)">readTransientRAW</a>(rawData);
+0125 <span class="comment">%             timeArray = results(2:end-1,1);</span>
+0126 <span class="comment">%             voltageArray = results(2:end-1,2);</span>
+0127 <span class="comment">%             currentArray = results(2:end-1,3);</span>
+0128 <span class="comment">%             resistanceArray = results(2:end-1,4);</span>
+0129 <span class="comment">%             figure</span>
+0130 <span class="comment">%             line(timeArray,voltageArray,'LineWidth',5)</span>
+0131 <span class="comment">%             ax1=gca;</span>
+0132 <span class="comment">%             ax1_pos = ax1.Position; % position of first axes</span>
+0133 <span class="comment">%             line(timeArray,currentArray,'Parent',ax1,'Color','r','LineWidth',5)</span>
+0134 <span class="comment">%             ax2 = axes('Position',ax1_pos,...</span>
+0135 <span class="comment">%                 'XAxisLocation','bottom',...</span>
+0136 <span class="comment">%                 'YAxisLocation','right',...</span>
+0137 <span class="comment">%                 'Color','none');</span>
+0138 <span class="comment">%             line(timeArray,resistanceArray,'Parent',ax2,'Color','g','LineWidth',5,'Marker','+','LineWidth',3)</span>
+0139         <span class="keyword">end</span>
+0140     <span class="keyword">end</span>
+0141 <span class="keyword">end</span>
+0142 
+0143 
+0144 
+0145         
+0146         <span class="comment">% obj.propertyStruct.plyConnectivity =1.0;</span>
+0147         <span class="comment">% choose between 'SteadyState' an2d 'Transient'</span>
+0148         <span class="comment">%obj.propertyStruct.dimension = '[8e-3 2e-3 1e-3]';</span>
+0149         <span class="comment">%obj.propertyStruct.towRhoArray = '[3.5e-5 1 1]';</span>
+0150         <span class="comment">%obj.propertyStruct.layUp = '[0 0]';</span>
+0151         <span class="comment">%obj.propertyStruct.interPlyResistance = 1000; % resistance of interply contacts</span>
+0152         <span class="comment">%obj.propertyStruct.contactSpan = 1e-3;</span>
+0153         <span class="comment">%nLayer = 4; % number of Layers in each ply</span>
+0154         <span class="comment">% contactRAfterBreakdown = 100;</span>
+0155         <span class="comment">%interPlyRAfterBreakdown = 1000;</span>
+0156         <span class="comment">%voltageInputTable = [0 0 90e-6 10 100e-3 0];</span>
+0157         
+0158         
+0159         <span class="comment">%obj.propertyStruct.name ='myLaminate1';</span>
+0160         <span class="comment">%obj.propertyStruct.type = 'cross-ply';</span>
+0161         
+0162         <span class="comment">%obj.propertyStruct.layup = '[0,0]';</span>
+0163         
+0164         <span class="comment">%             table1 = struct2table(obj.propertyStruct);</span>
+0165         <span class="comment">%             obj.propertyTable = table1;</span>
+0166         <span class="comment">%</span>
+0167         <span class="comment">%             obj.parameterStruct.stopTime = '1.0';</span>
+0168         <span class="comment">%             obj.parameterStruct.analysisType = 'Transient';</span>
+0169         <span class="comment">%             obj.parameterStruct.withJouleHeating = true;</span>
+0170         <span class="comment">%             obj.parameterStruct.voltageWaveform ='[0,1,1,2,2,10,3,20,4,0]';</span>
+0171         <span class="comment">%netlist= transientNetList11(obj)</span>
+0172 
+0173         
+0174             <span class="comment">%             tempCell = struct2cell(obj.propertyStruct)</span>
+0175         <span class="comment">%             %tempCell{2}=obj.propertyStruct.fiber.propertyStruct.name;</span>
+0176         <span class="comment">%             for i = 1:length(tempCell)</span>
+0177         <span class="comment">%                 item = tempCell{i}</span>
+0178         <span class="comment">%                 if isnumeric(item)</span>
+0179         <span class="comment">%                     tempCell{i} = mat2str(item,3)</span>
+0180         <span class="comment">%                 end</span>
+0181         <span class="comment">%             end</span>
+0182         <span class="comment">%             tableHandle.Data=tempCell;</span>
+0183         <span class="comment">%             tableHandle.ColumnName ={};</span>
+0184         <span class="comment">%             colNames = {'Lamina Name','Fiber','Volume Fraction','Pressure','Pack Order','Dimension'};</span>
+0185         <span class="comment">%             tableHandle.RowName =colNames;</span>
+0186         <span class="comment">%         end</span>
+0187         
+0188         
+0189         
+0190         
+0191 
+0192 <span class="comment">% property = struct({'Name','Diameter','Electrical Resistivity'</span>
+0193 <span class="comment">%property = struct</span>
+0194 <span class="comment">%field='name'</span>
+0195 <span class="comment">%value='as4'</span>
+0196 <span class="comment">%property = struct(field,value)</span>
+0197 <span class="comment">%property.name ='AS4'</span>
+0198 <span class="comment">%          property.Diameter = 5e-5</span>
+0199 <span class="comment">%          property.ElectricalResistivity</span>
+0200 <span class="comment">%          property.ThermalConductivity</span>
+0201 <span class="comment">%          property.EModulus</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

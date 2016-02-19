@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of kirchoff</title>
+  <meta name="keywords" content="kirchoff">
+  <meta name="description" content="Script to solve a complicated KVL network">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; kirchoff.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>kirchoff
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Script to solve a complicated KVL network</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">Script to solve a complicated KVL network</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>	UNTITLED2 Summary of this function goes here</li><li><a href="dangling.html" class="code" title="function [ dangling_exist ] = dangling( fiber,N,max_x )">dangling</a>	UNTITLED2 Summary of this function goes here</li><li><a href="deletenode.html" class="code" title="function [ new_fiber ] = deletenode( fiber,node,N )">deletenode</a>	UNTITLED Summary of this function goes here</li><li><a href="removezeros.html" class="code" title="function [ G1 indices ] = removezeros( G )">removezeros</a>	UNTITLED3 Summary of this function goes here</li><li><a href="test.html" class="code" title="">test</a>	% Statistical representation: beta</li><li><a href="traverse.html" class="code" title="function [ output_args ] = traverse( node,fiber1,N )">traverse</a>	UNTITLED3 Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 
+0002 
+0003 <span class="comment">%Script to solve a complicated KVL network</span>
+0004 clear all
+0005 
+0006 vfmatrix=[0.55]; <span class="comment">%volume fractions</span>
+0007 tempsimsize=size(vfmatrix);
+0008 simsize=tempsimsize(2);
+0009 final_result=zeros(10*simsize,2); <span class="comment">%first column is vf second column is resistance</span>
+0010 average_result=zeros(simsize,3);
+0011 runcount=0;
+0012 <span class="keyword">for</span> simnumber=1:simsize
+0013 <span class="keyword">for</span> specimen=1:1
+0014 vf=vfmatrix(simnumber);
+0015 filen=strcat(<span class="string">'vf_'</span>,num2str(vf),<span class="string">'_spec'</span>,num2str(specimen),<span class="string">'.mat'</span>);
+0016 load(filen);
+0017 viscircles([fiber.x' fiber.y'],fiber.radius);
+0018 axis([0 20 0 20]);
+0019 
+0020 Np=size(fiber.x);
+0021 N=Np(2);
+0022 perc=0.7*fiber.radius(1); <span class="comment">%percolation distance PARAMETER</span>
+0023 V_left=1; <span class="comment">%left Voltage PARAMETER</span>
+0024 V_right=0;  <span class="comment">%right voltage PARAMETER</span>
+0025 max_x=20; <span class="comment">%Left boundary coordinates</span>
+0026 
+0027 fiber1(N) = struct(<span class="string">'center'</span>,[], <span class="string">'radius'</span>,[], <span class="string">'nodes'</span>, []);
+0028 
+0029 xmat=fiber.x;
+0030 ymat=fiber.y;
+0031 rmat=fiber.radius;
+0032 <span class="keyword">for</span> i=1:N
+0033     fiber1(i).center(1)=xmat(i);
+0034     fiber1(i).center(2)=ymat(i);
+0035     fiber1(i).radius=rmat(i);
+0036 <span class="keyword">end</span>
+0037 
+0038 <span class="keyword">for</span> i=1:N
+0039     fiber1(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber1,i,perc,N);
+0040 <span class="keyword">end</span>
+0041 hold on
+0042 <span class="comment">% deleting dangling bonds within electrodes:</span>
+0043 <span class="keyword">while</span>(<a href="dangling.html" class="code" title="function [ dangling_exist ] = dangling( fiber,N,max_x )">dangling</a>(fiber1,N,max_x))
+0044 <span class="keyword">for</span> i=1:N
+0045      num=size(fiber1(i).nodes);
+0046     num_nodes=num(2);
+0047     <span class="keyword">if</span>(num_nodes==1) &amp;&amp; (fiber1(i).center(1)&gt;2*fiber1(i).radius) &amp;&amp; (fiber1(i).center(1)&lt;max_x-2*fiber1(i).radius)
+0048         fiber1=<a href="deletenode.html" class="code" title="function [ new_fiber ] = deletenode( fiber,node,N )">deletenode</a>(fiber1,i,N);
+0049     <span class="keyword">end</span>
+0050 <span class="keyword">end</span>
+0051 <span class="keyword">end</span>
+0052 
+0053 <span class="comment">% defining boundary elements</span>
+0054 leftnodes=[];
+0055 rightnodes=[];
+0056 <span class="keyword">for</span> i=1:N
+0057     <span class="keyword">if</span> (fiber1(i).center(1)&lt;=2*fiber1(i).radius) 
+0058         fiber1(i).nodes=[fiber1(i).nodes 0]; <span class="comment">%left boundary</span>
+0059         leftnodes(end+1)=i;
+0060     <span class="keyword">end</span>
+0061     <span class="keyword">if</span> (fiber1(i).center(1)&gt;=max_x-2*fiber1(i).radius)
+0062         fiber1(i).nodes=[fiber1(i).nodes N+1]; <span class="comment">% right boundary</span>
+0063         rightnodes(end+1)=i;
+0064     <span class="keyword">end</span>
+0065 <span class="keyword">end</span>
+0066 
+0067 <span class="comment">%deleting elements not connected to boundary.</span>
+0068 <span class="keyword">global</span> isconnected;
+0069 isconnected=zeros(1,N);
+0070 Nleft=max(size(leftnodes));
+0071 Nright=max(size(rightnodes));
+0072 <span class="keyword">for</span> i=1:Nleft
+0073   <a href="traverse.html" class="code" title="function [ output_args ] = traverse( node,fiber1,N )">traverse</a>(leftnodes(i),fiber1,N);
+0074 <span class="keyword">end</span>
+0075 <span class="keyword">for</span> i=1:Nright
+0076   <a href="traverse.html" class="code" title="function [ output_args ] = traverse( node,fiber1,N )">traverse</a>(rightnodes(i),fiber1,N);
+0077 <span class="keyword">end</span>
+0078 <span class="comment">% traverse(rightnodes,fiber1);</span>
+0079 
+0080 <span class="comment">% Deleting elements not connected to left or right ends:</span>
+0081 <span class="keyword">for</span> i=1:N
+0082     <span class="keyword">if</span> (isconnected(i)==0)
+0083         fiber1=<a href="deletenode.html" class="code" title="function [ new_fiber ] = deletenode( fiber,node,N )">deletenode</a>(fiber1,i,N);
+0084     <span class="keyword">end</span>
+0085 <span class="keyword">end</span>
+0086 
+0087 
+0088 <span class="comment">%plotting the node</span>
+0089 count=1;
+0090 <span class="keyword">for</span> i=1:N
+0091     num=size(fiber1(i).nodes);
+0092     num_nodes=num(2);
+0093     <span class="keyword">if</span>(num_nodes)
+0094         <span class="keyword">for</span> j=1:num_nodes
+0095             curr_node=fiber1(i).nodes(j);
+0096             <span class="keyword">if</span> ((curr_node&gt;0) &amp;&amp; (curr_node&lt;=N)) <span class="comment">%skipping boundary nodes</span>
+0097              plot([fiber1(i).center(1) fiber1(curr_node).center(1)],[fiber1(i).center(2) fiber1(curr_node).center(2)],<span class="string">'r*-'</span>,<span class="string">'LineWidth'</span>,3);
+0098             <span class="keyword">end</span>
+0099             <span class="keyword">if</span> curr_node==0
+0100                  plot([0 fiber1(i).center(1)],[fiber1(i).center(2) fiber1(i).center(2)],<span class="string">'r*-'</span>,<span class="string">'LineWidth'</span>,3);
+0101             <span class="keyword">end</span>
+0102             <span class="keyword">if</span> curr_node==N+1
+0103                  plot([fiber1(i).center(1) max_x],[fiber1(i).center(2) fiber1(i).center(2)],<span class="string">'r*-'</span>,<span class="string">'LineWidth'</span>,3);
+0104                 
+0105             <span class="keyword">end</span>
+0106 
+0107         <span class="keyword">end</span>
+0108         count=count+1;
+0109     <span class="keyword">end</span>
+0110 <span class="keyword">end</span>
+0111 
+0112 <span class="comment">%applying KVL</span>
+0113 <span class="comment">%[G]{V}={K}</span>
+0114 G=zeros(N);
+0115 K=zeros(1,N);
+0116 <a href="test.html" class="code" title="">test</a>=0;
+0117 <span class="keyword">for</span> i=1:N
+0118     isleft=sum(fiber1(i).nodes==0); <span class="comment">%left node</span>
+0119     isright=sum(fiber1(i).nodes==N+1); <span class="comment">%right node</span>
+0120 <span class="comment">%      isnextleft=sum([fiber(fiber(i).nodes).nodes]==0); %connected to left node</span>
+0121 <span class="comment">%     isnextright=sum([fiber(fiber(i).nodes).nodes]==N+1); %connected to left node</span>
+0122     num=size(fiber1(i).nodes);
+0123     num_nodes=num(2);
+0124     <span class="keyword">if</span>(num_nodes)
+0125        <span class="keyword">if</span>(~(isleft || isright))
+0126            sum_coeff=0;
+0127         <span class="keyword">for</span> j=1:num_nodes
+0128             ref=fiber1(i).nodes(j);
+0129             fiber_d=sqrt((fiber1(i).center(1)-fiber1(ref).center(1))^2+(fiber1(i).center(2)-fiber1(ref).center(2))^2);
+0130             G(i,fiber1(i).nodes(j))=-1/(exp(fiber_d));
+0131             sum_coeff=sum_coeff+(1/(exp(fiber_d)));
+0132         <span class="keyword">end</span>
+0133 <span class="comment">%          G(i,i)=num_nodes;</span>
+0134            G(i,i)=sum_coeff;
+0135        <span class="keyword">end</span>
+0136        
+0137        <span class="keyword">if</span> (isleft)
+0138        G(i,i)=1;
+0139        K(i)=V_left; <span class="comment">% Left Voltage</span>
+0140        <span class="keyword">end</span>
+0141        
+0142        <span class="keyword">if</span>(isright)
+0143            G(i,i)=1;
+0144            K(i)=V_right; <span class="comment">%Right Voltage</span>
+0145        <span class="keyword">end</span>
+0146     <span class="keyword">end</span>
+0147 <span class="keyword">end</span>
+0148 G1=G;
+0149 [G1 indices]=<a href="removezeros.html" class="code" title="function [ G1 indices ] = removezeros( G )">removezeros</a>(G1);
+0150 [G1 indices2]=<a href="removezeros.html" class="code" title="function [ G1 indices ] = removezeros( G )">removezeros</a>(G1');
+0151 G1=G1';
+0152 voltages=(G1^-1)*(K(indices))';
+0153 Final_Voltages=zeros(1,N);
+0154 
+0155 j=1;
+0156 <span class="comment">% for i=1:N</span>
+0157 <span class="comment">%     if i==indices(j);</span>
+0158 <span class="comment">%   Final_Voltage(i)=voltages(j);</span>
+0159 <span class="comment">%     end</span>
+0160 <span class="comment">% end</span>
+0161 Final_Voltages(indices)=voltages;  
+0162 <span class="comment">% Figure</span>
+0163 
+0164 text(max_x/2,10,<span class="string">'Nodal Voltage Distribution'</span>,<span class="string">'FontSize'</span>,18,<span class="string">'Color'</span>,<span class="string">'red'</span>,<span class="string">'BackgroundColor'</span>,<span class="string">'White'</span>);
+0165 
+0166 <span class="keyword">for</span> i=1:N
+0167  num=size(fiber1(i).nodes);
+0168 num_nodes=num(2);
+0169 <span class="keyword">if</span>(num_nodes)
+0170 text(fiber1(i).center(1),fiber1(i).center(2),num2str(Final_Voltages(i)),<span class="string">'FontSize'</span>,12);
+0171 <span class="keyword">end</span>
+0172 <span class="keyword">end</span>
+0173 
+0174 <span class="comment">%Computing incoming and outgoing current</span>
+0175 incoming_curr=0;
+0176 outgoing_curr=0;
+0177 <span class="keyword">for</span> i=1:N
+0178     isleft=sum(fiber1(i).nodes==0); <span class="comment">%left node</span>
+0179     isright=sum(fiber1(i).nodes==N+1); <span class="comment">%right node</span>
+0180     <span class="keyword">if</span> (isleft)
+0181         temp_arr=fiber1(i).nodes;
+0182         loc_curr=Final_Voltages(temp_arr(1:end-1));
+0183         loc_curr=V_left-loc_curr;
+0184         incoming_curr=incoming_curr+sum(loc_curr);
+0185     <span class="keyword">end</span>
+0186     
+0187     <span class="keyword">if</span> (isright)
+0188         temp_arr=fiber1(i).nodes;
+0189         loc_curr=Final_Voltages(temp_arr(1:end-1));
+0190         loc_curr=loc_curr-V_right;
+0191         outgoing_curr=outgoing_curr+sum(loc_curr);
+0192     <span class="keyword">end</span>
+0193 <span class="keyword">end</span>
+0194 runcount=runcount+1;
+0195 final_result(runcount,1)=vf;
+0196 final_result(runcount,2)=incoming_curr;
+0197 close all;
+0198 <span class="keyword">end</span>
+0199 
+0200 <span class="comment">% average_result (simnumber,1)=vf;</span>
+0201 <span class="comment">% average_result (simnumber,2)=mean(final_result(runcount-9:runcount,2));</span>
+0202 <span class="comment">% average_result (simnumber,3)=std(final_result(runcount-9:runcount,2));</span>
+0203 
+0204 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

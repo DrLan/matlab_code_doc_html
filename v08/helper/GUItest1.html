@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of GUItest1</title>
+  <meta name="keywords" content="GUItest1">
+  <meta name="description" content="GUITEST1 MATLAB code for GUItest1.fig">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; GUItest1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>GUItest1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>GUITEST1 MATLAB code for GUItest1.fig</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function varargout = GUItest1(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> GUITEST1 MATLAB code for GUItest1.fig
+      GUITEST1, by itself, creates a new GUITEST1 or raises the existing
+      singleton*.
+
+      H = GUITEST1 returns the handle to a new GUITEST1 or the handle to
+      the existing singleton*.
+
+      GUITEST1('CALLBACK',hObject,eventData,handles,...) calls the local
+      function named CALLBACK in GUITEST1.M with the given input arguments.
+
+      GUITEST1('Property','Value',...) creates a new GUITEST1 or raises the
+      existing singleton*.  Starting from the left, property value pairs are
+      applied to the GUI before GUItest1_OpeningFcn gets called.  An
+      unrecognized property name or invalid value makes property application
+      stop.  All inputs are passed to GUItest1_OpeningFcn via varargin.
+
+      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one
+      instance to run (singleton)&quot;.
+
+ See also: GUIDE, GUIDATA, GUIHANDLES</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>	TEMPLATE/GET Access data stored in a Template object</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function GUItest1_OpeningFcn(hObject, eventdata, handles, varargin)</a></li><li><a href="#_sub2" class="code">function varargout = GUItest1_OutputFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub3" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub4" class="code">function popupmenu1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub5" class="code">function popupmenu1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub6" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub7" class="code">function edit1_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub8" class="code">function edit1_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub9" class="code">function edit2_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub10" class="code">function edit2_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub11" class="code">function edit3_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub12" class="code">function edit3_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub13" class="code">function edit4_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub14" class="code">function edit4_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub15" class="code">function edit5_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub16" class="code">function edit5_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub17" class="code">function edit6_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub18" class="code">function edit6_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub19" class="code">function edit7_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub20" class="code">function edit7_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub21" class="code">function edit8_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub22" class="code">function edit8_CreateFcn(hObject, eventdata, handles)</a></li><li><a href="#_sub23" class="code">function edit9_Callback(hObject, eventdata, handles)</a></li><li><a href="#_sub24" class="code">function edit9_CreateFcn(hObject, eventdata, handles)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function varargout = GUItest1(varargin)</a>
+0002 <span class="comment">% GUITEST1 MATLAB code for GUItest1.fig</span>
+0003 <span class="comment">%      GUITEST1, by itself, creates a new GUITEST1 or raises the existing</span>
+0004 <span class="comment">%      singleton*.</span>
+0005 <span class="comment">%</span>
+0006 <span class="comment">%      H = GUITEST1 returns the handle to a new GUITEST1 or the handle to</span>
+0007 <span class="comment">%      the existing singleton*.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">%      GUITEST1('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+0010 <span class="comment">%      function named CALLBACK in GUITEST1.M with the given input arguments.</span>
+0011 <span class="comment">%</span>
+0012 <span class="comment">%      GUITEST1('Property','Value',...) creates a new GUITEST1 or raises the</span>
+0013 <span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+0014 <span class="comment">%      applied to the GUI before GUItest1_OpeningFcn gets called.  An</span>
+0015 <span class="comment">%      unrecognized property name or invalid value makes property application</span>
+0016 <span class="comment">%      stop.  All inputs are passed to GUItest1_OpeningFcn via varargin.</span>
+0017 <span class="comment">%</span>
+0018 <span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose &quot;GUI allows only one</span>
+0019 <span class="comment">%      instance to run (singleton)&quot;.</span>
+0020 <span class="comment">%</span>
+0021 <span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+0022 
+0023 <span class="comment">% Edit the above text to modify the response to help GUItest1</span>
+0024 
+0025 <span class="comment">% Last Modified by GUIDE v2.5 12-Nov-2013 10:58:29</span>
+0026 
+0027 <span class="comment">% Begin initialization code - DO NOT EDIT</span>
+0028 gui_Singleton = 1;
+0029 gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+0030                    <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+0031                    <span class="string">'gui_OpeningFcn'</span>, @<a href="#_sub1" class="code" title="subfunction GUItest1_OpeningFcn(hObject, eventdata, handles, varargin)">GUItest1_OpeningFcn</a>, <span class="keyword">...</span>
+0032                    <span class="string">'gui_OutputFcn'</span>,  @<a href="#_sub2" class="code" title="subfunction varargout = GUItest1_OutputFcn(hObject, eventdata, handles)">GUItest1_OutputFcn</a>, <span class="keyword">...</span>
+0033                    <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+0034                    <span class="string">'gui_Callback'</span>,   []);
+0035 <span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+0036     gui_State.gui_Callback = str2func(varargin{1});
+0037 <span class="keyword">end</span>
+0038 
+0039 <span class="keyword">if</span> nargout
+0040     [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+0041 <span class="keyword">else</span>
+0042     gui_mainfcn(gui_State, varargin{:});
+0043 <span class="keyword">end</span>
+0044 <span class="comment">% End initialization code - DO NOT EDIT</span>
+0045 
+0046 
+0047 <span class="comment">% --- Executes just before GUItest1 is made visible.</span>
+0048 <a name="_sub1" href="#_subfunctions" class="code">function GUItest1_OpeningFcn(hObject, eventdata, handles, varargin)</a>
+0049 <span class="comment">% This function has no output args, see OutputFcn.</span>
+0050 <span class="comment">% hObject    handle to figure</span>
+0051 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0052 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0053 <span class="comment">% varargin   command line arguments to GUItest1 (see VARARGIN)</span>
+0054 
+0055 <span class="comment">% Choose default command line output for GUItest1</span>
+0056 handles.output = hObject;
+0057 
+0058 <span class="comment">% Update handles structure</span>
+0059 guidata(hObject, handles);
+0060 
+0061 <span class="comment">% UIWAIT makes GUItest1 wait for user response (see UIRESUME)</span>
+0062 <span class="comment">% uiwait(handles.figure1);</span>
+0063 
+0064 
+0065 <span class="comment">% --- Outputs from this function are returned to the command line.</span>
+0066 <a name="_sub2" href="#_subfunctions" class="code">function varargout = GUItest1_OutputFcn(hObject, eventdata, handles) </a>
+0067 <span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+0068 <span class="comment">% hObject    handle to figure</span>
+0069 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0070 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0071 
+0072 <span class="comment">% Get default command line output from handles structure</span>
+0073 varargout{1} = handles.output;
+0074 
+0075 
+0076 <span class="comment">% --- Executes on button press in radiobutton1.</span>
+0077 <a name="_sub3" href="#_subfunctions" class="code">function radiobutton1_Callback(hObject, eventdata, handles)</a>
+0078 <span class="comment">% hObject    handle to radiobutton1 (see GCBO)</span>
+0079 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0080 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0081 
+0082 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of radiobutton1</span>
+0083 
+0084 
+0085 <span class="comment">% --- Executes on selection change in popupmenu1.</span>
+0086 <a name="_sub4" href="#_subfunctions" class="code">function popupmenu1_Callback(hObject, eventdata, handles)</a>
+0087 <span class="comment">% hObject    handle to popupmenu1 (see GCBO)</span>
+0088 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0089 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0090 
+0091 <span class="comment">% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array</span>
+0092 <span class="comment">%        contents{get(hObject,'Value')} returns selected item from popupmenu1</span>
+0093 
+0094 
+0095 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0096 <a name="_sub5" href="#_subfunctions" class="code">function popupmenu1_CreateFcn(hObject, eventdata, handles)</a>
+0097 <span class="comment">% hObject    handle to popupmenu1 (see GCBO)</span>
+0098 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0099 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0100 
+0101 <span class="comment">% Hint: popupmenu controls usually have a white background on Windows.</span>
+0102 <span class="comment">%       See ISPC and COMPUTER.</span>
+0103 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0104     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0105 <span class="keyword">end</span>
+0106 
+0107 
+0108 <span class="comment">% --- Executes on button press in checkbox1.</span>
+0109 <a name="_sub6" href="#_subfunctions" class="code">function checkbox1_Callback(hObject, eventdata, handles)</a>
+0110 <span class="comment">% hObject    handle to checkbox1 (see GCBO)</span>
+0111 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0112 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0113 
+0114 <span class="comment">% Hint: get(hObject,'Value') returns toggle state of checkbox1</span>
+0115 
+0116 
+0117 
+0118 <a name="_sub7" href="#_subfunctions" class="code">function edit1_Callback(hObject, eventdata, handles)</a>
+0119 <span class="comment">% hObject    handle to edit1 (see GCBO)</span>
+0120 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0121 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0122 
+0123 <span class="comment">% Hints: get(hObject,'String') returns contents of edit1 as text</span>
+0124 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit1 as a double</span>
+0125 
+0126 
+0127 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0128 <a name="_sub8" href="#_subfunctions" class="code">function edit1_CreateFcn(hObject, eventdata, handles)</a>
+0129 <span class="comment">% hObject    handle to edit1 (see GCBO)</span>
+0130 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0131 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0132 
+0133 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0134 <span class="comment">%       See ISPC and COMPUTER.</span>
+0135 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0136     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0137 <span class="keyword">end</span>
+0138 
+0139 
+0140 
+0141 <a name="_sub9" href="#_subfunctions" class="code">function edit2_Callback(hObject, eventdata, handles)</a>
+0142 <span class="comment">% hObject    handle to edit2 (see GCBO)</span>
+0143 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0144 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0145 
+0146 <span class="comment">% Hints: get(hObject,'String') returns contents of edit2 as text</span>
+0147 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit2 as a double</span>
+0148 
+0149 
+0150 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0151 <a name="_sub10" href="#_subfunctions" class="code">function edit2_CreateFcn(hObject, eventdata, handles)</a>
+0152 <span class="comment">% hObject    handle to edit2 (see GCBO)</span>
+0153 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0154 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0155 
+0156 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0157 <span class="comment">%       See ISPC and COMPUTER.</span>
+0158 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0159     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0160 <span class="keyword">end</span>
+0161 
+0162 
+0163 
+0164 <a name="_sub11" href="#_subfunctions" class="code">function edit3_Callback(hObject, eventdata, handles)</a>
+0165 <span class="comment">% hObject    handle to edit3 (see GCBO)</span>
+0166 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0167 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0168 
+0169 <span class="comment">% Hints: get(hObject,'String') returns contents of edit3 as text</span>
+0170 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit3 as a double</span>
+0171 
+0172 
+0173 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0174 <a name="_sub12" href="#_subfunctions" class="code">function edit3_CreateFcn(hObject, eventdata, handles)</a>
+0175 <span class="comment">% hObject    handle to edit3 (see GCBO)</span>
+0176 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0177 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0178 
+0179 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0180 <span class="comment">%       See ISPC and COMPUTER.</span>
+0181 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0182     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0183 <span class="keyword">end</span>
+0184 
+0185 
+0186 
+0187 <a name="_sub13" href="#_subfunctions" class="code">function edit4_Callback(hObject, eventdata, handles)</a>
+0188 <span class="comment">% hObject    handle to edit4 (see GCBO)</span>
+0189 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0190 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0191 
+0192 <span class="comment">% Hints: get(hObject,'String') returns contents of edit4 as text</span>
+0193 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit4 as a double</span>
+0194 
+0195 
+0196 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0197 <a name="_sub14" href="#_subfunctions" class="code">function edit4_CreateFcn(hObject, eventdata, handles)</a>
+0198 <span class="comment">% hObject    handle to edit4 (see GCBO)</span>
+0199 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0200 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0201 
+0202 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0203 <span class="comment">%       See ISPC and COMPUTER.</span>
+0204 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0205     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0206 <span class="keyword">end</span>
+0207 
+0208 
+0209 
+0210 <a name="_sub15" href="#_subfunctions" class="code">function edit5_Callback(hObject, eventdata, handles)</a>
+0211 <span class="comment">% hObject    handle to edit5 (see GCBO)</span>
+0212 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0213 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0214 
+0215 <span class="comment">% Hints: get(hObject,'String') returns contents of edit5 as text</span>
+0216 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit5 as a double</span>
+0217 
+0218 
+0219 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0220 <a name="_sub16" href="#_subfunctions" class="code">function edit5_CreateFcn(hObject, eventdata, handles)</a>
+0221 <span class="comment">% hObject    handle to edit5 (see GCBO)</span>
+0222 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0223 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0224 
+0225 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0226 <span class="comment">%       See ISPC and COMPUTER.</span>
+0227 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0228     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0229 <span class="keyword">end</span>
+0230 
+0231 
+0232 
+0233 <a name="_sub17" href="#_subfunctions" class="code">function edit6_Callback(hObject, eventdata, handles)</a>
+0234 <span class="comment">% hObject    handle to edit6 (see GCBO)</span>
+0235 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0236 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0237 
+0238 <span class="comment">% Hints: get(hObject,'String') returns contents of edit6 as text</span>
+0239 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit6 as a double</span>
+0240 
+0241 
+0242 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0243 <a name="_sub18" href="#_subfunctions" class="code">function edit6_CreateFcn(hObject, eventdata, handles)</a>
+0244 <span class="comment">% hObject    handle to edit6 (see GCBO)</span>
+0245 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0246 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0247 
+0248 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0249 <span class="comment">%       See ISPC and COMPUTER.</span>
+0250 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0251     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0252 <span class="keyword">end</span>
+0253 
+0254 
+0255 
+0256 <a name="_sub19" href="#_subfunctions" class="code">function edit7_Callback(hObject, eventdata, handles)</a>
+0257 <span class="comment">% hObject    handle to edit7 (see GCBO)</span>
+0258 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0259 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0260 
+0261 <span class="comment">% Hints: get(hObject,'String') returns contents of edit7 as text</span>
+0262 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit7 as a double</span>
+0263 
+0264 
+0265 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0266 <a name="_sub20" href="#_subfunctions" class="code">function edit7_CreateFcn(hObject, eventdata, handles)</a>
+0267 <span class="comment">% hObject    handle to edit7 (see GCBO)</span>
+0268 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0269 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0270 
+0271 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0272 <span class="comment">%       See ISPC and COMPUTER.</span>
+0273 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0274     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0275 <span class="keyword">end</span>
+0276 
+0277 
+0278 
+0279 <a name="_sub21" href="#_subfunctions" class="code">function edit8_Callback(hObject, eventdata, handles)</a>
+0280 <span class="comment">% hObject    handle to edit8 (see GCBO)</span>
+0281 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0282 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0283 
+0284 <span class="comment">% Hints: get(hObject,'String') returns contents of edit8 as text</span>
+0285 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit8 as a double</span>
+0286 
+0287 
+0288 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0289 <a name="_sub22" href="#_subfunctions" class="code">function edit8_CreateFcn(hObject, eventdata, handles)</a>
+0290 <span class="comment">% hObject    handle to edit8 (see GCBO)</span>
+0291 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0292 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0293 
+0294 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0295 <span class="comment">%       See ISPC and COMPUTER.</span>
+0296 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0297     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0298 <span class="keyword">end</span>
+0299 
+0300 
+0301 
+0302 <a name="_sub23" href="#_subfunctions" class="code">function edit9_Callback(hObject, eventdata, handles)</a>
+0303 <span class="comment">% hObject    handle to edit9 (see GCBO)</span>
+0304 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0305 <span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+0306 
+0307 <span class="comment">% Hints: get(hObject,'String') returns contents of edit9 as text</span>
+0308 <span class="comment">%        str2double(get(hObject,'String')) returns contents of edit9 as a double</span>
+0309 
+0310 
+0311 <span class="comment">% --- Executes during object creation, after setting all properties.</span>
+0312 <a name="_sub24" href="#_subfunctions" class="code">function edit9_CreateFcn(hObject, eventdata, handles)</a>
+0313 <span class="comment">% hObject    handle to edit9 (see GCBO)</span>
+0314 <span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+0315 <span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+0316 
+0317 <span class="comment">% Hint: edit controls usually have a white background on Windows.</span>
+0318 <span class="comment">%       See ISPC and COMPUTER.</span>
+0319 <span class="keyword">if</span> ispc &amp;&amp; isequal(<a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(hObject,<span class="string">'BackgroundColor'</span>), <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+0320     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(hObject,<span class="string">'BackgroundColor'</span>,<span class="string">'white'</span>);
+0321 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

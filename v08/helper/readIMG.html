@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of readIMG</title>
+  <meta name="keywords" content="readIMG">
+  <meta name="description" content="%">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; readIMG.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>readIMG
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>%</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function readIMG(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%
+ imgname='laser4.png'</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="SIM_Convergence_Square_IM7.html" class="code" title="">SIM_Convergence_Square_IM7</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_IM7_img.html" class="code" title="">SIM_IM7_img</a>	</li><li><a href="SIM_ReadIMG.html" class="code" title="">SIM_ReadIMG</a>	</li><li><a href="test2.html" class="code" title="">test2</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function readIMG(imgname,xmin_ratio,xmax_ratio,ymin_ratio,ymax_ratio)</a>
+0002 <span class="comment">%%</span>
+0003 <span class="comment">% imgname='laser4.png'</span>
+0004 A=imread(imgname);
+0005 <span class="comment">% A=imread('8ply-CFRP0063(x2.0k).tif');</span>
+0006 b=im2bw(A);
+0007 I = rgb2gray(A);
+0008 threshold = graythresh(I);
+0009 bw = im2bw(I,threshold);
+0010 imshow(bw)
+0011 bw = bwareaopen(bw,30);
+0012 [centers r]= imfindcircles(bw,[5 20]);  <span class="comment">%PARAMETER  [radius range]</span>
+0013 <span class="comment">% imshow(bw);</span>
+0014 <span class="comment">% viscircles(centers, r,'EdgeColor','r');</span>
+0015 <span class="comment">% figure;</span>
+0016 <span class="comment">% imshow(A)</span>
+0017 <span class="comment">% viscircles(centers, r,'EdgeColor','r','LineWidth',1);</span>
+0018 im_dimensions=size(bw);
+0019 <span class="comment">%%</span>
+0020 max_x=im_dimensions(2); <span class="comment">%Left boundary coordinates</span>
+0021 max_y=im_dimensions(1);
+0022 winXmin=xmin_ratio*max_x;
+0023 winXmax=xmax_ratio*max_x;
+0024 winYmin=ymin_ratio*max_y;
+0025 winYmax=ymax_ratio*max_y;
+0026 ind1=centers(:,1)&gt;=winXmin &amp; centers(:,1)&lt;=winXmax;
+0027 centers1=centers(ind1,:);
+0028 r1=r(ind1);
+0029 ind2=centers1(:,2)&gt;=winYmin &amp; centers1(:,2)&lt;=winYmax;
+0030 centers2=centers1(ind2,:);
+0031 r2=r1(ind2);
+0032 viscircles(centers2, r2,<span class="string">'EdgeColor'</span>,<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,1);
+0033 <span class="comment">% filename=['c:\directory\subdirectory\Database\matrix'</span>
+0034 fiber=struct(<span class="string">'x'</span>,[],<span class="string">'y'</span>,[],<span class="string">'radius'</span>,[]);
+0035 xcolumn=centers2(:,1);
+0036 ycolumn=centers2(:,2);
+0037 rcolumn=r2;
+0038 fiber.x=xcolumn';
+0039 fiber.y=ycolumn';
+0040 fiber.radius=rcolumn';
+0041 save fiberSEM2 fiber</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of CFRP_GUI_v08</title>
+  <meta name="keywords" content="CFRP_GUI_v08">
+  <meta name="description" content="GUI for 3D resistor network">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">GUI</a> &gt; CFRP_GUI_v08.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\GUI&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>CFRP_GUI_v08
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>GUI for 3D resistor network</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [allHandles,allData] = CFRP_GUI_v08( ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> GUI for 3D resistor network
+ -- copyright 2014-2016 Hong Yu, hongyu.us@gmail.com --</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@FiberLib/FiberLib.html" class="code" title="">FiberLib</a>	</li><li><a href="../../v08/@LaminaLib/LaminaLib.html" class="code" title="">LaminaLib</a>	</li><li><a href="../../v08/@LaminateLib/LaminateLib.html" class="code" title="">LaminateLib</a>	</li><li><a href="../../v08/helper/createTree2.html" class="code" title="function  [mtree,treecontainer] = createTree2(allData)">createTree2</a>	</li><li><a href="../../v08/helper/showTree.html" class="code" title="function showTree(allHandles,allData) %materialBrowserLayout">showTree</a>	[mtree,treecontainer] = uitree('v0', 'Root',root);</li><li><a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>	TEMPLATE/GET Access data stored in a Template object</li><li><a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>	TEMPLATE/SET Edit data stored in a Template object</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function allData = createData()</a></li><li><a href="#_sub2" class="code">function allHandles= createFrame()</a></li><li><a href="#_sub3" class="code">function createHeader</a></li><li><a href="#_sub4" class="code">function createCopyRight</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [allHandles,allData] = CFRP_GUI_v08( )</a>
+0002 <span class="comment">% GUI for 3D resistor network</span>
+0003 <span class="comment">% -- copyright 2014-2016 Hong Yu, hongyu.us@gmail.com --</span>
+0004 
+0005 <span class="comment">% set working director</span>
+0006 [path,filename,extension]=fileparts(which(<span class="string">'scad3.exe'</span>));
+0007 cd(path);
+0008 <span class="comment">%cd ..</span>
+0009 path = pwd;
+0010 addpath(path)
+0011 
+0012 <span class="comment">%1. create GUI frame layout</span>
+0013 <span class="comment">%[Fig_h,treePanel, materialPropertyTable, simulationParameterTable,fig1,fig2,allHandles] = createFrame()</span>
+0014 allHandles = <a href="#_sub2" class="code" title="subfunction allHandles= createFrame()">createFrame</a>();
+0015 allData = <a href="#_sub1" class="code" title="subfunction allData = createData()">createData</a>();
+0016 figureHandle = gcf
+0017 guidata(figureHandle,allData);
+0018     <a name="_sub1" href="#_subfunctions" class="code">function allData = createData()</a>
+0019 allData = {};
+0020 allData.topFolderPath = mfilename(<span class="string">'fullpath'</span>);
+0021 <span class="comment">%% load default material lib</span>
+0022 fiberLibObj = <a href="../../v08/@FiberLib/FiberLib.html" class="code" title="">FiberLib</a>();
+0023 laminateLibObj =  <a href="../../v08/@LaminateLib/LaminateLib.html" class="code" title="">LaminateLib</a>();
+0024 laminaLibObj = <a href="../../v08/@LaminaLib/LaminaLib.html" class="code" title="">LaminaLib</a>();
+0025 allData.fiberLib = fiberLibObj;
+0026 allData.laminateLib =laminateLibObj;
+0027 allData.laminaLib = laminaLibObj ;
+0028 [mtree1,treecontainer1] = <a href="../../v08/helper/createTree2.html" class="code" title="function  [mtree,treecontainer] = createTree2(allData)">createTree2</a>(allData);
+0029 allData.mtree = mtree1;
+0030 allData.treeContainer = treecontainer1;
+0031     <span class="keyword">end</span>
+0032 <span class="comment">%% display tree</span>
+0033 
+0034 <a href="../../v08/helper/showTree.html" class="code" title="function showTree(allHandles,allData) %materialBrowserLayout">showTree</a>(allHandles,allData);
+0035 <span class="comment">%%</span>
+0036 <span class="comment">%     function showTree(root,allHandles,allData) %materialBrowserLayout</span>
+0037 <span class="comment">%         [mtree,treecontainer] = uitree('v0', 'Root',root);</span>
+0038 <span class="comment">%         set(treecontainer,'Parent',allHandles.treePanel);</span>
+0039 <span class="comment">%         set(mtree, 'NodeSelectedCallback', {@treeNode_callback,allHandles,allData})</span>
+0040 <span class="comment">%     end</span>
+0041     <a name="_sub2" href="#_subfunctions" class="code">function allHandles= createFrame()</a>
+0042         <span class="comment">%% create GUI outbox</span>
+0043         scr_size = <a href="../../v08/m2html/@template/get.html" class="code" title="function varargout = get(tpl,action,varargin)">get</a>(0,<span class="string">'ScreenSize'</span>);
+0044         Fig_h = figure( <span class="keyword">...</span>
+0045             <span class="string">'MenuBar'</span>,<span class="string">'none'</span>,<span class="string">'Name'</span>,<span class="string">'CFRP 3D Resistor Network Model'</span>,<span class="keyword">...</span>
+0046             <span class="string">'OuterPosition'</span>,[(scr_size(1:2)+100) scr_size(3)-500 scr_size(4)-200],<span class="keyword">...</span>
+0047             <span class="string">'Tag'</span>,<span class="string">'GUI_Fig'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>);
+0048         movegui(Fig_h,<span class="string">'center'</span>)
+0049         allHandles={};        
+0050         <span class="comment">%% # create header,body,footer</span>
+0051         vertLayout = uix.VBoxFlex(<span class="string">'Parent'</span>,Fig_h,<span class="string">'Spacing'</span>,0);
+0052         <span class="keyword">if</span> 1
+0053             <a href="#_sub3" class="code" title="subfunction createHeader">createHeader</a>;  <span class="comment">% create Header with CCM logo in vertLayout</span>
+0054             horzLayout = uix.HBoxFlex(<span class="string">'Parent'</span>,vertLayout,<span class="string">'Spacing'</span>,5);
+0055             <span class="keyword">if</span> 1
+0056                 <span class="comment">%% ## create 2 columns for body  (1. material browser and 2. Plot)</span>
+0057                 materialBrowserPanel = uix.BoxPanel(<span class="string">'Parent'</span>,horzLayout,<span class="string">'Title'</span>,<span class="string">'Material Browser'</span>,<span class="string">'FontSize'</span>,12);
+0058                 <span class="keyword">if</span> 1
+0059                     materialBrowserLayout = uix.HBoxFlex(<span class="string">'Parent'</span>,materialBrowserPanel,<span class="string">'Spacing'</span>,5);
+0060                     allHandles.treePanel = uix.Panel(<span class="string">'Parent'</span>,materialBrowserLayout,<span class="string">'Tag'</span>,<span class="string">'treePanel'</span>,<span class="string">'Title'</span>,<span class="string">''</span>,<span class="string">'FontSize'</span>,10);
+0061                     detailPanel = uix.Panel(<span class="string">'Parent'</span>,materialBrowserLayout,<span class="string">'Title'</span>,<span class="string">'Material Properties'</span>,<span class="string">'FontSize'</span>,10);
+0062                     <span class="comment">% set(materialBrowserLayout,'Widths',[200 -1])</span>
+0063                     detailLayout = uix.VBoxFlex(<span class="string">'Parent'</span>,detailPanel,<span class="string">'Spacing'</span>,5);
+0064                     <span class="keyword">if</span> 1
+0065                         propertyPanel = uix.Panel(<span class="string">'Parent'</span>,detailLayout);
+0066                         add2LibBtnPanel = uix.Panel(<span class="string">'Parent'</span>,detailLayout);
+0067                         parameterPanel = uix.Panel(<span class="string">'Parent'</span>,detailLayout);
+0068                         runSimBtnPanel = uix.Panel(<span class="string">'Parent'</span>,detailLayout);
+0069                     <span class="keyword">end</span>
+0070                     <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(detailLayout,<span class="string">'Heights'</span>,[-1 35 -1 60])
+0071                 <span class="keyword">end</span>
+0072                 viewPanel = uix.BoxPanel(<span class="string">'Parent'</span>,horzLayout,<span class="string">'Title'</span>,<span class="string">'Plot'</span>,<span class="string">'FontSize'</span>,12);
+0073                 <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(horzLayout,<span class="string">'Widths'</span>,[-3 -2.5]);
+0074             <span class="keyword">end</span>
+0075             <a href="#_sub4" class="code" title="subfunction createCopyRight">createCopyRight</a>( );                                  <span class="comment">% create copy right box in the bottom</span>
+0076             <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(vertLayout,<span class="string">'Heights'</span>,[55 -4 35]);            <span class="comment">% height of copyright box set to 30</span>
+0077         <span class="keyword">end</span>      
+0078         <span class="comment">%% ### create 2 columns in materialBrowserPanel</span>
+0079         <span class="comment">%allHandles.chooseFiber</span>
+0080         <span class="keyword">if</span> 1  <span class="comment">% create 2 tables on propertyPanel</span>
+0081             allHandles.materialPropertyLayout = uix.VBoxFlex(<span class="string">'Parent'</span>,propertyPanel,<span class="string">'Spacing'</span>,0);
+0082             <span class="keyword">if</span> 1
+0083                 allHandles.materialPropertyTable = uitable(<span class="string">'Parent'</span>,allHandles.materialPropertyLayout,<span class="string">'Tag'</span>,<span class="string">'materialPropertyTable'</span>);
+0084                 allHandles.chooseFiberTable = uitable(<span class="string">'Parent'</span>,allHandles.materialPropertyLayout);
+0085                 allHandles.choosePackOrderTable = uitable(<span class="string">'Parent'</span>,allHandles.materialPropertyLayout);
+0086                 allHandles.chooseFiberTable.Visible = <span class="string">'on'</span>;
+0087                 allHandles.choosePackOrderTable.Visible=<span class="string">'off'</span>;
+0088                 
+0089             <span class="keyword">end</span>
+0090             <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(allHandles.materialPropertyLayout,<span class="string">'Height'</span>,[-5 -1 -1]);
+0091         <span class="keyword">end</span>
+0092         
+0093        
+0094         addToLibBtnLayout = uix.HBoxFlex(<span class="string">'Parent'</span>,add2LibBtnPanel,<span class="string">'Spacing'</span>,5);
+0095         <span class="keyword">if</span> 1
+0096             allHandles.removeFromLibBtn = uicontrol(addToLibBtnLayout ,<span class="string">'Tag'</span>,<span class="string">'runSimulationBtn'</span>,<span class="string">'String'</span>,<span class="string">'remove from library'</span>);
+0097             allHandles.add2LibBtn = uicontrol(addToLibBtnLayout ,<span class="string">'Tag'</span>,<span class="string">'runSimulationBtn'</span>,<span class="string">'String'</span>,<span class="string">'add to library'</span>);
+0098         <span class="keyword">end</span>
+0099         <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(addToLibBtnLayout,<span class="string">'Width'</span>,[-1 -1])
+0100         <span class="comment">% simulationParameterPanel = uix.BoxPanel('Parent',detailLayout,'Tag','simulationParameterPanel','Title','Simulation Parameters','FontSize',12);</span>
+0101         allHandles.simulationParameterTable = uitable(<span class="string">'Parent'</span>,parameterPanel,<span class="string">'Tag'</span>,<span class="string">'simulationParameterTable'</span>);
+0102         <span class="comment">%runSimulationPanel = uix.Panel('Parent',detailLayout);</span>
+0103         runSimBtnLayout = uix.HButtonBox(<span class="string">'Parent'</span>,runSimBtnPanel);
+0104         allHandles.runSimulationBtn = uicontrol(runSimBtnLayout ,<span class="string">'Tag'</span>,<span class="string">'runSimulationBtn'</span>,<span class="string">'String'</span>,<span class="string">'Run Simulation'</span>);
+0105         <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>( runSimBtnLayout, <span class="string">'ButtonSize'</span>, [300 70], <span class="string">'Spacing'</span>, 5 );
+0106         allHandles.runSimulationBtn.Visible=<span class="string">'off'</span>;
+0107         <span class="comment">% button to calculate</span>
+0108         <span class="comment">%ru = uix.HButtonBox('Parent',runSimulationPanel)</span>
+0109         <span class="comment">% calculateButton = uicontrol(calculateButtonLayout ,'String','Calculate Resistivity','Callback',@calculateButton_callback)</span>
+0110         <span class="comment">% set( calculateButtonLayout, 'ButtonSize', [180 35], 'Spacing', 5 );</span>
+0111         <span class="comment">% ### create tabbed plot window</span>
+0112         viewContainer = uicontainer(<span class="string">'Parent'</span>,viewPanel);
+0113         tabgp = uitabgroup(viewContainer);
+0114         tab1 = uitab(tabgp,<span class="string">'Title'</span>,<span class="string">'Resistivity'</span>);
+0115         plotLayout1 = uix.VBoxFlex(<span class="string">'Parent'</span>,tab1)
+0116         allHandles.fig1 = axes( <span class="string">'Parent'</span>, plotLayout1, <span class="string">'ActivePositionProperty'</span>, <span class="string">'outerposition'</span> );
+0117         <span class="comment">%set(plotLayout1,'Heights',[35 -1]);</span>
+0118         tab2 = uitab(tabgp,<span class="string">'Title'</span>,<span class="string">'Voltage and Current'</span>);
+0119         plotLayout2 = uix.VBoxFlex(<span class="string">'Parent'</span>,tab2);
+0120         allHandles.fig2 = axes( <span class="string">'Parent'</span>, plotLayout2,<span class="string">'ActivePositionProperty'</span>, <span class="string">'outerposition'</span> );
+0121         <span class="comment">%         rnames = [];</span>
+0122         <span class="comment">% cnames = {'Ply Number','Ply Angle','Lamina','Resistivity X','Resistivity Y','Resistivity Z'};</span>
+0123         <span class="comment">% detailTable = uitable('Parent',detailLayout,'ColumnName',cnames,'RowName',rnames); %'RowName',rnames</span>
+0124         <span class="comment">% detailTable.Position(3) = detailLayout.Position(3);</span>
+0125         <span class="comment">% detailTable.ColumnWidth = {150,50,50,'auto'};</span>
+0126         <span class="comment">% detailTable.RowStriping = 'on';</span>
+0127         <span class="comment">% cNamesTable2 = {'X Resistivity','Y Resistivity','Z Resistivity'};</span>
+0128         <span class="comment">%</span>
+0129         <span class="comment">% laminaTable2 = uitable('Parent',detailLayout,'ColumnName',cNamesTable2,...</span>
+0130         <span class="comment">%     'RowName',[],'Visible','off'); %'RowName',rnames</span>
+0131         <span class="comment">%% set window size</span>
+0132         <span class="comment">%set(materialBrowserLayout,'Widths',[170 -1])</span>
+0133         <span class="comment">%set(vertLayout,'Heights',[50 -4 30]); % height of copyright box set to 30</span>
+0134         <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(materialBrowserLayout,<span class="string">'Widths'</span>,[200 -1]);
+0135         <span class="comment">% set(simulationSettingsLayout,'Heights',[-1 15 -1 60])</span>
+0136         <a name="_sub3" href="#_subfunctions" class="code">function createHeader</a>
+0137             <span class="comment">%header</span>
+0138             headerLayout = uix.HBoxFlex(<span class="string">'Parent'</span>,vertLayout,<span class="string">'BackgroundColor'</span>,[1 1 1]);
+0139             <span class="comment">%         axes_UDLogo = axes( 'Parent',headerLayout, ...</span>
+0140             <span class="comment">%             'ActivePositionProperty', 'Position' );</span>
+0141             <span class="comment">%UDLogo = imshow('images/UDLogo.jpg');</span>
+0142             
+0143             <span class="comment">% blank = uix.Empty('Parent',headerLayout)</span>
+0144             TitleLayout = uix.VBoxFlex(<span class="string">'Parent'</span>,headerLayout)
+0145             Title = uicontrol(TitleLayout,<span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="string">'String'</span>,<span class="string">'3D Resistor Network Model for CFRP'</span>,<span class="keyword">...</span>
+0146                 <span class="string">'BackgroundColor'</span>,[1 1 1],<span class="keyword">...</span>
+0147                 <span class="string">'ForegroundColor'</span>,<span class="string">'b'</span>,<span class="keyword">...</span>
+0148                 <span class="string">'FontSize'</span>,20);
+0149             <span class="comment">%         axes_CCMLogo = axes( 'Parent',headerLayout, ...</span>
+0150             <span class="comment">%             'ActivePositionProperty', 'Position' );</span>
+0151             <span class="comment">% CCMLogo = imshow('images/CCMLogoName1.png');</span>
+0152             <a href="../../v08/m2html/@template/set.html" class="code" title="function tpl = set(tpl,action,varargin)">set</a>(headerLayout,<span class="string">'Widths'</span>,[ -1]);
+0153         <span class="keyword">end</span>        
+0154         <a name="_sub4" href="#_subfunctions" class="code">function createCopyRight</a>
+0155             myMessage = [<span class="string">'3D Resistor Network Model for CFRP   |'</span>, <span class="keyword">...</span>
+0156                 <span class="string">'   2014-2016   |'</span>,<span class="keyword">...</span>
+0157                 <span class="string">'   hongy@udel.edu, hongyu.us@gmail.com'</span>]
+0158             messagePanel = uix.BoxPanel(<span class="string">'Parent'</span>,vertLayout,<span class="string">'Title'</span>,[<span class="string">'Copyright '</span> myMessage],<span class="string">'FontSize'</span>,10);
+0159         <span class="keyword">end</span>   
+0160     <span class="keyword">end</span>
+0161 <span class="keyword">end</span>
+0162 
+0163 <span class="comment">%{</span>
+0164 what can be done
+0165 <span class="comment">%}</span>
+0166 
+0167 
+0168</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

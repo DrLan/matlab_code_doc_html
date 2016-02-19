@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of runLTspice</title>
+  <meta name="keywords" content="runLTspice">
+  <meta name="description" content="RUNLTSPICE internal function, no need to call">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Function</a> &gt; runLTspice.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Function&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>runLTspice
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>RUNLTSPICE internal function, no need to call</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function runLTspice(NetListID) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">RUNLTSPICE internal function, no need to call
+   result = runLTspice(obj,NetList)
+NetListID= [obj.netListName '.cir'];
+NetListID= ['SPICE_InOut/' NetList '.cir'];</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Function.html" class="code" title="">Function</a>	</li><li><a href="../../v08/@Laminate1/Laminate1.html" class="code" title="">Laminate1</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function runLTspice(NetListID)</a>
+0002 <span class="comment">%RUNLTSPICE internal function, no need to call</span>
+0003 <span class="comment">%   result = runLTspice(obj,NetList)</span>
+0004 <span class="comment">%NetListID= [obj.netListName '.cir'];</span>
+0005 <span class="comment">%NetListID= ['SPICE_InOut/' NetList '.cir'];</span>
+0006 SystemCMD = [<span class="string">'scad3.exe'</span>,<span class="string">' -b  '</span>,NetListID]; <span class="comment">% scad3.exe -b -ascii     save data in ascii format</span>
+0007 p=system(SystemCMD);
+0008 <span class="comment">% waitfor(p);</span>
+0009 <span class="comment">%spiceRawData = ['SPICE_InOut/' NetList,'.raw'];</span>
+0010 <span class="comment">%filepath = ['..\']</span>
+0011 <span class="comment">% switch obj.analysisType</span>
+0012 <span class="comment">%     case 'Transient'</span>
+0013 <span class="comment">% rawData = Function.LTspice2Matlab(filename);</span>
+0014 <span class="comment">% rhoArray = abs(rawData.variable_mat(1,:)./(rawData.variable_mat(2,:)+0.000001));</span>
+0015 <span class="comment">% result = abs([rawData.time_vect' rawData.variable_mat' rhoArray']);</span>
+0016 <span class="comment">%     case 'SteadyState'</span>
+0017 <span class="comment">%        %raw_data = Function.ReadRaw(filename);</span>
+0018 <span class="comment">%        [I_vinput,~,~]=Function.ReadRAW(filename);</span>
+0019 <span class="comment">%        raw_data = 1.0/abs(I_vinput);</span>
+0020 <span class="comment">%        result = raw_data;</span>
+0021 <span class="keyword">end</span>
+0022</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

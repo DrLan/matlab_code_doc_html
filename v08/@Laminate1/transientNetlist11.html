@@ -1,0 +1,1164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of transientNetlist11</title>
+  <meta name="keywords" content="transientNetlist11">
+  <meta name="description" content="TRANSIENTNETLIST1 Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Laminate1</a> &gt; transientNetlist11.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Laminate1&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>transientNetlist11
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>TRANSIENTNETLIST1 Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function netlist= transientNetlist11(obj) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">TRANSIENTNETLIST1 Summary of this function goes here
+   Detailed explanation goes here
+% 1. parse input parameters</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/helper/degtorad.html" class="code" title="function y = degtorad(x)">degtorad</a>	</li><li><a href="../../v08/helper/randomValue.html" class="code" title="function result = randomValue( lowerLimit, upperLimit )">randomValue</a>	RANDOMVALUE generate a random value between lowerLimit and upperLimit</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Laminate1.html" class="code" title="">Laminate1</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function netlist= transientNetlist11(obj)</a>
+0002 <span class="comment">%TRANSIENTNETLIST1 Summary of this function goes here</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 <span class="comment">%% 1. parse input parameters</span>
+0005 property = obj.propertyStruct;
+0006 parameter = obj.parameterStruct;
+0007 Fiber_spacing = 1e-6;
+0008 Den = 1790;
+0009 FiberRad = 3.5e-6;
+0010 netlistMatrix = [];
+0011 nItem= 0;
+0012 Rs = []; <span class="comment">%</span>
+0013 <span class="comment">%Masss = []; % mass of fiber or contact points</span>
+0014 connectProbability = 1;
+0015 R_ply0 = 10; <span class="comment">% resistance of interply contacts</span>
+0016 CfResin0 = 6.539e-9;
+0017 CfFbier0 =6.539e-8;
+0018 CfContact0 = 6.539e-10;
+0019 INTERPLY_RESISTANCE =10000;
+0020 Rvalue = <span class="string">'Rfiber'</span>;
+0021 Direction = 3 ;
+0022 ResinRich_Th = 10e-6;
+0023 stopTime = parameter.stopTime;
+0024 <span class="comment">%fiberDistance = 1e-6;</span>
+0025 <span class="comment">%netlist = obj.netListName;</span>
+0026 netlist = <span class="string">'laminate_0_0-1'</span>
+0027 <span class="comment">%Lc = property.contactSpan;</span>
+0028 Lc=1e-3;
+0029 <span class="comment">%[Spec_Len Spec_Wid Spec_Th] = obj.dimension;</span>
+0030 Spec_Len =8e-3
+0031 Spec_Wid= 2e-3;
+0032 Spec_Th= 1e-3;
+0033 <span class="comment">%[Bundle_rhox Bundle_rhoy Bundle_rhoz] = obj.towRhoArray;</span>
+0034 Bundle_rhox= 3.5e-5;
+0035 Bundle_rhoy= 0.5;
+0036 Bundle_rhoz= 1;
+0037 <span class="comment">%</span>
+0038 <span class="comment">% Bundle_rhox= property.towRhoArray(1);</span>
+0039 <span class="comment">% Bundle_rhoy= property.towRhoArray(2);</span>
+0040 <span class="comment">% Bundle_rhoz= property.towRhoArray(3);</span>
+0041 <span class="comment">%R_ply = obj.Rply;</span>
+0042 <span class="comment">%R_electrode = obj.Relectrode;</span>
+0043 Layup = [0,0];
+0044 Connectivity =0.5;
+0045 <span class="comment">%voltageInput =  '0 0 10u 11.7 20u 14.1 30u 14.3 40u 13.7 50u 11.7 60u 0.93 70u 0.69 80u 0.43 90u 0.23 100u 0';</span>
+0046 voltageInput =<span class="string">'0 0 10u 10 20u 20 40u 20 50u 0'</span>;
+0047 <span class="comment">% RNetwork Options</span>
+0048 nLayer = 4;
+0049 bundleLength = Lc; <span class="comment">% Bundle length</span>
+0050 bundleWidth = Lc/4; <span class="comment">% Bundle width</span>
+0051 
+0052 <span class="comment">%% 2. derived parameters</span>
+0053 MRx = Den*pi*FiberRad^2*bundleLength;
+0054 MRy = MRx/1000;
+0055 MRz = MRx/1000;
+0056 Mply = MRx/1000;
+0057 Melectrode = MRx*10;
+0058 AspectRatio = Spec_Len/Spec_Wid;
+0059 R_electrode = 1e-6;
+0060 thetas = <a href="../../v08/helper/degtorad.html" class="code" title="function y = degtorad(x)">degtorad</a>(Layup);
+0061 angle_ar = atan(1/AspectRatio);
+0062 nConnect = round(Connectivity*Spec_Len*Spec_Wid/(bundleWidth^2));
+0063 nPly = length(Layup); <span class="comment">% number of ply</span>
+0064 bundleThickness = Spec_Th/nPly/nLayer; <span class="comment">% bundle thickness</span>
+0065 L_Diag = sqrt(Spec_Len^2+Spec_Wid^2); <span class="comment">% specimen diag length</span>
+0066 <span class="comment">% effective length for each ply. Wid_eff and Len_eff are 1*nPly row vectors</span>
+0067 Wid_eff = L_Diag*sin(angle_ar+thetas); <span class="comment">%effective width of rectangle that contains specimen rectangle</span>
+0068 Len_eff = L_Diag*sin(angle_ar+pi/2-thetas); <span class="comment">% effective width of rectangle that contains specimen rectangle</span>
+0069 <span class="comment">%% 3. resistance of bundle</span>
+0070 bundleResistanceX = Bundle_rhox*bundleLength/(bundleWidth*bundleThickness);
+0071 bundleResistanceY = Bundle_rhoy*bundleWidth/(bundleLength*bundleThickness);
+0072 bundleResistanceZ = Bundle_rhoz*bundleThickness/(bundleLength*bundleWidth);
+0073 
+0074 <span class="comment">%% 4. write model head</span>
+0075 filePath =<span class="string">'SPICE\'</span>;
+0076 <span class="comment">%netlist = obj.netListName;</span>
+0077 NetListID= [filePath netlist <span class="string">'.cir'</span>]
+0078 <span class="comment">%NetListID= strcat(NetList,'.cir');</span>
+0079 fid=fopen(NetListID,<span class="string">'wt'</span>); <span class="comment">% wt means overwrite existing file named with NetListID</span>
+0080 <span class="comment">% To open a file in text mode, append 't' to the permission string,</span>
+0081 fprintf(fid,<span class="string">'%s  \n'</span>,<span class="string">'Copyright Hong YU hongy@udel.edu, UDel 2015 '</span>);
+0082 ST = fclose(fid);
+0083 
+0084 <span class="comment">%% write Voltage input</span>
+0085 fid=fopen(NetListID,<span class="string">'a'</span>);
+0086 <span class="comment">%fprintf(fid,'Iinput 0 Vin PWL(0 0 90e-3 7 100e-3 0) \n')</span>
+0087 
+0088 <span class="comment">%fprintf(fid,'%s %s %s %f \n','Iinput','Vin','0',Iin); % Vin is node for applying voltage. '0' is ground node</span>
+0089 <span class="comment">%ST = fclose(fid);</span>
+0090 
+0091 <span class="comment">%% Generate ABu_approx cell for future use</span>
+0092 ABu_approx = cell(nPly,1);
+0093 Mesh_UV_all = cell(nPly,1);
+0094 Mesh_U_all = cell(nPly,1);
+0095 Mesh_V_all = cell(nPly,1);
+0096 Bundles_all = cell(nPly,1);
+0097 Contacts_all = cell(nPly,1);
+0098 nBundle_v = zeros(nPly,1);
+0099 nContact_v = zeros(nPly,1);
+0100 Len_eff = zeros(nPly,1);
+0101 Wid_eff = zeros(nPly,1);
+0102 <span class="comment">%[X,Y] = meshgrid((-Spec_Len/2:Spec_Len:Spec_Len/2),(-Spec_Wid/2:Spec_Wid:Spec_Wid/2));</span>
+0103 <span class="comment">%%</span>
+0104 <span class="comment">% Rs = [];</span>
+0105 <span class="comment">% Item =0</span>
+0106 <span class="keyword">for</span> iP = 1:nPly
+0107     Z = (iP-1)*Spec_Th/nPly*ones(2,2);
+0108     <span class="comment">%     hold off</span>
+0109     <span class="comment">%     surf(X,Y,Z)</span>
+0110     <span class="comment">%     hold on</span>
+0111     theta = thetas(iP);
+0112     T_rot = [cos(-theta) sin(-theta); -sin(-theta) cos(-theta)];
+0113     Bound_XY = [0.5*Spec_Len*[-1 -1 1 1]' 0.5*Spec_Wid*[-1 1 1 -1]'];
+0114     Bound_UV = Bound_XY*T_rot; <span class="comment">% 4 boundary pts in UV coordinate system</span>
+0115     Len_UV = max(Bound_UV(:,1)) - min(Bound_UV(:,1));
+0116     Wid_UV = max(Bound_UV(:,2)) - min(Bound_UV(:,2));
+0117     Len_approx = bundleLength*floor(Len_UV/bundleLength);
+0118     NB_approx = floor(Wid_UV/bundleWidth);
+0119     Wid_approx = bundleWidth*NB_approx;
+0120     
+0121     Len_eff(iP) = Len_approx;
+0122     Wid_eff(iP) = Wid_approx;
+0123     Contacts = -Len_approx/2 : bundleLength : Len_approx/2;
+0124     Bundles = -Wid_approx/2 : bundleWidth : Wid_approx/2;
+0125     Contacts_all{iP} = Contacts;
+0126     Bundles_all{iP} = Bundles;
+0127     nContact = length(Contacts);
+0128     nContact_v(iP) = nContact;
+0129     nBundle = length(Bundles);
+0130     nBundle_v(iP) = nBundle;
+0131     size(Contacts)
+0132     size(Bundles)
+0133     min(Contacts)
+0134     max(Contacts)
+0135     min(Bundles)
+0136     max(Bundles)
+0137     [Mesh_U,Mesh_V] = meshgrid(Contacts,Bundles)<span class="comment">% grid x and y in matrix form</span>
+0138     Mesh_U_all{iP} = Mesh_U;
+0139     Mesh_V_all{iP} = Mesh_V;
+0140     Mesh_U_v = reshape(Mesh_U,[numel(Mesh_U),1]); <span class="comment">% grid x in vector form</span>
+0141     Mesh_V_v = reshape(Mesh_V,[numel(Mesh_V),1]); <span class="comment">% grid y in vector form</span>
+0142     Mesh_UV = [Mesh_U_v Mesh_V_v]; <span class="comment">% grid coordinates in 2 column matrix form. 1st column x; 2nd column</span>
+0143     Mesh_UV_all{iP} = Mesh_UV;
+0144     
+0145     <span class="keyword">if</span> theta == 0 || theta == pi/2
+0146         ABu_approx{iP} = [ones(nBundle,1) nContact*ones(nBundle,1)];
+0147     <span class="keyword">else</span>
+0148         slop = tan(theta);
+0149         <span class="comment">%         T_rot = [cos(theta) sin(theta); -sin(theta) cos(theta)]</span>
+0150         <span class="keyword">for</span> iB = 1:nBundle
+0151             Dis2O = -Wid_eff(iP)/2 - bundleWidth +iB*bundleWidth; <span class="comment">% distance to origin pt O.</span>
+0152             Pt_at_fiber = [-Dis2O*sin(theta) Dis2O*cos(theta)];
+0153             b_cross = Pt_at_fiber(2)-Pt_at_fiber(1)*tan(theta);
+0154             func_fiberY = @(x,k,b)k*x+b;  <span class="comment">% function for fiber line</span>
+0155             <span class="comment">% Left and Right bound</span>
+0156             xfiber = [-Spec_Len/2  Spec_Len/2];
+0157             yLR = feval(func_fiberY,xfiber,slop,b_cross); <span class="comment">% intersections between fiber line and LR boundary</span>
+0158             ind = find(yLR&gt;=1.0000001*(-Spec_Wid/2) &amp; yLR&lt;=1.0000001*(Spec_Wid/2));
+0159             <span class="keyword">if</span> length(ind) == 2
+0160                 xAB = xfiber;
+0161                 yAB = yLR(ind);
+0162             <span class="keyword">else</span>
+0163                 Ax = xfiber(ind);
+0164                 Ay = yLR(ind);
+0165                 <span class="comment">%now consider Top and Bottom bound</span>
+0166                 func_fiberX = @(y,k,b)(y-b)/k;
+0167                 YBound = [-Spec_Wid/2  Spec_Wid/2];
+0168                 xTB = feval(func_fiberX,YBound,slop,b_cross);
+0169                 ind = find(xTB&gt;=1.0000001*(-Spec_Len/2) &amp; xTB&lt;=1.0000001*(Spec_Len/2));
+0170                 Bx = xTB(ind);
+0171                 By = YBound(ind);
+0172                 xAB = [Ax Bx];
+0173                 xAB = unique(xAB);
+0174                 yAB = [Ay By];
+0175                 yAB = unique(yAB);
+0176             <span class="keyword">end</span>
+0177             AB_xy = [xAB' yAB']; <span class="comment">% 1st row A, 2nd row B. 1st column x, 2nd column y</span>
+0178             AB_uv = AB_xy*T_rot; <span class="comment">%note that AB_uv is in UV coordinate system</span>
+0179             A_xy_all{iP}(iB,:) = AB_xy(1,:);
+0180             B_xy_all{iP}(iB,:) = AB_xy(2,:);
+0181             A_uv_all{iP}(iB,:) = AB_uv(1,:);
+0182             B_uv_all{iP}(iB,:) = AB_uv(2,:);
+0183             Au = AB_uv(1,1);
+0184             Bu = AB_uv(2,1);
+0185             [c indA] = min(abs(Contacts-Au)); <span class="comment">% note that contact node start from 1</span>
+0186             Au_approx = Contacts(indA);
+0187             [c indB] = min(abs(Contacts-Bu));
+0188             Bu_aprox = Contacts(indB);
+0189             <span class="keyword">if</span> indA==indB
+0190                 indA = -1;
+0191                 indB = -1;
+0192             <span class="keyword">end</span>
+0193             minAB = min(indA,indB);
+0194             maxAB = max(indA,indB);
+0195             ABu_approx{iP}(iB,:) =[minAB maxAB];
+0196         <span class="keyword">end</span>
+0197     <span class="keyword">end</span>
+0198 <span class="keyword">end</span>
+0199 <span class="comment">%%</span>
+0200 <span class="keyword">switch</span> Direction
+0201     <span class="keyword">case</span> 1 <span class="comment">% X direction</span>
+0202         <span class="comment">%% in X direction</span>
+0203         <span class="keyword">for</span> iP = 1: nPly
+0204             <span class="comment">%     for iB = 1: nBundle</span>
+0205             theta = thetas(iP)
+0206             T_rot = [cos(-theta) sin(-theta); -sin(-theta) cos(-theta)];
+0207             nContact = nContact_v(iP);
+0208             nBundle = nBundle_v(iP);
+0209             <span class="keyword">if</span> theta == 0
+0210                 <span class="keyword">for</span> iB = 1:nBundle
+0211                     <span class="keyword">for</span> iL = 1:nLayer
+0212                         <span class="comment">% voltage</span>
+0213                         iC = 1;
+0214                         V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0215                         V_Node1 = <span class="string">'Vin'</span>;
+0216                         V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0217                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0218                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0219                         nItem = nItem+1;
+0220                         netlistMatrix{nItem} = [V_ID,<span class="string">' '</span>,V_Node1,<span class="string">' '</span>,V_Node2,<span class="string">' '</span>];
+0221                         Mass(nItem) = Melectrode;
+0222                         Rs(end+1) = R_electrode;
+0223                         ST = fclose(fid);
+0224                         <span class="comment">% ground</span>
+0225                         iC = nContact;
+0226                         G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0227                         G_Node2 = <span class="string">'0'</span>;
+0228                         G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0229                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0230                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0231                         ST = fclose(fid);
+0232 <span class="comment">%                         Item= Item+1;</span>
+0233 <span class="comment">%</span>
+0234 <span class="comment">%                         NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0235 <span class="comment">%                         Mass(Item) = Melectrode;</span>
+0236 <span class="comment">%                         Rs(end+1) = R_electrode;</span>
+0237                        
+0238                     <span class="keyword">end</span>
+0239                 <span class="keyword">end</span>
+0240             <span class="keyword">elseif</span> theta == pi/2
+0241                 <span class="keyword">for</span> iC = 1:nContact
+0242                     <span class="keyword">for</span> iL = 1:nLayer
+0243                         <span class="comment">% voltage</span>
+0244                         iB = 1;
+0245                         V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0246                         V_Node1 = <span class="string">'Vin'</span>;
+0247                         V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0248                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0249                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0250                         ST = fclose(fid);
+0251                         nItem = nItem+1;
+0252                         Mass(nItem) = Melectrode;
+0253                         Rs(end+1) = R_electrode;
+0254                         netlistMatrix{nItem} = [V_ID,<span class="string">' '</span>,V_Node1,<span class="string">' '</span>,V_Node2,<span class="string">' '</span>];
+0255                         <span class="comment">%                         NetListMatrix{Item} = [V_ID,V_Node1,V_Node2]</span>
+0256                         <span class="comment">% ground</span>
+0257                         iB = nBundle;
+0258                         G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0259                         G_Node2 = <span class="string">'0'</span>;
+0260                         G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0261                         
+0262                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0263                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0264                         ST = fclose(fid);
+0265 <span class="comment">%                         Item= Item+1;</span>
+0266 <span class="comment">%                         NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0267 <span class="comment">%                         %                         NetListMatrix{Item} = [G_ID,G_Node1,G_Node2]</span>
+0268 <span class="comment">%                         Mass(Item) = Melectrode;</span>
+0269 <span class="comment">%                         Rs(end+1) = R_electrode;</span>
+0270                     <span class="keyword">end</span>
+0271                 <span class="keyword">end</span>
+0272             <span class="keyword">else</span> <span class="comment">% theta~= 0 and 90 degree</span>
+0273                 BoundX = [-Spec_Len/2 Spec_Len/2];
+0274                 BoundY = [-Spec_Wid/2 Spec_Wid/2];
+0275                 BoundXY = [BoundX([1 1 2 2])' BoundY([1 2 2 1])'];
+0276                 BoundUV = BoundXY*T_rot;
+0277                 Wid_Ply = Wid_eff(iP);
+0278                 Bundles = -Wid_Ply/2 : bundleWidth : Wid_Ply/2;
+0279                 <span class="comment">%                 Bundles = Bundles_all{iP}</span>
+0280                 
+0281                 [LB indLB] = min(abs(Bundles-BoundUV(1,2)));
+0282                 [LT indLT] = min(abs(Bundles-BoundUV(2,2)));
+0283                 [RB indRT] = min(abs(Bundles-BoundUV(3,2)));
+0284                 [RT indRB] = min(abs(Bundles-BoundUV(4,2)));
+0285                 <span class="comment">%         minTop = min(indLT,indRT)</span>
+0286                 <span class="comment">%         maxTop = max(indLT,indRT)</span>
+0287                 <span class="comment">%         minBottom = min(indLB,indRB)</span>
+0288                 <span class="comment">%         maxBottom = max(indLB,indRB)</span>
+0289                 <span class="keyword">if</span> theta &lt; 0
+0290                     <span class="comment">% voltage</span>
+0291                     <span class="keyword">for</span> iB = indLB:indLT
+0292                         iC = ABu_approx{iP}(iB,1); <span class="comment">% A</span>
+0293                         <span class="keyword">for</span> iL = 1:nLayer
+0294                             V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0295                             V_Node1 = <span class="string">'Vin'</span>;
+0296                             V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0297                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0298                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0299                             ST = fclose(fid);
+0300 <span class="comment">%                             Item= Item+1;</span>
+0301 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0302 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0303 <span class="comment">%                             NetListMatrix{Item} = [V_ID,' ',V_Node1,' ',V_Node2,' '];</span>
+0304 <span class="comment">%                             %                             NetListMatrix{Item} = [V_ID,V_Node1,V_Node2]</span>
+0305                         <span class="keyword">end</span>
+0306                     <span class="keyword">end</span>
+0307                     <span class="comment">%ground</span>
+0308                     <span class="keyword">for</span> iB = indRB:indRT
+0309                         iC = ABu_approx{iP}(iB,2); <span class="comment">% B</span>
+0310                         <span class="keyword">for</span> iL = 1:nLayer
+0311                             G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0312                             G_Node2 = <span class="string">'0'</span>;
+0313                             G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0314                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0315                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0316                             ST = fclose(fid);
+0317 <span class="comment">%                             Item= Item+1;</span>
+0318 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0319 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0320 <span class="comment">%                             NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0321 <span class="comment">%                             %                             NetListMatrix{Item} = [G_ID,G_Node1,G_Node2]</span>
+0322                         <span class="keyword">end</span>
+0323                     <span class="keyword">end</span>
+0324                 <span class="keyword">else</span> <span class="comment">% theta &gt; 0</span>
+0325                     <span class="comment">% voltage</span>
+0326                     <span class="keyword">for</span> iB = indLB:indLT
+0327                         iC = ABu_approx{iP}(iB,1); <span class="comment">% A</span>
+0328                         <span class="keyword">for</span> iL = 1:nLayer
+0329                             V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0330                             V_Node1 = <span class="string">'Vin'</span>;
+0331                             V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0332                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0333                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0334                             ST = fclose(fid);
+0335 <span class="comment">%                             Item= Item+1;</span>
+0336 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0337 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0338 <span class="comment">%                             NetListMatrix{Item} = [V_ID,' ',V_Node1,' ',V_Node2,' '];</span>
+0339 <span class="comment">%                             %                             NetListMatrix{Item} = [V_ID,V_Node1,V_Node2]</span>
+0340                         <span class="keyword">end</span>
+0341                     <span class="keyword">end</span>
+0342                     <span class="comment">%ground</span>
+0343                     <span class="keyword">for</span> iB = indRB:indRT
+0344                         iC = ABu_approx{iP}(iB,2); <span class="comment">% B</span>
+0345                         <span class="keyword">for</span> iL = 1:nLayer
+0346                             G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0347                             G_Node2 = <span class="string">'0'</span>;
+0348                             G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0349                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0350                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0351                             ST = fclose(fid);
+0352 <span class="comment">%                             Item= Item+1;</span>
+0353 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0354 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0355 <span class="comment">%                             NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0356 <span class="comment">%                             %                             NetListMatrix{Item} = [G_ID,G_Node1,G_Node2]</span>
+0357                             
+0358                         <span class="keyword">end</span>
+0359                     <span class="keyword">end</span>
+0360                 <span class="keyword">end</span>
+0361             <span class="keyword">end</span>
+0362         <span class="keyword">end</span>
+0363         <span class="comment">%%</span>
+0364     <span class="keyword">case</span> 2  <span class="comment">% Y direction</span>
+0365         <span class="comment">%% in Y direction</span>
+0366         <span class="keyword">for</span> iP=1:nPly
+0367             theta = thetas(iP)
+0368             T_rot = [cos(-theta) sin(-theta); -sin(-theta) cos(-theta)];
+0369             nContact = nContact_v(iP);
+0370             nBundle = nBundle_v(iP);
+0371             <span class="keyword">if</span> theta == pi/2
+0372                 <span class="keyword">for</span> iB = 1:nBundle
+0373                     <span class="keyword">for</span> iL = 1:nLayer
+0374                         <span class="comment">% voltage</span>
+0375                         iC = 1;
+0376                         V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0377                         V_Node1 = <span class="string">'Vin'</span>;
+0378                         V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0379                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0380                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0381                         ST = fclose(fid);
+0382                         nItem= nItem+1;
+0383                         Mass(nItem) = Melectrode;
+0384                         Rs(end+1) = R_electrode;
+0385                         netlistMatrix{nItem} = [V_ID,<span class="string">' '</span>,V_Node1,<span class="string">' '</span>,V_Node2,<span class="string">' '</span>];
+0386                         <span class="comment">%                         NetListMatrix{Item} = [V_ID,V_Node1,V_Node2]</span>
+0387                         <span class="comment">% ground</span>
+0388                         iC = nContact;
+0389                         G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0390                         G_Node2 = <span class="string">'0'</span>;
+0391                         G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0392                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0393                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0394                         ST = fclose(fid);
+0395 <span class="comment">%                         Item= Item+1;</span>
+0396 <span class="comment">%                         Mass(Item) = Melectrode;</span>
+0397 <span class="comment">%                         Rs(end+1) = R_electrode;</span>
+0398 <span class="comment">%                         %                         NetListMatrix{Item} = [G_ID,G_Node1,G_Node2]</span>
+0399 <span class="comment">%                         NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0400                     <span class="keyword">end</span>
+0401                 <span class="keyword">end</span>
+0402             <span class="keyword">elseif</span> theta == 0
+0403                 <span class="keyword">for</span> iC = 1:nContact
+0404                     <span class="keyword">for</span> iL = 1:nLayer
+0405                         <span class="comment">% voltage</span>
+0406                         iB = 1;
+0407                         V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0408                         V_Node1 = <span class="string">'Vin'</span>;
+0409                         V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0410                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0411                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0412                         ST = fclose(fid);
+0413                         nItem= nItem+1;
+0414                         Mass(nItem) = Melectrode;
+0415                         Rs(end+1) = R_electrode;
+0416                         netlistMatrix{nItem} = [V_ID,<span class="string">' '</span>,V_Node1,<span class="string">' '</span>,V_Node2,<span class="string">' '</span>];
+0417                         <span class="comment">% ground</span>
+0418                         iB = nBundle;
+0419                         G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0420                         G_Node2 = <span class="string">'0'</span>;
+0421                         G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0422                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0423                         fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0424                         ST = fclose(fid);
+0425 <span class="comment">%                         Item= Item+1;</span>
+0426 <span class="comment">%                         Mass(Item) = Melectrode;</span>
+0427 <span class="comment">%                         Rs(end+1) = R_electrode;</span>
+0428 <span class="comment">%                         NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0429                     <span class="keyword">end</span>
+0430                 <span class="keyword">end</span>
+0431             <span class="keyword">else</span> <span class="comment">% theta~= 0 and 90 degree</span>
+0432                 BoundX = [-Spec_Len/2 Spec_Len/2];
+0433                 BoundY = [-Spec_Wid/2 Spec_Wid/2];
+0434                 BoundXY = [BoundX([1 1 2 2])' BoundY([1 2 2 1])'];
+0435                 BoundUV = BoundXY*T_rot;
+0436                 Bundles = Bundles_all{iP};
+0437                 
+0438                 [LB indLB] = min(abs(Bundles-BoundUV(1,2)));
+0439                 [LT indLT] = min(abs(Bundles-BoundUV(2,2)));
+0440                 [RB indRB] = min(abs(Bundles-BoundUV(3,2)));
+0441                 [RT indRT] = min(abs(Bundles-BoundUV(4,2)));
+0442                 <span class="comment">%         minTop = min(indLT,indRT)</span>
+0443                 <span class="comment">%         maxTop = max(indLT,indRT)</span>
+0444                 <span class="comment">%         minBottom = min(indLB,indRB)</span>
+0445                 <span class="comment">%         maxBottom = max(indLB,indRB)</span>
+0446                 <span class="keyword">if</span> theta &lt; 0
+0447                     <span class="comment">% voltage</span>
+0448                     <span class="keyword">for</span> iB = indLT:indRT
+0449                         iC = ABu_approx{iP}(iB,1); <span class="comment">% A</span>
+0450                         <span class="keyword">for</span> iL = 1:nLayer
+0451                             V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0452                             V_Node1 = <span class="string">'Vin'</span>;
+0453                             V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0454                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0455                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0456                             ST = fclose(fid);
+0457 <span class="comment">%                             Item= Item+1;</span>
+0458 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0459 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0460 <span class="comment">%                             NetListMatrix{Item} = [V_ID,' ',V_Node1,' ',V_Node2,' '];</span>
+0461                         <span class="keyword">end</span>
+0462                     <span class="keyword">end</span>
+0463                     <span class="comment">%ground</span>
+0464                     <span class="keyword">for</span> iB = indLB:indRB
+0465                         iC = ABu_approx{iP}(iB,2); <span class="comment">% B</span>
+0466                         <span class="keyword">for</span> iL = 1:nLayer
+0467                             G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0468                             G_Node2 = <span class="string">'0'</span>;
+0469                             G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0470                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0471                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0472                             ST = fclose(fid);
+0473 <span class="comment">%                             Item= Item+1;</span>
+0474 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0475 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0476 <span class="comment">%                             NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0477                         <span class="keyword">end</span>
+0478                     <span class="keyword">end</span>
+0479                 <span class="keyword">else</span> <span class="comment">% theta &gt; 0</span>
+0480                     <span class="comment">% voltage</span>
+0481                     <span class="keyword">for</span> iB = indLT:indRT
+0482                         iC = ABu_approx{iP}(iB,2); <span class="comment">% A</span>
+0483                         <span class="keyword">for</span> iL = 1:nLayer
+0484                             V_ID = [<span class="string">'RV_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0485                             V_Node1 = <span class="string">'Vin'</span>;
+0486                             V_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0487                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0488                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0489                             ST = fclose(fid);
+0490                             nItem= nItem+1;
+0491                             Mass(nItem) = Melectrode;
+0492                             Rs(end+1) = R_electrode;
+0493                             netlistMatrix{nItem} = [V_ID,<span class="string">' '</span>,V_Node1,<span class="string">' '</span>,V_Node2,<span class="string">' '</span>];
+0494                         <span class="keyword">end</span>
+0495                     <span class="keyword">end</span>
+0496                     <span class="comment">%ground</span>
+0497                     <span class="keyword">for</span> iB = indLB:indRB
+0498                         iC = ABu_approx{iP}(iB,1); <span class="comment">% B</span>
+0499                         <span class="keyword">for</span> iL = 1:nLayer
+0500                             G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0501                             G_Node2 = <span class="string">'0'</span>;
+0502                             G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0503                             fid=fopen(NetListID,<span class="string">'a'</span>);
+0504                             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0505                             ST = fclose(fid);
+0506 <span class="comment">%                             Item= Item+1;</span>
+0507 <span class="comment">%                             Mass(Item) = Melectrode;</span>
+0508 <span class="comment">%                             Rs(end+1) = R_electrode;</span>
+0509 <span class="comment">%                             NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0510                         <span class="keyword">end</span>
+0511                     <span class="keyword">end</span>
+0512                 <span class="keyword">end</span>
+0513             <span class="keyword">end</span>
+0514         <span class="keyword">end</span>
+0515         
+0516         
+0517     <span class="keyword">case</span> 3 <span class="comment">% Z direction</span>
+0518         <span class="comment">%% in Z direction</span>
+0519         <span class="comment">%if in Z direction, apply Voltage Vinput at top ply top layer</span>
+0520         iP = nPly;
+0521         nBundle = nBundle_v(iP);
+0522         <span class="keyword">for</span> iB = 1:nBundle
+0523             indA = ABu_approx{iP}(iB,1);
+0524             indB = ABu_approx{iP}(iB,2);
+0525             <span class="keyword">if</span> indA~=indB
+0526                 <span class="keyword">for</span> iC = indA:indB
+0527                     V_ID = [<span class="string">'RV_P'</span>,num2str(nPly),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0528                     V_Node1 = <span class="string">'Vin'</span>;
+0529                     V_Node2 = [<span class="string">'P'</span>,num2str(nPly),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0530                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0531                     fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0532                     ST = fclose(fid);
+0533 <span class="comment">%                     Item= Item+1;</span>
+0534 <span class="comment">%                     Mass(Item) = Melectrode;</span>
+0535 <span class="comment">%                     Rs(end+1) = R_electrode;</span>
+0536 <span class="comment">%                     NetListMatrix{Item} = [V_ID,' ' ,V_Node1,' ',V_Node2,' '];</span>
+0537                 <span class="keyword">end</span>
+0538             <span class="keyword">end</span>
+0539         <span class="keyword">end</span>
+0540         
+0541         <span class="comment">%% apply ground  BC at bottom ply bottom layer</span>
+0542         iP = 1;
+0543         nBundle = nBundle_v(iP);
+0544         <span class="keyword">for</span> iB = 1:nBundle
+0545             indA = ABu_approx{iP}(iB,1);
+0546             indB = ABu_approx{iP}(iB,2);
+0547             <span class="keyword">if</span> indA~=indB
+0548                 <span class="keyword">for</span> iC = indA:indB
+0549                     G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0550                     G_Node2 = <span class="string">'0'</span>;
+0551                     G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0552                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0553                     fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0554                     ST = fclose(fid);
+0555 <span class="comment">%                     Item= Item+1;</span>
+0556 <span class="comment">%                     Mass(Item) = Melectrode;</span>
+0557 <span class="comment">%                     Rs(end+1) = R_electrode;</span>
+0558 <span class="comment">%                     %                     NetListMatrix{Item} = [G_ID,G_Node1,G_Node2]</span>
+0559 <span class="comment">%                     NetListMatrix{Item} = [G_ID,' ',G_Node1,' ',G_Node2,' '];</span>
+0560                 <span class="keyword">end</span>
+0561             <span class="keyword">end</span>
+0562         <span class="keyword">end</span>
+0563 <span class="keyword">end</span>
+0564 
+0565 <span class="comment">%% Generate Resistor Network</span>
+0566 <span class="keyword">for</span> iP = 1:nPly
+0567     <span class="comment">% plot box boundary</span>
+0568     
+0569     
+0570     <span class="comment">%hold on</span>
+0571     XBox = Spec_Len/2*[-1 -1 1 1 -1];
+0572     YBox = Spec_Wid/2*[-1 1 1 -1 -1];
+0573     ZBox = (((iP-1)*nLayer)*bundleThickness+(iP-1)*ResinRich_Th)*[ 1 1 1 1 1];
+0574     <span class="comment">% plot3(XBox,YBox,ZBox,'r')</span>
+0575     theta = thetas(iP);
+0576     T_rot = [cos(-theta) sin(-theta); -sin(-theta) cos(-theta)];
+0577     T_back = [cos(theta) sin(theta); -sin(theta) cos(theta)];
+0578     Contacts = Contacts_all(iP);
+0579     Bundles = Bundles_all(iP);
+0580     nContact = nContact_v(iP);
+0581     nBundle = nBundle_v(iP);
+0582     
+0583     <span class="comment">% plot in UV coordinates</span>
+0584     UBox = Len_eff(iP)/2*[-1 -1 1 1 -1];
+0585     VBox = Wid_eff(iP)/2*[-1 1 1 -1 -1];
+0586     WBox = (((iP-1)*nLayer)*bundleThickness+(iP-1)*ResinRich_Th)*[ 1 1 1 1 1];
+0587     XYBox = [UBox' VBox']*T_back;
+0588     XBox = XYBox(:,1)';
+0589     YBox = XYBox(:,2)';
+0590     <span class="comment">%plot3(XBox,YBox,WBox)</span>
+0591     
+0592     <span class="comment">%</span>
+0593     <span class="comment">%     Contacts = -Len_eff(iP)/2:Lc:Len_eff(iP)/2</span>
+0594     <span class="comment">%     Bundles = -Wid_eff(iP)/2:Bundle_Wid:Wid_eff(iP)/2</span>
+0595     <span class="comment">%     nContact = length(Contacts)</span>
+0596     <span class="comment">%     nBundle = length(Bundles)</span>
+0597     <span class="comment">%% x direction</span>
+0598     
+0599     <span class="keyword">for</span> iB = 1:nBundle
+0600         ItemV1 = (iB-1)*bundleWidth-Wid_eff(iP)/2;
+0601         ItemV2 = ItemV1;
+0602         
+0603         indA = ABu_approx{iP}(iB,1);
+0604         indB = ABu_approx{iP}(iB,2);
+0605         <span class="keyword">if</span> indA~=indB
+0606             <span class="keyword">for</span> iL = 1:nLayer
+0607                 ItemZ1 = ((iP-1)*nLayer+iL-1)*bundleThickness+(iP-1)*ResinRich_Th;
+0608                 ItemZ2 = ItemZ1;
+0609                 <span class="keyword">for</span> iC = indA:(indB-1) <span class="comment">% note no Rz on outmost contact</span>
+0610                     ItemU1 = (iC-1)*bundleLength-Len_eff(iP)/2;
+0611                     ItemU2 = (iC)*bundleLength-Len_eff(iP)/2;
+0612                     ItemUV = [ItemU1 ItemV1; ItemU2 ItemV2];
+0613                     ItemXYs = ItemUV*T_back;
+0614                     ItemX1 = ItemXYs(1,1);
+0615                     ItemY1 = ItemXYs(1,2);
+0616                     ItemX2 = ItemXYs(2,1);
+0617                     ItemY2 = ItemXYs(2,2);
+0618                     
+0619                     Rx_ID =[<span class="string">'XRx_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0620 <span class="comment">%                     rType = 'X';</span>
+0621 <span class="comment">%                     [resistorID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+0622                     
+0623                     
+0624                     <span class="comment">%[R_ID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+0625                     
+0626                     
+0627                     <span class="comment">%</span>
+0628                                         Rx_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0629                                         Rx_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC+1)];
+0630                     <span class="comment">%                      Rx_Node3 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC),'t'];</span>
+0631                     <span class="comment">%                     Rx_Node4 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC+1),'t'];</span>
+0632                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0633                     RsubcktString = [<span class="string">'Rfiber Rf='</span> num2str(bundleResistanceX)];
+0634                     fprintf(fid,<span class="string">'%s %s %s %s \n'</span>,Rx_ID,Rx_Node1,Rx_Node2,RsubcktString);
+0635                     <span class="comment">% fprintf(fid,'%s %s %s %s \n',resistorID,node1,node2,RsubcktString);</span>
+0636                     <span class="comment">%fprintf(fid,'%s %s %s %s %s %s \n',resistorID,node1,node2,node3,node4,RsubcktString);</span>
+0637                     ST = fclose(fid);
+0638 <span class="comment">%                     Item= Item+1;</span>
+0639                     <span class="comment">%                     Mass(Item) = MRx;</span>
+0640                     <span class="comment">%                     Rs(end+1) = bundleResistanceX;</span>
+0641                     <span class="comment">%                     NetListMatrix{Item} = [Rx_ID,' ',Rx_Node1,' ',Rx_Node2,' '];</span>
+0642                     <span class="comment">%                      Coordinates(:,Item) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';</span>
+0643                 <span class="keyword">end</span>
+0644             <span class="keyword">end</span>
+0645         <span class="keyword">end</span>
+0646     <span class="keyword">end</span>
+0647     <span class="comment">%% Y direction</span>
+0648     
+0649     <span class="keyword">for</span> iB = 1:(nBundle-1)
+0650         <span class="comment">%                 ItemV1 = (iB-1)*Bundle_Wid-Wid_eff(iP)/2</span>
+0651         <span class="comment">%                 ItemV2 = iB*Bundle_Wid-Wid_eff(iP)/2</span>
+0652         
+0653         indA = ABu_approx{iP}(iB,1);
+0654         indB = ABu_approx{iP}(iB,2);
+0655         <span class="keyword">if</span> indA~=indB
+0656             
+0657             <span class="keyword">for</span> iL = 1:nLayer
+0658                 ItemZ1 = ((iP-1)*nLayer+iL-1)*bundleThickness+(iP-1)*ResinRich_Th;
+0659                 ItemZ2 = ItemZ1;
+0660                 <span class="keyword">for</span> iC = indA:indB <span class="comment">% note no Rz on outmost contact</span>
+0661                     
+0662                     
+0663                     NextB = iB+1;
+0664                     <span class="keyword">if</span> iC&gt;= ABu_approx{iP}(NextB,1) &amp;&amp; iC&lt;=ABu_approx{iP}(NextB,2)
+0665                         ItemU1 = (iC-1)*bundleLength-Len_eff(iP)/2;
+0666                         ItemU2 = ItemU1;
+0667                         <span class="comment">%</span>
+0668                         ItemV1 = (iB-1)*bundleWidth-Wid_eff(iP)/2;
+0669                         ItemV2 = (iB)*bundleWidth-Wid_eff(iP)/2;
+0670                         
+0671                         ItemXYs = [ItemU1 ItemV1; ItemU2 ItemV2]*T_back;
+0672                         ItemX1 = ItemXYs(1,1);
+0673                         ItemY1 = ItemXYs(1,2);
+0674                         ItemX2 = ItemXYs(2,1);
+0675                         ItemY2 = ItemXYs(2,2);
+0676                         
+0677                         
+0678                                                 Ry_ID =[<span class="string">'XRy_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0679                                                 Ry_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0680                                                 Ry_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB+1),<span class="string">'C'</span>,num2str(iC)];
+0681                         
+0682                         
+0683 <span class="comment">%                         rType = 'Y';</span>
+0684 <span class="comment">%                         [resistorID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+0685                         RsubcktString = [<span class="string">'Rfiber Rf='</span> num2str(bundleResistanceY)];
+0686                         fid=fopen(NetListID,<span class="string">'a'</span>);
+0687                          fprintf(fid,<span class="string">'%s %s %s %s \n'</span>,Ry_ID,Ry_Node1,Ry_Node2,RsubcktString);
+0688 <span class="comment">%                          fprintf(fid,'%s %s %s %s \n',resistorID,node1,node2,RsubcktString);</span>
+0689                        <span class="comment">% fprintf(fid,'%s %s %s %s %s %s \n',resistorID,node1,node2,node3,node4,RsubcktString);</span>
+0690                         ST = fclose(fid);
+0691 <span class="comment">%                         Item = Item + 1;</span>
+0692 <span class="comment">%                         Mass(Item) = MRy;</span>
+0693 <span class="comment">%                         Rs(end+1) = bundleResistanceY;</span>
+0694 <span class="comment">%                         NetListMatrix{Item} = [Ry_ID,' ',Ry_Node1,' ',Ry_Node2,' '];</span>
+0695 <span class="comment">%                         Coordinates(:,Item) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';</span>
+0696                     <span class="keyword">end</span>
+0697                 <span class="keyword">end</span>
+0698             <span class="keyword">end</span>
+0699         <span class="keyword">end</span>
+0700     <span class="keyword">end</span>
+0701     
+0702     <span class="comment">%{</span>
+0703 <span class="comment">%</span>
+0704 <span class="comment">%</span>
+0705 <span class="comment">%                     ItemX1 = iC*Bundle_Len-Len_eff(iP)/2;</span>
+0706 <span class="comment">%                     ItemX2 = (iC+1)*Bundle_Len-Len_eff(iP)/2;</span>
+0707 <span class="comment">%                     Rx_ID =['Rx_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+0708 <span class="comment">%                     Rx_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+0709 <span class="comment">%                     Rx_Node2 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC+1)];</span>
+0710 <span class="comment">%                     fid=fopen(NetListID,'a');</span>
+0711 <span class="comment">%                     fprintf(fid,'%s %s %s %f \n',Rx_ID,Rx_Node1,Rx_Node2,Rx_Bundle);</span>
+0712 <span class="comment">%                     ST = fclose(fid);</span>
+0713 <span class="comment">%                     Item= Item+1;</span>
+0714 <span class="comment">%                     Mass(Item) = MRx;</span>
+0715 <span class="comment">%                     Rs(end+1) = Rx_Bundle;</span>
+0716 <span class="comment">%                     NetListMatrix{Item} = [Rx_ID,' ',Rx_Node1,' ',Rx_Node2,' ']</span>
+0717 <span class="comment">%                      Coordinates(:,Item) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';</span>
+0718 <span class="comment">%                 end</span>
+0719 <span class="comment">%             end</span>
+0720 <span class="comment">%         end</span>
+0721 <span class="comment">%     end</span>
+0722     
+0723     
+0724 <span class="comment">%     % y direction % BUGs!!!!</span>
+0725 <span class="comment">%     for iC = 1:nContact</span>
+0726 <span class="comment">%         [indBundle indAB] = find(ABu_approx{iP} == iC); % find starting and ending bundles at each contact point</span>
+0727 <span class="comment">%         b1 = indBundle;  % get starting and ending bundles</span>
+0728 <span class="comment">%         ItemX1 = (iC-1)*Bundle_Len-Len_eff(iP)/2</span>
+0729 <span class="comment">%         ItemX2 = ItemX1</span>
+0730 <span class="comment">%         if length(b1)&gt;=2</span>
+0731 <span class="comment">%             c0 = min(b1);</span>
+0732 <span class="comment">%             c1 = max(b1);</span>
+0733 <span class="comment">%             for iB = c0:(c1-1) % note no Ry on outmost bundle</span>
+0734 <span class="comment">%                 ItemY1 = (iB-1)*Bundle_Wid-Wid_eff(iP)/2;</span>
+0735 <span class="comment">%                 ItemY2 = (iB)*Bundle_Wid-Wid_eff(iP)/2;</span>
+0736 <span class="comment">%</span>
+0737 <span class="comment">%                 %                 if iB == c0 || iB == c1</span>
+0738 <span class="comment">%                 %                     for iL = 1:nLayer</span>
+0739 <span class="comment">%                 %                         %printf Rname PLB_iB_C_iC PLB_iB+1-C_iC 0.5R_y</span>
+0740 <span class="comment">%                 %                         Ry_ID =['Ry_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0741 <span class="comment">%                 %                         Ry_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0742 <span class="comment">%                 %                         Ry_Node2 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB+1),'C',num2str(iC)]</span>
+0743 <span class="comment">%                 %                         fid=fopen(NetListID,'a');</span>
+0744 <span class="comment">%                 %                         fprintf(fid,'%s %s %s %f \n',Ry_ID,Ry_Node1,Ry_Node2,Ry_Bundle/2); % note at corner, resistance is Ry_bundle/2</span>
+0745 <span class="comment">%                 %                         ST = fclose(fid);</span>
+0746 <span class="comment">%                 %                     end</span>
+0747 <span class="comment">%                 %                 else</span>
+0748 <span class="comment">%                 for iL = 1:nLayer</span>
+0749 <span class="comment">%                     ItemZ1 = ((iP-1)*nLayer+iL-1)*Bundle_Th+(iP-1)*ResinRich_Th;</span>
+0750 <span class="comment">%                     ItemZ2 = ItemZ1;</span>
+0751 <span class="comment">%                     %printf Rname PLB_iB_C_iC PLB_iB+1-C_iC R_y</span>
+0752 <span class="comment">%                     Ry_ID =['Ry_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+0753 <span class="comment">%                     Ry_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+0754 <span class="comment">%                     Ry_Node2 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB+1),'C',num2str(iC)];</span>
+0755 <span class="comment">%                     fid=fopen(NetListID,'a');</span>
+0756 <span class="comment">%                     fprintf(fid,'%s %s %s %f \n',Ry_ID,Ry_Node1,Ry_Node2,Ry_Bundle);</span>
+0757 <span class="comment">%                     ST = fclose(fid);</span>
+0758 <span class="comment">%                     Item = Item + 1;</span>
+0759 <span class="comment">%                     Mass(Item) = MRy;</span>
+0760 <span class="comment">%                     Rs(end+1) = Ry_Bundle;</span>
+0761 <span class="comment">%                     NetListMatrix{Item} = [Ry_ID,' ',Ry_Node1,' ',Ry_Node2,' ']</span>
+0762 <span class="comment">%                     Coordinates(:,Item) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';</span>
+0763 <span class="comment">%                 end</span>
+0764 <span class="comment">%             end</span>
+0765 <span class="comment">%         end</span>
+0766 <span class="comment">%     end</span>
+0767     <span class="comment">%}</span>
+0768     <span class="comment">% z direction</span>
+0769     <span class="keyword">for</span> iB = 1:nBundle
+0770         indA = ABu_approx{iP}(iB,1);
+0771         indB = ABu_approx{iP}(iB,2);
+0772         ItemV1 = (iB-1)*bundleWidth-Wid_eff(iP)/2;
+0773         ItemV2 = ItemV1;
+0774         <span class="keyword">if</span> indA~=indB
+0775             <span class="keyword">for</span> iC = indA:indB
+0776                 ItemU1 = (iC-1)*bundleLength-Len_eff(iP)/2;
+0777                 ItemU2 = ItemU1;
+0778                 ItemXYs = [ItemU1 ItemV1; ItemU2 ItemV2]*T_back;
+0779                 ItemX1 = ItemXYs(1,1);
+0780                 ItemY1 = ItemXYs(1,2);
+0781                 ItemX2 = ItemXYs(2,1);
+0782                 ItemY2 = ItemXYs(2,2);
+0783                 <span class="comment">%{</span>
+0784                 <span class="comment">%                 if iC == indA || iC == indB</span>
+0785                 <span class="comment">%                     for iL =1:(nLayer-1) % Note no Rz on top layer</span>
+0786                 <span class="comment">%                         %printf Rzname P-L_iL-B-C  0.5Rz</span>
+0787                 <span class="comment">%                         Rz_ID =['Rz_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0788                 <span class="comment">%                         Rz_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0789                 <span class="comment">%                         Rz_Node2 = ['P',num2str(iP),'L',num2str(iL+1),'B',num2str(iB),'C',num2str(iC)]</span>
+0790                 <span class="comment">%                         fid=fopen(NetListID,'a');</span>
+0791                 <span class="comment">%                         fprintf(fid,'%s %s %s %f \n',Rz_ID,Rz_Node1,Rz_Node2,Rz_Bundle/2);</span>
+0792                 <span class="comment">%                         ST = fclose(fid);</span>
+0793                 <span class="comment">%                     end</span>
+0794                 <span class="comment">%                 else</span>
+0795                 <span class="comment">%}</span>
+0796                 <span class="keyword">for</span> iL =1:(nLayer-1)
+0797                     ItemZ1 = ((iP-1)*nLayer+iL-1)*bundleThickness+(iP-1)*ResinRich_Th;
+0798                     ItemZ2 = ((iP-1)*nLayer+iL)*bundleThickness+(iP-1)*ResinRich_Th;
+0799                     <span class="comment">%printf Rzname P-L_iL-B-C  0.5Rz</span>
+0800                                         Rz_ID =[<span class="string">'XRz_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0801                                         Rz_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0802                                         Rz_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL+1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)];
+0803                     CfResin0 =6.539e-10;
+0804                     RfValue0 = bundleResistanceZ;
+0805                     RfValue = RfValue0*10^(<a href="../../v08/helper/randomValue.html" class="code" title="function result = randomValue( lowerLimit, upperLimit )">randomValue</a>(-4,4));
+0806                     RfString = [<span class="string">'Rf='</span>, num2str(RfValue)];
+0807                     CfValue = CfResin0*10^(<a href="../../v08/helper/randomValue.html" class="code" title="function result = randomValue( lowerLimit, upperLimit )">randomValue</a>(-4,4));
+0808                     CfString = [<span class="string">'Cf='</span>, num2str(CfValue)];
+0809                     
+0810 <span class="comment">%                     rType = 'Z';</span>
+0811 <span class="comment">%                     [resistorID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+0812                     RsubcktString = [<span class="string">'Rcontact '</span>,RfString,<span class="string">' '</span>,CfString];
+0813                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0814                     fprintf(fid,<span class="string">'%s %s %s %s\n'</span>,Rz_ID,Rz_Node1,Rz_Node2,RsubcktString);
+0815 <span class="comment">%                      fprintf(fid,[Rz_ID,' ',Rz_Node1,' ',Rz_Node2,' Rcontact1 ',RfString,' ',CfString,'\n'])</span>
+0816 <span class="comment">%                      fprintf(fid,'%s %s %s %s \n',resistorID,node1,node2,RsubcktString);</span>
+0817                    <span class="comment">% fprintf(fid,'%s %s %s %s %s %s \n',resistorID,node1,node2,node3,node4,RsubcktString);</span>
+0818                      ST = fclose(fid);
+0819                     <span class="comment">%             fid=fopen(NetListID,'a');</span>
+0820                     <span class="comment">%             fprintf(fid,[Rz_ID,' ',Rz_Node1,' ',Rz_Node2,' Rcontact1 ',RfString,' ',CfString,'\n'])</span>
+0821                    
+0822                     
+0823                     <span class="comment">%                     Rvalue = 10+(1000-10)*rand;</span>
+0824                     <span class="comment">%                     RsubcktString= ['Rcontact Rf=',num2str(Rvalue)]</span>
+0825                     <span class="comment">%</span>
+0826                     <span class="comment">%                     fid=fopen(NetListID,'a');</span>
+0827                     <span class="comment">%                     fprintf(fid,'%s %s %s %s\n',Rz_ID,Rz_Node1,Rz_Node2,RsubcktString);</span>
+0828                     <span class="comment">%                     ST = fclose(fid);</span>
+0829 <span class="comment">%                     Item= Item+1;</span>
+0830 <span class="comment">%                     Mass(Item) = MRz;</span>
+0831 <span class="comment">%                     Rs(end+1) = bundleResistanceZ;</span>
+0832 <span class="comment">%                     NetListMatrix{Item} = [Rz_ID,' ',Rz_Node1,' ',Rz_Node2,' '];</span>
+0833 <span class="comment">%                     Coordinates(:,Item) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';</span>
+0834                 <span class="keyword">end</span>
+0835             <span class="keyword">end</span>
+0836         <span class="keyword">end</span>
+0837     <span class="keyword">end</span>
+0838 <span class="keyword">end</span>
+0839 
+0840 
+0841 <span class="comment">%% Add inter-Ply connections</span>
+0842 <span class="keyword">if</span> nPly &gt; 1
+0843     <span class="keyword">for</span> iP = 1:(nPly-1)
+0844         <span class="comment">%         theta0 = thetas(iP);  %lower ply angle</span>
+0845         <span class="comment">%         if theta0 == 0</span>
+0846         <span class="comment">%     Connect_XY = [3 3]</span>
+0847         <span class="comment">%         Connect_XY = [5 5]</span>
+0848         <span class="comment">%         Connect_XY = [1*Spec_Len*(rand(nConnect,1)-0.5) 1*Spec_Wid*(rand(nConnect,1)-0.5)]; % coordinates of connection poits in XY coord system</span>
+0849         <span class="comment">%         nConnect = size(Connect_XY,1);</span>
+0850         
+0851         
+0852         theta0 = thetas(iP);  <span class="comment">%lower ply angle</span>
+0853         theta1 = thetas(iP+1);  <span class="comment">% upper ply angle</span>
+0854         Contacts0 = Contacts_all{iP};
+0855         Bundles0 = Bundles_all{iP};
+0856         nContact0 = length(Contacts0);
+0857         nBundle0 = length(Bundles0);
+0858         
+0859         theta_between = abs(theta1-theta0);
+0860         <span class="comment">%         if theta_between == 0</span>
+0861         disp(<span class="string">'theta_between=%s'</span>)
+0862         disp(theta_between)
+0863         connectivity = Function.Connect_Theta(theta_between,Lc);
+0864         disp(connectivity)
+0865         <span class="keyword">if</span> connectivity == -1
+0866             nConnect_tot = round(Spec_Len*Spec_Wid/Lc/Fiber_spacing);
+0867             nIntersection = nContact0*nBundle0;
+0868             nConnect = floor(connectProbability*nIntersection);
+0869             R_ply = R_ply0/(nConnect_tot/nIntersection);
+0870         <span class="keyword">else</span>
+0871             <span class="comment">%             R_ply = R_ply0</span>
+0872             nConnect_tot = round(Spec_Len*Spec_Wid*connectivity);
+0873             nConnect = floor(connectProbability*nConnect_tot);
+0874             R_ply = R_ply0;
+0875         <span class="keyword">end</span>
+0876         
+0877         <span class="comment">% at lower ply:</span>
+0878         T_rot0 = [cos(-theta0) sin(-theta0); -sin(-theta0) cos(-theta0)];
+0879         T_back0 = [cos(theta0) sin(theta0); -sin(theta0) cos(theta0)];
+0880         Connect_XY = [1*Spec_Len*(rand(nConnect,1)-0.5) 1*Spec_Wid*(rand(nConnect,1)-0.5)];
+0881         Connect_UV0 = Connect_XY*T_rot0;
+0882         
+0883         Mesh_UV0 = Mesh_UV_all{iP};
+0884         Mesh_U0 = Mesh_U_all{iP};
+0885         Mesh_V0 = Mesh_V_all{iP};
+0886         <span class="comment">%</span>
+0887         
+0888         <span class="comment">%         Prob_connect = 1</span>
+0889         <span class="comment">%         nIntersection = nContact0*nBundle0;</span>
+0890         <span class="comment">%         nConnect = Prob_connect*nConnect_tot;</span>
+0891         <span class="comment">%         R_ply = R_ply0/(nConnect_tot/nIntersection)</span>
+0892         
+0893         <span class="comment">% at upper ply:</span>
+0894         
+0895         T_rot1 = [cos(-theta1) sin(-theta1); -sin(-theta1) cos(-theta1)];
+0896         T_back1 = [cos(theta1) sin(theta1); -sin(theta1) cos(theta1)];
+0897         Connect_UV1 = Connect_XY*T_rot1;
+0898         Mesh_UV1 = Mesh_UV_all{iP+1};
+0899         Mesh_U1 = Mesh_U_all{iP+1};
+0900         Mesh_V1 = Mesh_V_all{iP+1};
+0901         Contacts1 = Contacts_all{iP+1};
+0902         Bundles1 = Bundles_all{iP+1};
+0903         nContact1 = length(Contacts1);
+0904         nBundle1 = length(Bundles1);
+0905         
+0906         
+0907         <span class="comment">% iterate through each connection pt</span>
+0908         <span class="keyword">for</span> nCnnt = 1:nConnect
+0909             <span class="comment">%             ItemX1 = Connect_XY(nCnnt,1)</span>
+0910             <span class="comment">%             ItemX2 = ItemX1</span>
+0911             <span class="comment">%             ItemY1 = Connect_XY(nCnnt,2)</span>
+0912             <span class="comment">%             ItemY2 = ItemY1</span>
+0913             
+0914             <span class="comment">%             ItemZ1 =</span>
+0915             <span class="comment">%             ItemZ2 =</span>
+0916             u0 = Connect_UV0(nCnnt,1);
+0917             v0 = Connect_UV0(nCnnt,2);
+0918             u1 = Connect_UV1(nCnnt,1);
+0919             v1 = Connect_UV1(nCnnt,2);
+0920             [c indC0] = min(sqrt((Mesh_UV0(:,1)-u0).^2+(Mesh_UV0(:,2)-v0).^2));
+0921             CnntUV0 = Mesh_UV0(indC0,:);
+0922             CnntUV0 = CnntUV0*T_back0;
+0923             CnntUV0_all(nCnnt,:) = CnntUV0;
+0924             <span class="comment">%             hold on</span>
+0925             <span class="comment">%             plot3(CnntUV0(1),CnntUV0(2),0,'r+')</span>
+0926             <span class="comment">%         Cnnt_B0 = floor(indC0/nBundle0)</span>
+0927             <span class="comment">%         Cnnt_C0 = mod(indC0,nBundle0)</span>
+0928             Cnnt_C0 = floor((indC0-1)/nBundle0)+1;
+0929             Cnnt_B0 = mod((indC0-1),nBundle0)+1;
+0930             [c, indC1] = min(sqrt((Mesh_UV1(:,1)-u1).^2+(Mesh_UV1(:,2)-v1).^2));
+0931             CnntUV1 = Mesh_UV1(indC1,:);
+0932             CnntUV1 = CnntUV1*T_back1;
+0933             CnntX = [CnntUV0(1) CnntUV1(1)];
+0934             CnntY = [CnntUV0(2) CnntUV1(2)];
+0935             ItemX1 = CnntUV0(1);
+0936             ItemX2 = CnntUV1(1);
+0937             ItemY1 = CnntUV0(2);
+0938             ItemY2 = CnntUV1(2);
+0939             ItemZ1 = (iP-1)*(nLayer)*bundleThickness+(nLayer-1)*bundleThickness+(iP-1)*ResinRich_Th;
+0940             ItemZ2 = ItemZ1+bundleThickness+ResinRich_Th;
+0941             CnntZ = [ItemZ1 ItemZ2];
+0942             <span class="comment">%             plot3(CnntX,CnntY,CnntZ,'g--')</span>
+0943             <span class="comment">%             plot3(CnntUV1(1),CnntUV1(2),Spec_Th/nPly,'b*');</span>
+0944             Cnnt_C1 = floor((indC1-1)/nBundle1)+1;
+0945             Cnnt_B1 = mod((indC1-1),nBundle1)+1;
+0946             <span class="comment">%         Cnnt_B1 = floor(indC1/nBundle1)</span>
+0947             <span class="comment">%         Cnnt_C1 = mod(indC1,nBundle1)</span>
+0948             <span class="comment">% print netlist</span>
+0949             
+0950             
+0951              Rc_ID =[<span class="string">'XRc_P'</span>,num2str(iP),<span class="string">'Cnnt'</span>,num2str(nCnnt)];
+0952             Rc_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(Cnnt_B0),<span class="string">'C'</span>,num2str(Cnnt_C0)];
+0953              Rc_Node2 = [<span class="string">'P'</span>,num2str(iP+1),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(Cnnt_B1),<span class="string">'C'</span>,num2str(Cnnt_C1)];
+0954             RfValue0 = INTERPLY_RESISTANCE;
+0955             CfResin0 =6.539e-9;
+0956             
+0957             RfValue = RfValue0*10^(<a href="../../v08/helper/randomValue.html" class="code" title="function result = randomValue( lowerLimit, upperLimit )">randomValue</a>(-4,4));
+0958             CfValue = CfResin0*10^(<a href="../../v08/helper/randomValue.html" class="code" title="function result = randomValue( lowerLimit, upperLimit )">randomValue</a>(-4,4));
+0959                  RfString = [<span class="string">'Rf='</span>, num2str(RfValue)];
+0960             CfString = [<span class="string">'Cf='</span>, num2str(CfValue)];
+0961             
+0962 <span class="comment">%             rType = 'interPly';</span>
+0963 <span class="comment">%             [resistorID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+0964             
+0965 <span class="comment">%                       resistorID =['XRc_P',num2str(iP),'Cnnt',num2str(nCnnt)];</span>
+0966 <span class="comment">%             node1 = ['P',num2str(iP),'L',num2str(nLayer),'B',num2str(Cnnt_B0),'C',num2str(Cnnt_C0)];</span>
+0967 <span class="comment">%             node2 = ['P',num2str(iP+1),'L',num2str(1),'B',num2str(Cnnt_B1),'C',num2str(Cnnt_C1)];</span>
+0968 <span class="comment">%             node3 = ['P',num2str(iP),'L',num2str(nLayer),'B',num2str(Cnnt_B0),'C',num2str(Cnnt_C0),'t'];</span>
+0969 <span class="comment">%             node4 = ['P',num2str(iP+1),'L',num2str(1),'B',num2str(Cnnt_B1),'C',num2str(Cnnt_C1),'t'];</span>
+0970 <span class="comment">%</span>
+0971 <span class="comment">%             RsubcktString = ['Rresin ',RfString,' ',CfString];</span>
+0972 <span class="comment">%             fid=fopen(NetListID,'a');</span>
+0973 <span class="comment">%              fprintf(fid,'%s %s %s %s \n',resistorID,node1,node2,RsubcktString);</span>
+0974 <span class="comment">%            % fprintf(fid,'%s %s %s %s %s %s \n',resistorID,node1,node2,node3,node4,RsubcktString);</span>
+0975 <span class="comment">%             ST = fclose(fid);</span>
+0976             
+0977             
+0978             
+0979             fid=fopen(NetListID,<span class="string">'a'</span>);
+0980             fprintf(fid,[Rc_ID,<span class="string">' '</span>,Rc_Node1,<span class="string">' '</span>,Rc_Node2,<span class="string">' Rresin '</span>,RfString,<span class="string">' '</span>,CfString,<span class="string">'\n'</span>])
+0981             <span class="comment">% fprintf(fid,'%s %s %s %s \n',Rc_ID,Rc_Node1,Rc_Node2,'Rresin');</span>
+0982             <span class="comment">% fprintf(fid,'%s %s %s %f \n',Rc_ID,Rc_Node1,Rc_Node2,R_ply);</span>
+0983             ST = fclose(fid);
+0984             nItem= nItem+1;
+0985             Mass(nItem) = Mply;
+0986             Rs(end+1) = R_ply;
+0987             netlistMatrix{nItem} = [Rc_ID,<span class="string">' '</span>,Rc_Node1,<span class="string">' '</span>,Rc_Node2,<span class="string">' '</span>];
+0988             Coordinates(:,nItem) = [ItemX1 ItemX2 ItemY1 ItemY2 ItemZ1 ItemZ2]';
+0989         <span class="keyword">end</span>
+0990     <span class="keyword">end</span>
+0991 <span class="keyword">end</span>
+0992 <span class="comment">% NetListMatrix = NetListMatrix';</span>
+0993 <span class="comment">% Rs = Rs';</span>
+0994 <span class="comment">% Masss = Mass';</span>
+0995 <span class="comment">%% write analysis command</span>
+0996 Subckt1 = [<span class="string">'.subckt Rfiber e1 e2 \n'</span> <span class="keyword">...</span>
+0997     <span class="string">'.param Rf=60 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-8 thRf=1.3e6\n'</span> <span class="keyword">...</span>
+0998     <span class="string">'G_R1 e1 e2 VALUE={(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293)))}\n'</span> <span class="keyword">...</span>
+0999     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1000     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1001     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1002     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1003     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1004     <span class="string">'*Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1005     <span class="string">'*Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1006     <span class="string">'.ends \n'</span>];
+1007 
+1008 Subckt2 = [<span class="string">'.subckt Rcontact e1 e2 \n'</span> <span class="keyword">...</span>
+1009     <span class="string">'.param Rbreakdown=200 Rf=30 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-10 thRf=1.3e4\n'</span> <span class="keyword">...</span>
+1010     <span class="string">'G_R1 e1 e2 VALUE={if(V(t)-1000,(V(e1)-V(e2))/(1.0*Rf*exp(Ea*eV_kB*(1/V(t)-1/293))),(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293))))}\n'</span> <span class="keyword">...</span>
+1011     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1012     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1013     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1014     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1015     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1016     <span class="string">'*Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1017     <span class="string">'*Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1018     <span class="string">'.ends \n'</span>];
+1019 
+1020 
+1021 
+1022 Subckt3 = [<span class="string">'.subckt Rresin e1 e2 \n'</span> <span class="keyword">...</span>
+1023     <span class="string">'.param Rbreakdown=1000 Rf=3000 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-9 thRf=1.3e8\n'</span> <span class="keyword">...</span>
+1024     <span class="string">'G_R1 e1 e2 VALUE={if(V(t)-1000,(V(e1)-V(e2))/(0.1*Rf*exp(Ea*eV_kB*(1/V(t)-1/293))),(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293))))}\n'</span> <span class="keyword">...</span>
+1025     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1026     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1027     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1028     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1029     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1030     <span class="string">'*Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1031     <span class="string">'*Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1032     <span class="string">'.ends \n'</span>];
+1033 
+1034 Subckt4 = [<span class="string">'.subckt Rfiber1 e1 e2 t1 t2 \n'</span> <span class="keyword">...</span>
+1035     <span class="string">'.param Rf=60 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-8 thRf=1.3e6\n'</span> <span class="keyword">...</span>
+1036     <span class="string">'G_R1 e1 e2 VALUE={(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293)))}\n'</span> <span class="keyword">...</span>
+1037     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1038     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1039     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1040     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1041     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1042     <span class="string">'Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1043     <span class="string">'Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1044     <span class="string">'.ends \n'</span>];
+1045 
+1046 Subckt5 = [<span class="string">'.subckt Rcontact1 e1 e2 t1 t2\n'</span> <span class="keyword">...</span>
+1047     <span class="string">'.param Rbreakdown=200 Rf=30 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-10 thRf=1.3e4\n'</span> <span class="keyword">...</span>
+1048     <span class="string">'G_R1 e1 e2 VALUE={if(V(t)-1000,(V(e1)-V(e2))/(1.0*Rf*exp(Ea*eV_kB*(1/V(t)-1/293))),(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293))))}\n'</span> <span class="keyword">...</span>
+1049     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1050     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1051     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1052     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1053     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1054     <span class="string">'Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1055     <span class="string">'Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1056     <span class="string">'.ends \n'</span>];
+1057 
+1058 
+1059 
+1060 Subckt6 = [<span class="string">'.subckt Rresin1 e1 e2 t1 t2 \n'</span> <span class="keyword">...</span>
+1061     <span class="string">'.param Rbreakdown=1000 Rf=3000 Ea=8.5e-3 eV_kB=1.16e4 Const=1 Cf=6.539e-9 thRf=1.3e8\n'</span> <span class="keyword">...</span>
+1062     <span class="string">'G_R1 e1 e2 VALUE={if(V(t)-1000,(V(e1)-V(e2))/(0.1*Rf*exp(Ea*eV_kB*(1/V(t)-1/293))),(V(e1)-V(e2))/(Rf*exp(Ea*eV_kB*(1/V(t)-1/293))))}\n'</span> <span class="keyword">...</span>
+1063     <span class="string">'*G_R2 e2 emid VALUE={(V(e2)-V(emid))/(Rf*exp(Const/(V(t)-293+0.1)))}\n'</span> <span class="keyword">...</span>
+1064     <span class="string">'Cth t t_init {Cf}\n'</span> <span class="keyword">...</span>
+1065     <span class="string">'G_joule1 t_init t VALUE={I(G_R1)*(V(e1)-V(e2))}\n'</span> <span class="keyword">...</span>
+1066     <span class="string">'*G_joule2 t_init t VALUE={I(G_R2)*(V(e2)-V(emid))}\n'</span> <span class="keyword">...</span>
+1067     <span class="string">'V_init t_init 0 293\n'</span> <span class="keyword">...</span>
+1068     <span class="string">'Rth1 t1 t {thRf}\n'</span> <span class="keyword">...</span>
+1069     <span class="string">'Rth2 t2 t {thRf}\n'</span> <span class="keyword">...</span>
+1070     <span class="string">'.ends \n'</span>];
+1071 
+1072 <span class="comment">%Subckts = [Subckt1 Subckt2 Subckt3 Subckt4 Subckt5 Subckt6];</span>
+1073 Subckts = [Subckt1 Subckt2 Subckt3];
+1074 voltageInputStr = [<span class="string">'Vinput Vin 0  PWL('</span> voltageInput <span class="string">')\n'</span>];
+1075 analysisCommandStr = [<span class="string">'.tran '</span> stopTime <span class="string">' UIC \n'</span>];
+1076 data2SaveStr = <span class="string">'.SAVE V(Vin) I(Vinput) \n'</span>;
+1077 options = [<span class="string">'.options abstol=0.001 \n'</span> <span class="keyword">...</span>
+1078     <span class="string">'.options chgtol=1e-006 \n'</span> <span class="keyword">...</span>
+1079     <span class="string">'.options sstol=0.01 \n'</span> <span class="keyword">...</span>
+1080     <span class="string">'.options gmin=1e-6 \n'</span> <span class="keyword">...</span>
+1081     <span class="string">'.options reltol=0.01 \n'</span> <span class="keyword">...</span>
+1082     <span class="string">'.options   MinDeltaGmin=0.01 \n'</span> <span class="keyword">...</span>
+1083     <span class="string">'.options vntol=0.001 \n'</span> ]
+1084 endStr = <span class="string">'.end \n'</span>;
+1085 
+1086 fid=fopen(NetListID,<span class="string">'a'</span>);
+1087 fprintf(fid,[Subckts voltageInputStr analysisCommandStr data2SaveStr options endStr]);
+1088 ST=fclose(fid);
+1089 fclose(<span class="string">'all'</span>)
+1090 <span class="comment">%'.param Rf=60 Const=1 Cf=1 thRf=1\n' ...</span>
+1091 <span class="comment">%'G_R1 e1 e2 VALUE={(V(e1)-V(e2))/(Rf*exp(Const/(V(t)-293+0.1)))}\n' ...</span>
+1092 <span class="comment">%fid=fopen(NetListID,'a');</span>
+1093 <span class="comment">% fprintf(fid,Subckt);</span>
+1094 <span class="comment">% fprintf(fid,'.tran 0.001 0.1 UIC \n')</span>
+1095 <span class="comment">% fprintf(fid,'%s \n','.END');</span>
+1096 <span class="comment">% ST = fclose(fid);</span>
+1097 
+1098 <span class="comment">%     function [R_ID,node1,node2,node3,node4]=generate_4_node_IDs(rType,iP,iL,iB,iC);</span>
+1099 <span class="comment">%         switch rType</span>
+1100 <span class="comment">%             case 'X'</span>
+1101 <span class="comment">%                 R_ID =['XRx_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+1102 <span class="comment">%             case 'Y'</span>
+1103 <span class="comment">%                 R_ID = ['XRy_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+1104 <span class="comment">%             case 'Z'</span>
+1105 <span class="comment">%                 R_ID = ['XRz_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+1106 <span class="comment">%             case 'interPly'</span>
+1107 <span class="comment">%                 R_ID = ['XRc_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+1108 <span class="comment">%         end</span>
+1109 <span class="comment">%         node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)];</span>
+1110 <span class="comment">%         node2 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC+1)];</span>
+1111 <span class="comment">%         node3 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC),'t'];</span>
+1112 <span class="comment">%         node4 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC+1),'t'];</span>
+1113 <span class="comment">%     end</span>
+1114 <span class="keyword">end</span>
+1115</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

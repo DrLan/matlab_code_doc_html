@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ContactR</title>
+  <meta name="keywords" content="ContactR">
+  <meta name="description" content="% contact resistance">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ContactR.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ContactR
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% contact resistance</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function Rc = ContactR(fiberRadius,Fc,E,rf) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% contact resistance
+ F is loading at contact point; E is fiber modulus;
+ rho is fiber resistivity</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Function.html" class="code" title="">Function</a>	</li><li><a href="Interface_layer_simulation.html" class="code" title="">Interface_layer_simulation</a>	% 3D Resistor Network Modle by Hong Yu</li><li><a href="RNetworkGUI1.html" class="code" title="function varargout = RNetworkGUI1(varargin)">RNetworkGUI1</a>	RNETWORKGUI1 MATLAB code for RNetworkGUI1.fig</li><li><a href="RvsPressure.html" class="code" title="">RvsPressure</a>	</li><li><a href="SIM_Compare_Combine_GUI.html" class="code" title="function varargout = SIM_Compare_Combine_GUI(varargin)">SIM_Compare_Combine_GUI</a>	SIM_COMPARE_COMBINE_GUI MATLAB code for SIM_Compare_Combine_GUI.fig</li><li><a href="SIM_Compare_Combine_GUI_table.html" class="code" title="function varargout = SIM_Compare_Combine_GUI_table(varargin)">SIM_Compare_Combine_GUI_table</a>	SIM_COMPARE_COMBINE_GUI_TABLE MATLAB code for SIM_Compare_Combine_GUI_table.fig</li><li><a href="SIM_Compare_GUI.html" class="code" title="function varargout = SIM_Compare_GUI(varargin)">SIM_Compare_GUI</a>	SIM_COMPARE_GUI MATLAB code for SIM_Compare_GUI.fig</li><li><a href="SIM_Compare_Hexagonal_GUI.html" class="code" title="function varargout = SIM_Compare_Hexagonal_GUI(varargin)">SIM_Compare_Hexagonal_GUI</a>	SIM_COMPARE_HEXAGONAL_GUI MATLAB code for SIM_Compare_Hexagonal_GUI.fig</li><li><a href="SIM_Compare_Square_GUI.html" class="code" title="function varargout = SIM_Compare_Square_GUI(varargin)">SIM_Compare_Square_GUI</a>	SIM_COMPARE_SQUARE_GUI MATLAB code for SIM_Compare_Square_GUI.fig</li><li><a href="SIM_Comparison_R_VF_AS4.html" class="code" title="">SIM_Comparison_R_VF_AS4</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7.html" class="code" title="">SIM_Convergence_Square_IM7</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict 1].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 1]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict 2].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 2]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict 3].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 3]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Pressure_IM7.html" class="code" title="">SIM_Pressure_IM7</a>	% Statistical representation: beta</li><li><a href="SIM_Pressure_IM7_Gutowski.html" class="code" title="">SIM_Pressure_IM7_Gutowski</a>	% Statistical representation: beta</li><li><a href="SIM_beta_Dis_IM7.html" class="code" title="">SIM_beta_Dis_IM7</a>	% Statistical representation: beta</li><li><a href="Sensitivity_Study_Taguchi.html" class="code" title="">Sensitivity_Study_Taguchi</a>	% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Rc = ContactR(fiberRadius,Fc,E,rf)</a>
+0002 <span class="comment">%% contact resistance</span>
+0003 <span class="comment">% F is loading at contact point; E is fiber modulus;</span>
+0004 <span class="comment">% rho is fiber resistivity</span>
+0005 Rc=rf/(1.76*(Fc*fiberRadius/E)^(1/3));</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

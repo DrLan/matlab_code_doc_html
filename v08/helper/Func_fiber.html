@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Func_fiber</title>
+  <meta name="keywords" content="Func_fiber">
+  <meta name="description" content="%">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Func_fiber.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Func_fiber
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>%</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [fiber1 VF] = Func_fiber(fibermat,fiberRadius) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>	UNTITLED2 Summary of this function goes here</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [fiber1 VF] = Func_fiber(fibermat,fiberRadius)</a>
+0002 <span class="comment">%%</span>
+0003 load(fibermat);
+0004 N=size(fiber.radius,2);
+0005 fiber1= struct(<span class="string">'center'</span>,[], <span class="string">'radius'</span>,[], <span class="string">'nodes'</span>, []);
+0006 aveRad=mean(fiber.radius);
+0007 scale=aveRad/fiberRadius;
+0008 
+0009 fiber.x=fiber.x/scale;
+0010 fiber.y=fiber.y/scale;
+0011 fiber.radius=fiber.radius/scale;
+0012 minx=min(fiber.x)-fiberRadius;
+0013 miny=min(fiber.y)-fiberRadius;
+0014 maxx=max(fiber.x)+fiberRadius;
+0015 maxy=max(fiber.y)+fiberRadius;
+0016 xlen=maxx-minx;
+0017 ylen=maxy-miny;
+0018 Rsquare=fiber.radius*fiber.radius';
+0019 VF=pi*Rsquare/(xlen*ylen);
+0020 <span class="comment">%%</span>
+0021 viscircles([fiber.x' fiber.y'],fiber.radius);
+0022 axis([minx maxx miny maxy]);
+0023 <span class="comment">%%</span>
+0024 
+0025 <span class="keyword">for</span> i=1:N
+0026     fiber1(i).center(1)=fiber.x(i);
+0027     fiber1(i).center(2)=fiber.y(i);
+0028     fiber1(i).radius=fiber.radius(i);
+0029 <span class="keyword">end</span>
+0030 fiber=fiber1;
+0031 <span class="comment">%%</span>
+0032 perc=fiberRadius;
+0033 <span class="keyword">for</span> i=1:N
+0034     fiber(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber,i,perc,N);
+0035 <span class="keyword">end</span>
+0036 <span class="comment">% finish creating neighbors</span>
+0037 <span class="comment">% find floating fibers that are not connected to any fibers</span>
+0038 nullnodes=[];
+0039 <span class="keyword">for</span> i=1:N
+0040     <span class="keyword">if</span> size(fiber(i).nodes,2)==0
+0041         nullnodes(end+1)=i;
+0042     <span class="keyword">end</span>
+0043 <span class="keyword">end</span>
+0044 <span class="keyword">while</span> ~isempty(nullnodes)
+0045     fiber(nullnodes(1))=[];
+0046     N=size(fiber,2);
+0047     <span class="keyword">for</span> i=1:N
+0048         fiber(i).nodes=<a href="createnode.html" class="code" title="function [ nodes ] = createnode( fiber,ref,perc,N )">createnode</a>(fiber,i,perc,N);
+0049     <span class="keyword">end</span>
+0050     nullnodes=[];
+0051     <span class="keyword">for</span> i=1:N
+0052         <span class="keyword">if</span> size(fiber(i).nodes,2)==0
+0053             nullnodes(end+1)=i;            
+0054         <span class="keyword">end</span>
+0055     <span class="keyword">end</span>
+0056 <span class="keyword">end</span>
+0057 <span class="comment">%%</span>
+0058 fiber1=fiber
+0059</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

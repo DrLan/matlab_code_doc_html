@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of getfiber3</title>
+  <meta name="keywords" content="getfiber3">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; getfiber3.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>getfiber3
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function getfiber3(frow,fcolumn,VF,fiberRadius) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="test3.html" class="code" title="">test3</a>	</li><li><a href="test4_modelsize.html" class="code" title="">test4_modelsize</a>	</li><li><a href="test5_sensitivity.html" class="code" title="">test5_sensitivity</a>	</li><li><a href="test6_VF.html" class="code" title="">test6_VF</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function getfiber3(frow,fcolumn,VF,fiberRadius)</a>
+0002 rad=fiberRadius;
+0003 a=rad*(sqrt(pi/(VF))-2); <span class="comment">% square packingfiber= struct('x',[], 'y',[], 'radius', []);</span>
+0004 <span class="keyword">for</span> i=1:frow
+0005     <span class="keyword">for</span> j=1:fcolumn
+0006         fnum=(i-1)*fcolumn+j;
+0007 <span class="comment">%          fnum=(i-1)*fcolumn+j;</span>
+0008 <span class="comment">%                             fiber(fnum).center=[(j-1)*(2*rad+a) (i-1)*(2*rad+a)];</span>
+0009 <span class="comment">%         fiber(fnum).center=[(j-1)*(2*rad+2*a)+normrnd(0,a) (i-1)*(2*rad+2*a)++normrnd(0,a)];</span>
+0010 <span class="comment">%         fiber.x(fnum,1)=sqrt(3)*(j-1)*(rad+a/2);</span>
+0011 <span class="comment">%         fiber.y(fnum,1)=(1-mod(j,2))*(rad+a/2)+(i-1)*2*(rad+a/2); %hex packing</span>
+0012         fiber.x(1,fnum)=(j-1)*(2*rad+a);
+0013         fiber.y(1,fnum)=(i-1)*(2*rad+a); <span class="comment">% square packing</span>
+0014 
+0015 <span class="comment">% B=((fcolumn-1)*sqrt(3)/2+frow-1)*2*rad;</span>
+0016 <span class="comment">% A=(frow-1)*(fcolumn-1)*sqrt(3)/2;</span>
+0017 <span class="comment">% C=4*rad^2-(frow*fcolumn*pi*rad^2)/VF;</span>
+0018 <span class="comment">% a=-2*rad+(-B+sqrt(B^2-4*A*C))/(2*A);  %hex packing</span>
+0019 <span class="comment">% a=fiberRadius*(sqrt(pi/(2*sqrt(3)*VF))-1);  % triangle arragement of fibers</span>
+0020 <span class="comment">% max_x=(2*a+2*rad)*(fcolumn-1);</span>
+0021 <span class="comment">% max_y=(2*a+2*rad)*(frow-1);</span>
+0022         fiber.radius(1,fnum)=rad;
+0023     <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025 <span class="comment">% fiber.x;</span>
+0026 <span class="comment">% fiber.y</span>
+0027 save PerfectFiber fiber
+0028 <span class="comment">% for i=1:frow</span>
+0029 <span class="comment">%                         for j=1:fcolumn</span>
+0030 <span class="comment">%                             fnum=(i-1)*fcolumn+j;</span>
+0031 <span class="comment">%                              fiber(fnum).center=[sqrt(3)*(j-1)*(rad+a/2) (1-mod(j,2))*(rad+a/2)+(i-1)*2*(rad+a/2)];</span>
+0032 <span class="comment">% %                             fiber(fnum).center=[(j-1)*(2*rad+a) (i-1)*(2*rad+a)];</span>
+0033 <span class="comment">%                             fiber(fnum).radius=rad;</span>
+0034 <span class="comment">%</span>
+0035 <span class="comment">%                             %          fiber(fnum).center=[sqrt(3)*(j-1)*(rad+a/2) (1-mod(i,2))*(rad+a/2)+(i-1)*2*(rad+a/2)];</span>
+0036 <span class="comment">%                             %         fiber(fnum).center=[-(mod(i,2)-1)*(rad+a)+  (j-1)*(2*rad+2*a) (i-1)*(rad+a)*sqrt(3)];</span>
+0037 <span class="comment">%                             %          fiber(fnum).center=[-(mod(i,2)-1)*(rad+a)+(j-1)*(2*rad+2*a)+normrnd(0,0.1*a) (i-1)*(rad+a)*sqrt(3)+normrnd(0,0.1*a)];</span>
+0038 <span class="comment">%                             %          fiber(fnum).radius=rad;</span>
+0039 <span class="comment">%                         end</span>
+0040 <span class="comment">%                     end</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

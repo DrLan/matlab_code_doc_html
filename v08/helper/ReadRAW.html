@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ReadRAW</title>
+  <meta name="keywords" content="ReadRAW">
+  <meta name="description" content="function [LineContent,NVariables, NValues] = ReadRAW(filepath)">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ReadRAW.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ReadRAW
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [LineContent,NVariables, NValues] = ReadRAW(filepath)</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [Vin,data,data1]=ReadRAW(infile) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> function [LineContent,NVariables, NValues] = ReadRAW(filepath)
+ fid = fopen(filepath);
+ % lines = []
+ % fid1 = fopen(filepath,'rt')
+ % % fid2 = fopen 
+ line = 0;
+ while 1
+     line =line+1
+     LineContent = fgetl(fid)
+     disp(LineContent)
+     if LineContent == 'Variables:\n'
+          NVariables = line;
+     elseif LineContent == 'Values:\n'
+         NValues = line;
+     end
+      if ~ischar(LineContent), break, end
+ end
+     if LineContent
+     lines{end+1} = line
+     if pline == 'Variables:'
+        
+         nline = fgetl(fid)
+         fprintf(fid1,nline)
+         
+        
+ 
+ %     if ~ischar(line)
+ %         break;
+ %     end
+     end
+ 
+     pline = line;
+ end
+ fclose(fid);
+ end</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="../../v08/@Function/Function.html" class="code" title="">Function</a>	</li><li><a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="TestMatlab2LTspice.html" class="code" title="">TestMatlab2LTspice</a>	% write Model head</li><li><a href="runLTspice.html" class="code" title="function [Vin,Is,data1] = runLTspice(NetList)">runLTspice</a>	% Run LTSpice and reduce data</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% function [LineContent,NVariables, NValues] = ReadRAW(filepath)</span>
+0002 <span class="comment">% fid = fopen(filepath);</span>
+0003 <span class="comment">% % lines = []</span>
+0004 <span class="comment">% % fid1 = fopen(filepath,'rt')</span>
+0005 <span class="comment">% % % fid2 = fopen</span>
+0006 <span class="comment">% line = 0;</span>
+0007 <span class="comment">% while 1</span>
+0008 <span class="comment">%     line =line+1</span>
+0009 <span class="comment">%     LineContent = fgetl(fid)</span>
+0010 <span class="comment">%     disp(LineContent)</span>
+0011 <span class="comment">%     if LineContent == 'Variables:\n'</span>
+0012 <span class="comment">%          NVariables = line;</span>
+0013 <span class="comment">%     elseif LineContent == 'Values:\n'</span>
+0014 <span class="comment">%         NValues = line;</span>
+0015 <span class="comment">%     end</span>
+0016 <span class="comment">%      if ~ischar(LineContent), break, end</span>
+0017 <span class="comment">% end</span>
+0018 <span class="comment">%     if LineContent</span>
+0019 <span class="comment">%     lines{end+1} = line</span>
+0020 <span class="comment">%     if pline == 'Variables:'</span>
+0021 <span class="comment">%</span>
+0022 <span class="comment">%         nline = fgetl(fid)</span>
+0023 <span class="comment">%         fprintf(fid1,nline)</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">%</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">% %     if ~ischar(line)</span>
+0028 <span class="comment">% %         break;</span>
+0029 <span class="comment">% %     end</span>
+0030 <span class="comment">%     end</span>
+0031 <span class="comment">%</span>
+0032 <span class="comment">%     pline = line;</span>
+0033 <span class="comment">% end</span>
+0034 <span class="comment">% fclose(fid);</span>
+0035 <span class="comment">% end</span>
+0036 
+0037 <a name="_sub0" href="#_subfunctions" class="code">function [Vin,data,data1]=ReadRAW(infile)</a>
+0038 <span class="comment">%?????</span>
+0039 <span class="comment">%?????????????????????data????????????</span>
+0040 <span class="comment">%?????</span>
+0041 <span class="comment">% infile——???????;</span>
+0042 <span class="comment">% data=????</span>
+0043 
+0044 <span class="comment">% tmpfile='tmp2.mat';</span>
+0045 
+0046 fidin=fopen(infile,<span class="string">'r'</span>); <span class="comment">% ?????????.list?</span>
+0047 
+0048 <span class="comment">% fidtmp=fopen(tmpfile,'w'); % ????????????????</span>
+0049 data1=[];
+0050 <span class="keyword">while</span> ~feof(fidin) <span class="comment">% ?????????</span>
+0051     tline=fgetl(fidin); <span class="comment">% ????????????????</span>
+0052     <span class="keyword">if</span> ~isempty(tline) <span class="comment">% ??????</span>
+0053         str = <span class="string">'[^0-9 | \. | \- | \+ | \s | e | E]'</span>; <span class="comment">%??????????????? - . E e ?? ? ???? ??????</span>
+0054         start = regexp(tline,str, <span class="string">'once'</span>);
+0055         <span class="keyword">if</span> isempty(start)
+0056             <span class="comment">%% following 2 lined added</span>
+0057             LocSpace = regexp(tline,<span class="string">'[\s]'</span>);
+0058             <span class="keyword">if</span> LocSpace(1)~=1
+0059                 Vin1=str2num(tline);
+0060                 Vin=Vin1(2);
+0061             <span class="keyword">else</span>
+0062                 data1(end+1)=str2num(tline);
+0063 <span class="comment">%                 fprintf(fidtmp,'%f\n',data3);</span>
+0064             <span class="keyword">end</span>
+0065         <span class="keyword">end</span>
+0066     <span class="keyword">end</span>
+0067 <span class="keyword">end</span>
+0068 fclose(fidin);
+0069 <span class="comment">% fclose(fidtmp);</span>
+0070 
+0071 <span class="comment">% data1=textscan(tmpfile);</span>
+0072 data2 = fliplr(data1);
+0073 data=data2(1:end-1);
+0074 <span class="comment">% delete(tmpfile)</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

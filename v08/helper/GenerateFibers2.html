@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of GenerateFibers2</title>
+  <meta name="keywords" content="GenerateFibers2">
+  <meta name="description" content="%  ************************************">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; GenerateFibers2.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>GenerateFibers2
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>%  ************************************</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [Loc,ProbFibers,VF] = GenerateFibers2(VF,fiberRadius,numFibers) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">%  ************************************
+ code developed by
+ Hong Yu  May 15, 2014 UDel
+%  ***********************************
+% force-directed fiber arrangement</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%%  ************************************</span>
+0002 <span class="comment">% code developed by</span>
+0003 <span class="comment">% Hong Yu  May 15, 2014 UDel</span>
+0004 <span class="comment">%%  ***********************************</span>
+0005 <span class="comment">%% force-directed fiber arrangement</span>
+0006 <a name="_sub0" href="#_subfunctions" class="code">function [Loc,ProbFibers,VF] = GenerateFibers2(VF,fiberRadius,numFibers)</a>
+0007 Length0=sqrt(pi*fiberRadius^2*numFibers/VF);
+0008 Length=Length0-2*fiberRadius;
+0009 Loc=Length*rand(numFibers,2);
+0010 Cterm=1;
+0011 k_opt=Cterm*Length0/sqrt(numFibers);
+0012 Rad=fiberRadius*ones(numFibers,1);
+0013 <span class="keyword">for</span> iter = 1:10
+0014     <span class="comment">%calculate force on each fiber</span>
+0015     <span class="keyword">for</span> i=1:numFibers
+0016         <span class="comment">% direction of forces</span>
+0017         VecF=Loc-[Loc(i,1)*ones(numFibers,1) Loc(i,2)*ones(numFibers,1)];
+0018         NormVecF=VecF/norm(VecF);
+0019         ForceVec=zeros(numFibers,2);
+0020         <span class="comment">% forces</span>
+0021         <span class="keyword">for</span> j=1:numFibers
+0022             <span class="keyword">if</span> j==i
+0023                 Fa(j)=0;
+0024                 Fr(j)=0;
+0025             <span class="keyword">else</span>
+0026                 Dis=sqrt((Loc(i,1)-Loc(j,2))^2+(Loc(i,2)-Loc(j,2)^2));
+0027                 Fa(j)=Dis^2/k_opt;
+0028                 Fr(j)=-k_opt^2/Dis;
+0029             <span class="keyword">end</span>
+0030             Force=Fa+Fr;
+0031             ForceVec(j,:)=NormVecF(j,:)*Force(j);
+0032         <span class="keyword">end</span>
+0033         <span class="comment">% total force for fiber i</span>
+0034         TotForce=sum(ForceVec);
+0035         <span class="comment">% move fiber i</span>
+0036         NewLoc(i,:)=Loc(i,:)+0.1*TotForce;
+0037     <span class="keyword">end</span>
+0038     Loc=NewLoc;
+0039 <span class="keyword">end</span>
+0040 viscircles(Loc,Rad)
+0041       
+0042          
+0043                 
+0044       
+0045     <span class="comment">%move fibers</span>
+0046     
+0047     
+0048 
+0049 
+0050 
+0051 
+0052 
+0053 
+0054 
+0055 
+0056 
+0057 <span class="comment">% Loc=[];</span>
+0058 <span class="comment">% Length0=sqrt(pi*fiberRadius^2*numFibers/VF);</span>
+0059 <span class="comment">% Length=Length0-2*fiberRadius;</span>
+0060 <span class="comment">% Rad=fiberRadius*ones(numFibers,1);</span>
+0061 <span class="comment">% ProbFibers=[];</span>
+0062 <span class="comment">% % for i=1:numFibers</span>
+0063 <span class="comment">% %     trialLoc = Length*[rand rand];</span>
+0064 <span class="comment">% %     ElasticK=1;</span>
+0065 <span class="comment">% for i=1:numFibers</span>
+0066 <span class="comment">%     %     x(i)=rand*Length;</span>
+0067 <span class="comment">%     %     y(i)</span>
+0068 <span class="comment">%     trialLoc = Length*[rand rand]</span>
+0069 <span class="comment">%     fiberID=i;</span>
+0070 <span class="comment">%     %    check overlapping</span>
+0071 <span class="comment">%     [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius);</span>
+0072 <span class="comment">%     RunIter=0;</span>
+0073 <span class="comment">%     while Overlapping_tag ~= 0 &amp;&amp; RunIter&lt;=100000</span>
+0074 <span class="comment">%         trialLoc = Length*[rand rand];</span>
+0075 <span class="comment">%         [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius);</span>
+0076 <span class="comment">%         RunIter=RunIter+1;</span>
+0077 <span class="comment">%     end</span>
+0078 <span class="comment">%     if Overlapping_tag ~=0</span>
+0079 <span class="comment">%         ProbFibers(end+1)=i;</span>
+0080 <span class="comment">%         Loc(i,:)=trialLoc</span>
+0081 <span class="comment">%     else</span>
+0082 <span class="comment">%         Loc(i,:)=trialLoc</span>
+0083 <span class="comment">%     end</span>
+0084 <span class="comment">%</span>
+0085 <span class="comment">% end</span>
+0086 <span class="comment">% viscircles(Loc,Rad)</span>
+0087 <span class="comment">%</span>
+0088 <span class="comment">%</span>
+0089 <span class="comment">% % %         for m=1:Overlapping_tag</span>
+0090 <span class="comment">% % %             OverlappingID = Overlapping_fibers(m)</span>
+0091 <span class="comment">% % %             Direction(m,:)= [trialLoc(1,1)-Loc(OverlappingID,1),trialLoc(1,2)-Loc(OverlappingID,2)]</span>
+0092 <span class="comment">% % %             OverDist=norm(Direction(m,:));</span>
+0093 <span class="comment">% % %             Force(m)=ElasticK*(2*fiberRadius-OverDist);</span>
+0094 <span class="comment">% % %             Vectors=Direction(m,:)*Force(m)/OverDist;</span>
+0095 <span class="comment">% % %         end</span>
+0096 <span class="comment">% % %         MoveVector = sum(Vectors)</span>
+0097 <span class="comment">% % %         trialLoc = trialLoc+MoveVector;</span>
+0098 <span class="comment">% % %         [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius);</span>
+0099 <span class="comment">% % %         RunIter=RunIter+1;</span>
+0100 <span class="comment">% % %     end</span>
+0101 <span class="comment">% % %     ReLoc=0;</span>
+0102 <span class="comment">% % %     while Overlapping_tag ~=0 &amp; ReLoc&lt;=10</span>
+0103 <span class="comment">% % %         trialLoc = Length*[rand rand];</span>
+0104 <span class="comment">% % %         [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius);</span>
+0105 <span class="comment">% % %         ReLoc=ReLoc+1</span>
+0106 <span class="comment">% % %     end</span>
+0107 <span class="comment">% %     %    if not overlapping, finish adding this fiber</span>
+0108 <span class="comment">% %     if Overlapping_tag == 0</span>
+0109 <span class="comment">% %         Loc(i,:)=trialLoc;</span>
+0110 <span class="comment">% %     end</span>
+0111 <span class="comment">% %     % if overlapping, find overlapping fiber(s)</span>
+0112 <span class="comment">% %     % then calculate move vector</span>
+0113 <span class="comment">% %     % move the new fiber and check overlapping again</span>
+0114 <span class="comment">% %     %         else</span>
+0115 <span class="comment">% %     %             for m=1:Overlapping_tag</span>
+0116 <span class="comment">% %     %                 OverlappingID = Overlapping_fibers(m)</span>
+0117 <span class="comment">% %     %                 Direction(m,:)= [trialLoc(1,1)-Loc(OverlappingID,1),trialLoc(1,2)-Loc(OverlappingID,2)]</span>
+0118 <span class="comment">% %     %                 OverDist=norm(Direction(m,:));</span>
+0119 <span class="comment">% %     %                 Force(m)=ElasticK*(2*fiberRadius-OverDist);</span>
+0120 <span class="comment">% %     %                 Vectors=Direction(m,:)*Force(m)/OverDist;</span>
+0121 <span class="comment">% %     %             end</span>
+0122 <span class="comment">% %     %             MoveVector = sum(Vectors)</span>
+0123 <span class="comment">% %     %             trialLoc = trialLoc+MoveVector;</span>
+0124 <span class="comment">% %     %             [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius);</span>
+0125 <span class="comment">% %     %             if Overlapping_tag ~= 0</span>
+0126 <span class="comment">% %     %</span>
+0127 <span class="comment">% %     %             end</span>
+0128 <span class="comment">% % end</span>
+0129 <span class="comment">% % viscircles(Loc,Rad)</span>
+0130 <span class="comment">%</span>
+0131 <span class="comment">% function [Overlapping_tag,Overlapping_fibers] = CheckOverlapping(trialLoc,fiberID,Loc,Rad,fiberRadius)</span>
+0132 <span class="comment">% if isempty(Loc)</span>
+0133 <span class="comment">%     Overlapping_tag=0;</span>
+0134 <span class="comment">%     Overlapping_fibers=[];</span>
+0135 <span class="comment">% else</span>
+0136 <span class="comment">%     Overlapping_tag=0;</span>
+0137 <span class="comment">%     Overlapping_fibers=[];</span>
+0138 <span class="comment">%     % x0=x(fiberID);</span>
+0139 <span class="comment">%     % y0=y(fiberID);</span>
+0140 <span class="comment">%     %     [x0 y0]=trialLoc;</span>
+0141 <span class="comment">%     x0=trialLoc(1,1);</span>
+0142 <span class="comment">%     y0=trialLoc(1,2);</span>
+0143 <span class="comment">%     %     x0=Loc(fiberID,1);</span>
+0144 <span class="comment">%     %     y0=Loc(fiberID,2);</span>
+0145 <span class="comment">%     xmin=x0-2*fiberRadius;</span>
+0146 <span class="comment">%     xmax=x0+2*fiberRadius;</span>
+0147 <span class="comment">%     ymin=y0-2*fiberRadius;</span>
+0148 <span class="comment">%     ymax=y0+2*fiberRadius;</span>
+0149 <span class="comment">%     OverInd=find(xmin&lt;=Loc(:,1)&lt;=xmax&amp;ymin&lt;=Loc(:,2)&lt;=ymax);</span>
+0150 <span class="comment">%     if isempty(OverInd)</span>
+0151 <span class="comment">%         Overlapping_tag=0;</span>
+0152 <span class="comment">%     else</span>
+0153 <span class="comment">%         for j=1:size(OverInd)</span>
+0154 <span class="comment">%             PrevID=OverInd(j);</span>
+0155 <span class="comment">%             space=sqrt((Loc(PrevID,1)-x0)^2+(Loc(PrevID,2)-y0)^2)-2*Rad(PrevID);</span>
+0156 <span class="comment">%             if space&lt;0</span>
+0157 <span class="comment">%                 Overlapping_tag = Overlapping_tag+1;</span>
+0158 <span class="comment">%                 Overlapping_fibers(end+1)=PrevID;</span>
+0159 <span class="comment">%             end</span>
+0160 <span class="comment">%         end</span>
+0161 <span class="comment">%     end</span>
+0162 <span class="comment">% end</span>
+0163 <span class="comment">%</span>
+0164 <span class="comment">% % if size(Loc2,1) = 0</span>
+0165 <span class="comment">% %     Overlapping_tag = 0;</span>
+0166 <span class="comment">% % else</span>
+0167 <span class="comment">% %     for j=1:size(Loc2,1)</span>
+0168 <span class="comment">% %         space</span>
+0169 <span class="comment">% %</span>
+0170 <span class="comment">% %</span>
+0171 <span class="comment">% %</span>
+0172 <span class="comment">% % for j=1:(fiberID-1)</span>
+0173 <span class="comment">% %     space=sqrt((x(j)-x(fiberID))^2+(y(j)-y(fiberID))^2)-rad(j)-rad(fiberID);</span>
+0174 <span class="comment">% %     if space&lt;0</span>
+0175 <span class="comment">% %         Overlapping_tag = 1</span>
+0176 <span class="comment">% %         Overlapping_fibers(end+1)=j;</span>
+0177 <span class="comment">% %     end</span>
+0178 <span class="comment">% % end</span>
+0179 <span class="comment">%</span>
+0180 <span class="comment">%</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

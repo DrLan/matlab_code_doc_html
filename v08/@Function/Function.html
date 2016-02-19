@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Function</title>
+  <meta name="keywords" content="Function">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Function</a> &gt; Function.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Function&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Function
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Connect_Theta.html" class="code" title="function connectivity = Connect_Theta(theta,Lc)">Connect_Theta</a>	</li><li><a href="ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>	% Force at each contact point.</li><li><a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="Function.html" class="code" title="">Function</a>	</li><li><a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="LTspice2Matlab.html" class="code" title="function raw_data = LTspice2Matlab( filename, varargin )">LTspice2Matlab</a>	</li><li><a href="ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>	function [LineContent,NVariables, NValues] = ReadRAW(filepath)</li><li><a href="runLTspice.html" class="code" title="function runLTspice(NetListID)">runLTspice</a>	RUNLTSPICE internal function, no need to call</li><li><a href="transientData.html" class="code" title="function result = transientData(spiceRawData);">transientData</a>	TRANSIENTDATA extract transient data from SPICE RAW data file</li><li><a href="../../v08/@Laminate1/runLTspice.html" class="code" title="function raw_data = runLTspice(obj,NetList)">runLTspice</a>	RUNLTSPICE call LTspice to solve resistor network.</li><li><a href="../../v08/helper/ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>	% Force at each contact point.</li><li><a href="../../v08/helper/ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>	% contact resistance</li><li><a href="../../v08/helper/Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="../../v08/helper/GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="../../v08/helper/ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>	function [LineContent,NVariables, NValues] = ReadRAW(filepath)</li><li><a href="../../v08/helper/runLTspice.html" class="code" title="function [Vin,Is,data1] = runLTspice(NetList)">runLTspice</a>	% Run LTSpice and reduce data</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Function.html" class="code" title="">Function</a>	</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Function.html" class="code" title="">Function</a>
+0002     methods(Static)
+0003          <a href="runLTspice.html" class="code" title="function runLTspice(NetListID)">runLTspice</a>(NetListID);
+0004            result = <a href="transientData.html" class="code" title="function result = transientData(spiceRawData);">transientData</a>(spiceRawData);
+0005         raw_data = <a href="LTspice2Matlab.html" class="code" title="function raw_data = LTspice2Matlab( filename, varargin )">LTspice2Matlab</a>( filename, varargin )
+0006         rho = <a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage);
+0007         fiber2D = <a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder);
+0008         Fc = <a href="ContactForce.html" class="code" title="function Fc = ContactForce(VF,beta,Pressure,fiberRadius)">ContactForce</a>(VF,beta,Pressure,fiberRadius);
+0009         Rc = <a href="ContactR.html" class="code" title="function Rc = ContactR(fiberRadius,Fc,E,rf)">ContactR</a>(fiberRadius,Fc,E,rf);
+0010         [Vin,data,data1]=<a href="ReadRAW.html" class="code" title="function [Vin,data,data1]=ReadRAW(infile)">ReadRAW</a>(infile);
+0011         connectivity = <a href="Connect_Theta.html" class="code" title="function connectivity = Connect_Theta(theta,Lc)">Connect_Theta</a>(theta,Lc)
+0012     <span class="keyword">end</span>
+0013 <span class="keyword">end</span>
+0014</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of CrossPly3</title>
+  <meta name="keywords" content="CrossPly3">
+  <meta name="description" content="% Generate SPICE netlist">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; CrossPly3.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>CrossPly3
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Generate SPICE netlist</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Generate SPICE netlist
+% by Hong YU, 10-17-2014
+% hongyu.us@gmail.com</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="degtorad.html" class="code" title="function y = degtorad(x)">degtorad</a>	</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">%% Generate SPICE netlist</span>
+0002 <span class="comment">%% by Hong YU, 10-17-2014</span>
+0003 <span class="comment">%% hongyu.us@gmail.com</span>
+0004 clear all
+0005 <span class="comment">%%User Inputs:</span>
+0006 <span class="comment">% LTSpicePath = 'c:\Program Files (x86)\LTC\LTspicIV\scad3.exe' % LTSpice installation path</span>
+0007 NetList=<span class="string">'IM7[0-45-90]2_1'</span>; <span class="comment">%t model name</span>
+0008 Vin = 1 <span class="comment">% applied voltage</span>
+0009 Layup = [0 90] <span class="comment">% ply layup</span>
+0010 nLayer = 10; <span class="comment">% number of Layers in each ply</span>
+0011 AspectRatio = 2 <span class="comment">% Specimen aspect ratio</span>
+0012 Spec_Len = 50e-3 <span class="comment">% specimen length</span>
+0013 Spec_Wid = Spec_Len/AspectRatio <span class="comment">% specimen width</span>
+0014 Spec_Th = 0.5e-3 <span class="comment">% specimen thickness</span>
+0015 Lc= 3e-3 <span class="comment">% contact span</span>
+0016 Bundle_Len = Lc; <span class="comment">% Bundle length</span>
+0017 Bundle_Wid = Lc/5; <span class="comment">% Bundle width</span>
+0018 R_ply = 10; <span class="comment">% resistance of interply contacts</span>
+0019 R_electrode = 0.00001; <span class="comment">% resistance of copper bar elctrodes</span>
+0020 <span class="comment">% rho of bundle; get from detailed RNM</span>
+0021 Bundle_rhox = 3e-5;
+0022 Bundle_rhoy = 0.04;
+0023 Bundle_rhoz = 0.04;
+0024 
+0025 <span class="comment">%% derived parameters</span>
+0026 thetas = <a href="degtorad.html" class="code" title="function y = degtorad(x)">degtorad</a>(Layup)
+0027 angle_ar = atan(1/AspectRatio)
+0028 <span class="comment">% Connectivity = 100/(Spec_Len*Spec_Wid); % connectivity</span>
+0029 Connectivity = 1/(Lc*Lc)
+0030 nConnect = round(Connectivity*Spec_Len*Spec_Wid)
+0031 nPly = length(Layup) <span class="comment">% number of ply</span>
+0032 Bundle_Th = Spec_Th/nPly/nLayer; <span class="comment">% bundle thickness</span>
+0033 L_Diag = sqrt(Spec_Len^2+Spec_Wid^2) <span class="comment">% specimen diag length</span>
+0034 <span class="comment">% effective length for each ply. Wid_eff and Len_eff are 1*nPly row vectors</span>
+0035 Wid_eff = L_Diag*sin(angle_ar+thetas) <span class="comment">%effective width of rectangle that contains specimen rectangle</span>
+0036 Len_eff = L_Diag*sin(angle_ar+pi/2-thetas) <span class="comment">% effective width of rectangle that contains specimen rectangle</span>
+0037 
+0038 <span class="comment">% resistance of bundle</span>
+0039 Rx_Bundle = Bundle_rhox*Bundle_Len/(Bundle_Wid*Bundle_Th);
+0040 Ry_Bundle = Bundle_rhoy*Bundle_Wid/(Bundle_Len*Bundle_Th);
+0041 Rz_Bundle = Bundle_rhoz*Bundle_Th/(Bundle_Len*Bundle_Wid);
+0042 
+0043 
+0044 <span class="comment">%% write SPICE netlist</span>
+0045 <span class="comment">%% write Model head</span>
+0046 NetListID= strcat(NetList,<span class="string">'.cir'</span>)
+0047 fid=fopen(NetListID,<span class="string">'wt'</span>); <span class="comment">% wt means overwrite existing file named with NetListID</span>
+0048 <span class="comment">% To open a file in text mode, append 't' to the permission string,</span>
+0049 fprintf(fid,<span class="string">'%s  \n'</span>,<span class="string">'Resistor Network for Cross-Ply CFRP'</span>)
+0050 ST = fclose(fid);
+0051 
+0052 <span class="comment">%% write Voltage input</span>
+0053 fid=fopen(NetListID,<span class="string">'a'</span>);
+0054 fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,<span class="string">'Vinput'</span>,<span class="string">'Vin'</span>,<span class="string">'0'</span>,Vin); <span class="comment">% Vin is node for applying voltage. '0' is ground node</span>
+0055 ST = fclose(fid);
+0056 
+0057 <span class="comment">%%</span>
+0058 <span class="comment">% ABu_approx = cell(nPly,1)</span>
+0059 <span class="comment">% AB_ind = cell(nPly,1)</span>
+0060 <span class="comment">%% Generate ABu_approx cell for future use</span>
+0061 ABu_approx = cell(nPly,1)
+0062 nBundle_v = zeros(nPly,1)
+0063 nContact_v = zeros(nPly,1)
+0064 <span class="keyword">for</span> iP = 1:nPly
+0065     Contacts = -Len_eff(iP)/2:Lc:Len_eff(iP)/2
+0066     Bundles = -Wid_eff(iP)/2:Bundle_Wid:Wid_eff(iP)/2
+0067     nContact = length(Contacts)
+0068     nContact_v(iP) = nContact
+0069     nBundle = length(Bundles)
+0070     nBundle_v(iP) = nBundle
+0071     [Mesh_U Mesh_V] = meshgrid(Contacts,Bundles) <span class="comment">% grid x and y in matrix form</span>
+0072     Mesh_U_v = reshape(Mesh_U,[prod(size(Mesh_U)),1]) <span class="comment">% grid x in vector form</span>
+0073     Mesh_V_v = reshape(Mesh_V,[prod(size(Mesh_V)),1]) <span class="comment">% grid y in vector form</span>
+0074     Mesh_UV_all = [Mesh_U_v Mesh_V_v] <span class="comment">% grid coordinates in 2 column matrix form. 1st column x; 2nd column</span>
+0075     theta = thetas(iP)
+0076     <span class="keyword">if</span> theta == 0 || theta == pi/2
+0077         ABu_approx{iP} = [ones(nBundle,1) nContact*ones(nBundle,1)]
+0078         
+0079         <span class="comment">%         for iB = 1:nBundle</span>
+0080         <span class="comment">%         indA = 0</span>
+0081         <span class="comment">%         indB = nContact</span>
+0082         <span class="comment">%         ABu_approx{iP}(iB,:) =[indA indB]</span>
+0083         <span class="comment">%         end</span>
+0084         
+0085         <span class="comment">%     elseif theta == pi/2</span>
+0086         
+0087         <span class="comment">% angle is neither 0 nor 90 degree</span>
+0088         <span class="comment">%if theta ~= 0 &amp;&amp; theta ~= pi/2</span>
+0089     <span class="keyword">else</span>
+0090         
+0091         slop = tan(theta)
+0092         T_rot = [cos(theta) sin(theta); -sin(theta) cos(theta)]
+0093         <span class="keyword">for</span> iB = 1:nBundle
+0094             Dis2O = Wid_eff(iP)/2 + Bundle_Wid -iB*Bundle_Wid
+0095             Pt_at_fiber = [-Dis2O*sin(theta) Dis2O*cos(theta)]
+0096             b_cross = Pt_at_fiber(2)-Pt_at_fiber(1)*tan(theta)
+0097             func_fiberY = @(x,k,b)k*x+b
+0098             <span class="comment">% Left and Right bound</span>
+0099             xfiber = [-Spec_Len/2  Spec_Len/2]
+0100             yLR = feval(func_fiberY,xfiber,slop,b_cross)
+0101             ind = find(yLR&gt;=1.0000001*(-Spec_Wid/2) &amp; yLR&lt;=1.0000001*(Spec_Wid/2))
+0102             <span class="keyword">if</span> length(ind) == 2
+0103                 xAB = xfiber
+0104                 yAB = yLR(ind)
+0105             <span class="keyword">else</span>
+0106                 Ax = xfiber(ind)
+0107                 Ay = yLR(ind)
+0108                 <span class="comment">%now consider Top and Bottom bound</span>
+0109                 func_fiberX = @(y,k,b)(y-b)/k
+0110                 YBound = [-Spec_Wid/2  Spec_Wid/2]
+0111                 xTB = feval(func_fiberX,YBound,slop,b_cross)
+0112                 ind = find(xTB&gt;=1.0000001*(-Spec_Len/2) &amp; xTB&lt;=1.0000001*(Spec_Len/2))
+0113                 Bx = xTB(ind)
+0114                 By = YBound(ind)
+0115                 xAB = [Ax Bx]
+0116                 xAB = unique(xAB)
+0117                 yAB = [Ay By]
+0118                 yAB = unique(yAB)
+0119                 AB_xy = [xAB' yAB']
+0120                 AB_uv = AB_xy*T_rot <span class="comment">%note that AB_uv is in UV coordinate system</span>
+0121                 Au = AB_uv(1,1)
+0122                 Bu = AB_uv(1,2)
+0123                 [c indA] = min(abs(Contacts-Au)) <span class="comment">% note that contact node start from 1</span>
+0124                 Au_approx = Contacts(indA)
+0125                 [c indB] = min(abs(Contacts-Bu))
+0126                 Bu_aprox = Contacts(indB)
+0127                 <span class="keyword">if</span> indA==indB
+0128                     indA = -1;
+0129                     indB = -1;
+0130                 <span class="keyword">end</span>
+0131                 minAB = min(indA,indB)
+0132                 maxAB = max(indA,indB)
+0133                 ABu_approx{iP}(iB,:) =[minAB maxAB]
+0134             <span class="keyword">end</span>
+0135         <span class="keyword">end</span>
+0136     <span class="keyword">end</span>
+0137 <span class="keyword">end</span>
+0138 
+0139 
+0140 
+0141 <span class="comment">%         yfiber = slop*xfiber+Pt_at_fiber(2)-Pt_at_fiber(1)*tan(theta)</span>
+0142 <span class="comment">%</span>
+0143 <span class="comment">%     T_rot = [cos(theta) sin(theta); -sin(theta) cos(theta)]</span>
+0144 <span class="comment">%     for iB = 1:nBundle</span>
+0145 <span class="comment">%         Dis2O = Wid_eff(iP)/2 + Bundle_Wid -iB*Bundle_Wid</span>
+0146 <span class="comment">%         Pt_at_fiber = [-Dis2O*sin(theta) Dis2O*cos(theta)]</span>
+0147 <span class="comment">%         xfiber = [-Spec_Len/2  Spec_Len/2]</span>
+0148 <span class="comment">%         yfiber = tan(theta)*xfiber+Pt_at_fiber(2)-Pt_at_fiber(1)*tan(theta) % Note: tan(pi/2) is meaningless. Special treatment needed for 90degree</span>
+0149 <span class="comment">%         xlimit = [-Spec_Len/2 Spec_Len/2]</span>
+0150 <span class="comment">%         ylimit = [-Spec_Wid/2 Spec_Wid/2]</span>
+0151 <span class="comment">%         xBox = xlimit([1 1 2 2 1])</span>
+0152 <span class="comment">%         yBox = ylimit([1 2 2 1 1])</span>
+0153 <span class="comment">%         [xAB,yAB] = polyxpoly(xfiber,yfiber,xBox,yBox)</span>
+0154 <span class="comment">%         AB_xy = [xAB yAB] %note that AB_xy is in XY coordinate system</span>
+0155 <span class="comment">%         AB_uv = AB_xy*T_rot %note that AB_uv is in UV coordinate system</span>
+0156 <span class="comment">%         Au = AB_uv(1,1)</span>
+0157 <span class="comment">%         Bu = AB_uv(1,2)</span>
+0158 <span class="comment">%         [c indA] = min(abs(Contacts-Au))</span>
+0159 <span class="comment">%         Au_approx = Contacts(indA)</span>
+0160 <span class="comment">%         [c indB] = min(abs(Contacts-Bu))</span>
+0161 <span class="comment">%         Bu_aprox = Contacts(indB)</span>
+0162 <span class="comment">%         if indA==indB</span>
+0163 <span class="comment">%             indA = -1;</span>
+0164 <span class="comment">%             indB = -1;</span>
+0165 <span class="comment">%         end</span>
+0166 <span class="comment">%         ABu_approx{iP}(iB,:) =[indA indB]</span>
+0167 <span class="comment">%     end</span>
+0168 <span class="comment">% end</span>
+0169 
+0170 
+0171 <span class="comment">%% apply Voltage Vinput at top ply top layer</span>
+0172 iP = nPly
+0173 nBundle = nBundle_v(iP)
+0174 <span class="keyword">for</span> iB = 1:nBundle
+0175     indA = ABu_approx{iP}(iB,1)
+0176     indB = ABu_approx{iP}(iB,2)
+0177     <span class="keyword">if</span> indA~=indB
+0178         <span class="keyword">for</span> iC = indA:indB
+0179             V_ID = [<span class="string">'RV_P'</span>,num2str(nPly),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0180             V_Node1 = <span class="string">'Vin'</span>
+0181             V_Node2 = [<span class="string">'P'</span>,num2str(nPly),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0182             fid=fopen(NetListID,<span class="string">'a'</span>);
+0183             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,V_ID,V_Node1,V_Node2,R_electrode);
+0184             ST = fclose(fid);
+0185         <span class="keyword">end</span>
+0186     <span class="keyword">end</span>
+0187 <span class="keyword">end</span>
+0188 
+0189 <span class="comment">%% apply ground  BC at bottom ply bottom layer</span>
+0190 iP = 1
+0191 nBundle = nBundle_v(iP)
+0192 <span class="keyword">for</span> iB = 1:nBundle
+0193     indA = ABu_approx{iP}(iB,1)
+0194     indB = ABu_approx{iP}(iB,2)
+0195     <span class="keyword">if</span> indA~=indB
+0196         <span class="keyword">for</span> iC = indA:indB
+0197             G_ID = [<span class="string">'RG_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0198             G_Node2 = <span class="string">'0'</span>
+0199             G_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0200             fid=fopen(NetListID,<span class="string">'a'</span>);
+0201             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,G_ID,G_Node1,G_Node2,R_electrode);
+0202             ST = fclose(fid);
+0203         <span class="keyword">end</span>
+0204     <span class="keyword">end</span>
+0205 <span class="keyword">end</span>
+0206 
+0207 <span class="comment">%% Generate Resistor Network</span>
+0208 <span class="keyword">for</span> iP = 1:nPly
+0209     theta = thetas(iP)
+0210     T_rot = [cos(theta) sin(theta); -sin(theta) cos(theta)]
+0211     Contacts = -Len_eff(iP)/2:Lc:Len_eff(iP)/2
+0212     Bundles = -Wid_eff(iP)/2:Bundle_Wid:Wid_eff(iP)/2
+0213     nContact = length(Contacts)
+0214     nBundle = length(Bundles)
+0215     <span class="comment">% x direction</span>
+0216     <span class="keyword">for</span> iB = 1:nBundle
+0217         indA = ABu_approx{iP}(iB,1)
+0218         indB = ABu_approx{iP}(iB,2)
+0219         <span class="keyword">if</span> indA~=indB
+0220             <span class="keyword">for</span> iL = 1:nLayer
+0221                 <span class="keyword">for</span> iC = indA:(indB-1) <span class="comment">% note no Rz on outmost contact</span>
+0222                     Rx_ID =[<span class="string">'Rx_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0223                     Rx_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0224                     Rx_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC+1)]
+0225                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0226                     fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,Rx_ID,Rx_Node1,Rx_Node2,Rx_Bundle);
+0227                     ST = fclose(fid);
+0228                 <span class="keyword">end</span>
+0229             <span class="keyword">end</span>
+0230         <span class="keyword">end</span>
+0231     <span class="keyword">end</span>
+0232     <span class="comment">% y direction</span>
+0233     <span class="keyword">for</span> iC = 1:nContact
+0234         [indBundle indAB] = find(ABu_approx{iP} == iC) <span class="comment">% find starting and ending bundles at each contact point</span>
+0235         b1 = indBundle  <span class="comment">% get starting and ending bundles</span>
+0236         <span class="keyword">if</span> length(b1)&gt;=2
+0237             c0 = min(b1)
+0238             c1 = max(b1)
+0239             <span class="keyword">for</span> iB = c0:(c1-1) <span class="comment">% note no Ry on outmost bundle</span>
+0240                 <span class="comment">%                 if iB == c0 || iB == c1</span>
+0241                 <span class="comment">%                     for iL = 1:nLayer</span>
+0242                 <span class="comment">%                         %printf Rname PLB_iB_C_iC PLB_iB+1-C_iC 0.5R_y</span>
+0243                 <span class="comment">%                         Ry_ID =['Ry_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0244                 <span class="comment">%                         Ry_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0245                 <span class="comment">%                         Ry_Node2 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB+1),'C',num2str(iC)]</span>
+0246                 <span class="comment">%                         fid=fopen(NetListID,'a');</span>
+0247                 <span class="comment">%                         fprintf(fid,'%s %s %s %f \n',Ry_ID,Ry_Node1,Ry_Node2,Ry_Bundle/2); % note at corner, resistance is Ry_bundle/2</span>
+0248                 <span class="comment">%                         ST = fclose(fid);</span>
+0249                 <span class="comment">%                     end</span>
+0250                 <span class="comment">%                 else</span>
+0251                 <span class="keyword">for</span> iL = 1:nLayer
+0252                     <span class="comment">%printf Rname PLB_iB_C_iC PLB_iB+1-C_iC R_y</span>
+0253                     Ry_ID =[<span class="string">'Ry_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0254                     Ry_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0255                     Ry_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB+1),<span class="string">'C'</span>,num2str(iC)]
+0256                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0257                     fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,Ry_ID,Ry_Node1,Ry_Node2,Ry_Bundle);
+0258                     ST = fclose(fid);
+0259                 <span class="keyword">end</span>
+0260             <span class="keyword">end</span>
+0261         <span class="keyword">end</span>
+0262     <span class="keyword">end</span>
+0263     
+0264     <span class="comment">% z direction</span>
+0265     <span class="keyword">for</span> iB = 1:nBundle
+0266         indA = ABu_approx{iP}(iB,1)
+0267         indB = ABu_approx{iP}(iB,2)
+0268         <span class="keyword">if</span> indA~=indB
+0269             <span class="keyword">for</span> iC = indA:indB
+0270                 <span class="comment">%                 if iC == indA || iC == indB</span>
+0271                 <span class="comment">%                     for iL =1:(nLayer-1) % Note no Rz on top layer</span>
+0272                 <span class="comment">%                         %printf Rzname P-L_iL-B-C  0.5Rz</span>
+0273                 <span class="comment">%                         Rz_ID =['Rz_P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0274                 <span class="comment">%                         Rz_Node1 = ['P',num2str(iP),'L',num2str(iL),'B',num2str(iB),'C',num2str(iC)]</span>
+0275                 <span class="comment">%                         Rz_Node2 = ['P',num2str(iP),'L',num2str(iL+1),'B',num2str(iB),'C',num2str(iC)]</span>
+0276                 <span class="comment">%                         fid=fopen(NetListID,'a');</span>
+0277                 <span class="comment">%                         fprintf(fid,'%s %s %s %f \n',Rz_ID,Rz_Node1,Rz_Node2,Rz_Bundle/2);</span>
+0278                 <span class="comment">%                         ST = fclose(fid);</span>
+0279                 <span class="comment">%                     end</span>
+0280                 <span class="comment">%                 else</span>
+0281                 <span class="keyword">for</span> iL =1:(nLayer-1)
+0282                     <span class="comment">%printf Rzname P-L_iL-B-C  0.5Rz</span>
+0283                     Rz_ID =[<span class="string">'Rz_P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0284                     Rz_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0285                     Rz_Node2 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(iL+1),<span class="string">'B'</span>,num2str(iB),<span class="string">'C'</span>,num2str(iC)]
+0286                     fid=fopen(NetListID,<span class="string">'a'</span>);
+0287                     fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,Rz_ID,Rz_Node1,Rz_Node2,Rz_Bundle);
+0288                     ST = fclose(fid);
+0289                 <span class="keyword">end</span>
+0290             <span class="keyword">end</span>
+0291         <span class="keyword">end</span>
+0292     <span class="keyword">end</span>
+0293 <span class="keyword">end</span>
+0294 
+0295 
+0296 <span class="comment">%% Add inter-Ply connections</span>
+0297 <span class="keyword">if</span> nPly &gt; 1
+0298     <span class="keyword">for</span> iP = 1:(nPly-1)
+0299         <span class="comment">%     Connect_XY = [3 3]</span>
+0300         Connect_XY = [0.8*Spec_Len*(rand(nConnect,1)-0.5) 0.8*Spec_Wid*(rand(nConnect,1)-0.5)]; <span class="comment">% coordinates of connection poits in XY coord system</span>
+0301         <span class="comment">% at lower ply:</span>
+0302         theta0 = thetas(iP)  <span class="comment">%lower ply angle</span>
+0303         T_rot0 = [cos(theta0) sin(theta0); -sin(theta0) cos(theta0)]
+0304         Contacts0 = -Len_eff(iP)/2:Lc:Len_eff(iP)/2
+0305         Bundles0 = -Wid_eff(iP)/2:Bundle_Wid:Wid_eff(iP)/2
+0306         nContact0 = length(Contacts0)
+0307         nBundle0 = length(Bundles0)
+0308         Connect_UV0 = Connect_XY*T_rot0 <span class="comment">% Connect points UV coordinates in 2 column form. 1st x; 2nd y</span>
+0309         [Mesh_U0 Mesh_V0] = meshgrid(Contacts0,Bundles0) <span class="comment">% grid x and y in matrix form</span>
+0310         Mesh_U_v0 = reshape(Mesh_U0,[prod(size(Mesh_U0)),1]) <span class="comment">% grid x in vector form</span>
+0311         Mesh_V_v0 = reshape(Mesh_V0,[prod(size(Mesh_V0)),1]) <span class="comment">% grid y in vector form</span>
+0312         Mesh_UV0 = [Mesh_U_v0 Mesh_V_v0] <span class="comment">% grid coordinates in 2 column matrix form. 1st column x; 2nd column</span>
+0313         
+0314         <span class="comment">% at upper ply:</span>
+0315         theta1 = thetas(iP+1)  <span class="comment">% upper ply angle</span>
+0316         T_rot1 = [cos(theta1) sin(theta1); -sin(theta1) cos(theta1)]
+0317         Contacts1 = -Len_eff(iP+1)/2:Lc:Len_eff(iP+1)/2
+0318         Bundles1 = -Wid_eff(iP+1)/2:Bundle_Wid:Wid_eff(iP+1)/2
+0319         nContact1 = length(Contacts1)
+0320         nBundle1 = length(Bundles1)
+0321         Connect_UV1 = Connect_XY*T_rot1 <span class="comment">% Connect points UV coordinates in 2 column form. 1st x; 2nd y</span>
+0322         [Mesh_U1 Mesh_V1] = meshgrid(Contacts1,Bundles1) <span class="comment">% grid x and y in matrix form</span>
+0323         Mesh_U_v1 = reshape(Mesh_U1,[prod(size(Mesh_U1)),1]) <span class="comment">% grid x in vector form</span>
+0324         Mesh_V_v1 = reshape(Mesh_V1,[prod(size(Mesh_V1)),1]) <span class="comment">% grid y in vector form</span>
+0325         Mesh_UV1 = [Mesh_U_v1 Mesh_V_v1] <span class="comment">% grid coordinates in 2 column matrix form. 1st column x; 2nd column</span>
+0326         <span class="comment">% connect points</span>
+0327         <span class="keyword">for</span> nCnnt = 1:nConnect
+0328             xC0 = Connect_UV0(nCnnt,1)
+0329             yC0 = Connect_UV0(nCnnt,2)
+0330             xC1 = Connect_UV1(nCnnt,1)
+0331             yC1 = Connect_UV1(nCnnt,2)
+0332             [c indC0] = min(sqrt((Mesh_UV0(:,1)-xC0).^2+(Mesh_UV0(:,2)-yC0).^2))
+0333             <span class="comment">%         Cnnt_B0 = floor(indC0/nBundle0)</span>
+0334             <span class="comment">%         Cnnt_C0 = mod(indC0,nBundle0)</span>
+0335             Cnnt_C0 = floor((indC0-1)/nBundle0)+1
+0336             Cnnt_B0 = mod((indC0-1),nBundle0)+1
+0337             [c indC1] = min(sqrt((Mesh_UV1(:,1)-xC1).^2+(Mesh_UV1(:,2)-yC1).^2))
+0338             Cnnt_C1 = floor((indC1-1)/nBundle1)+1
+0339             Cnnt_B1 = mod((indC1-1),nBundle1)+1
+0340             <span class="comment">%         Cnnt_B1 = floor(indC1/nBundle1)</span>
+0341             <span class="comment">%         Cnnt_C1 = mod(indC1,nBundle1)</span>
+0342             <span class="comment">% print netlist</span>
+0343             Rc_ID =[<span class="string">'Rc_P'</span>,num2str(iP),<span class="string">'Cnnt'</span>,num2str(nCnnt)]
+0344             Rc_Node1 = [<span class="string">'P'</span>,num2str(iP),<span class="string">'L'</span>,num2str(nLayer),<span class="string">'B'</span>,num2str(Cnnt_B0),<span class="string">'C'</span>,num2str(Cnnt_C0)]
+0345             Rc_Node2 = [<span class="string">'P'</span>,num2str(iP+1),<span class="string">'L'</span>,num2str(1),<span class="string">'B'</span>,num2str(Cnnt_B1),<span class="string">'C'</span>,num2str(Cnnt_C1)]
+0346             fid=fopen(NetListID,<span class="string">'a'</span>);
+0347             fprintf(fid,<span class="string">'%s %s %s %f \n'</span>,Rc_ID,Rc_Node1,Rc_Node2,R_ply);
+0348             ST = fclose(fid);
+0349         <span class="keyword">end</span>
+0350     <span class="keyword">end</span>
+0351 <span class="keyword">end</span>
+0352 
+0353 fid=fopen(NetListID,<span class="string">'a'</span>);
+0354 <span class="comment">% fprintf(fid,'%s \n','.OP');</span>
+0355 fprintf(fid,<span class="string">'%s \n'</span>,<span class="string">'.DC Vinput 1 1 1'</span>);
+0356 <span class="comment">% % fprintf(fid,'%s \n','.control');</span>
+0357 <span class="comment">% % fprintf(fid,'%s \n','run');</span>
+0358 <span class="comment">% % fprintf(fid,'%s \n','wrdata testout6 I(Vinput)');</span>
+0359 <span class="comment">% % fprintf(fid,'%s \n','.endc');</span>
+0360 fprintf(fid,<span class="string">'%s \n'</span>,<span class="string">'.PRINT I(Vinput)'</span>);
+0361 fprintf(fid,<span class="string">'%s \n'</span>,<span class="string">'.END'</span>);
+0362 ST = fclose(fid);
+0363 
+0364 
+0365 <span class="comment">%     T_rot = [cos(theta) sin(theta); -sin(theta) cos(theta)]</span>
+0366 <span class="comment">%</span>
+0367 <span class="comment">%</span>
+0368 <span class="comment">%     Connect_UV = Connect_XY*T_rot % Connect points UV coordinates in 2 column form. 1st x; 2nd y</span>
+0369 <span class="comment">%     get Mesh_UV_P0 depending on theta0</span>
+0370 <span class="comment">%     get Mesh_UV_P1 depending on theta1</span>
+0371 <span class="comment">%     get Ply0BundleID Ply0ContactID then get Ply0ID = P1L3B_C_</span>
+0372 <span class="comment">%     get Ply0BundleID Ply0ContactID then get Ply1ID = P2L1B_C_</span>
+0373 <span class="comment">%     printf RPly12Cnnt1 Ply0ID Ply1ID Rply</span>
+0374 
+0375 
+0376 
+0377 
+0378 
+0379 
+0380 
+0381 
+0382 
+0383 
+0384 
+0385 
+0386 
+0387 
+0388 
+0389 
+0390 
+0391 
+0392 
+0393 
+0394 
+0395 
+0396 
+0397 
+0398 
+0399 
+0400 
+0401 
+0402 
+0403 <span class="comment">%</span>
+0404 <span class="comment">% fid=fopen(NetListID,'a');</span>
+0405 <span class="comment">% % fprintf(fid,'%s \n','.OP');</span>
+0406 <span class="comment">% fprintf(fid,'%s \n','.DC Vinput 1 1 1');</span>
+0407 <span class="comment">% % % fprintf(fid,'%s \n','.control');</span>
+0408 <span class="comment">% % % fprintf(fid,'%s \n','run');</span>
+0409 <span class="comment">% % % fprintf(fid,'%s \n','wrdata testout6 I(Vinput)');</span>
+0410 <span class="comment">% % % fprintf(fid,'%s \n','.endc');</span>
+0411 <span class="comment">% fprintf(fid,'%s \n','.SAVE I(Vinput)');</span>
+0412 <span class="comment">% fprintf(fid,'%s \n','.END');</span>
+0413 <span class="comment">% ST = fclose(fid);</span>
+0414 <span class="comment">%</span>
+0415 <span class="comment">% %% Run SPICE and get results</span>
+0416 <span class="comment">% %cd c:\spice\bin</span>
+0417 <span class="comment">% %doscommand = strcat('ngspice.exe -b -o Log.log','    ',NetListID)</span>
+0418 <span class="comment">% % dos('ngspice.exe -b -o Log.log IM7[0-90]2.cir')</span>
+0419 <span class="comment">% % load testout6.data</span>
+0420 <span class="comment">% % VI = testout6</span>
+0421 <span class="comment">% % U_in = VI(1)</span>
+0422 <span class="comment">% % I_out = abs(VI(2))</span>
+0423 <span class="comment">% % Resistance = U_in/I_out</span>
+0424 <span class="comment">%</span>
+0425 <span class="comment">% %</span>
+0426 <span class="comment">% SystemCMD = ['scad3.exe',' -b -ascii ',NetListID];</span>
+0427 <span class="comment">% system(SystemCMD)</span>
+0428 <span class="comment">% filepath = [NetList,'.raw'];</span>
+0429 <span class="comment">% current_out = str2num(getLastLine(filepath))</span>
+0430 <span class="comment">% Rz = 1/abs(current_out)</span>
+0431 <span class="comment">%</span>
+0432 <span class="comment">%</span>
+0433 <span class="comment">% %</span>
+0434 <span class="comment">% % fprintf(fid,'%s \n','.DC Vinput 2 2 2')</span>
+0435 <span class="comment">% % fprintf(fid,'%s \n','.PRINT DC V(Vin,0) I(Vinput)')</span>
+0436 <span class="comment">% % fprintf(fid,'%s \n','.PLOT DC V(Vin,0) I(Vin,0)')</span>
+0437 <span class="comment">% % fprintf(fid,'%s \n','.END')</span>
+0438 <span class="comment">% % ST = fclose(fid);</span>
+0439 <span class="comment">%</span>
+0440 <span class="comment">%</span>
+0441 <span class="comment">%</span>
+0442 <span class="comment">% % nContact = round(Spec_Len/Lc);</span>
+0443 <span class="comment">% % nBundle = Spec_Wid/Bundle_Wid;</span>
+0444 <span class="comment">% %[Bundle_rhox,Bundle_rhoy,Bundle_rhoz] = RhoTensorUD(VF,</span>
+0445 <span class="comment">%</span>
+0446 <span class="comment">% %%</span>
+0447 <span class="comment">% % nBundle = 30</span>
+0448 <span class="comment">% % Lc = 3e-3</span>
+0449 <span class="comment">% % Bundle_Wid = 1e-3</span>
+0450 <span class="comment">% % Spec_Th = 0.125e-3</span>
+0451 <span class="comment">% % Spec_Wid = Bundle_Wid * nBundle</span>
+0452 <span class="comment">% % Spec_Len = Lc*nContact</span>
+0453 <span class="comment">% % Bundle_Th = Spec_Th/nPly/nLayer</span>
+0454 <span class="comment">% % Bundle_Len = Lc</span>
+0455 <span class="comment">% % Rx_Bundle = 1</span>
+0456 <span class="comment">% % Ry_Bundle = 100</span>
+0457 <span class="comment">% % Rz_Bundle = 100</span>
+0458 <span class="comment">%</span>
+0459 <span class="comment">%</span>
+0460 <span class="comment">%</span>
+0461 <span class="comment">% %fid=fopen(NetListID,'a');</span>
+0462 <span class="comment">%</span>
+0463 <span class="comment">%</span>
+0464 <span class="comment">%</span>
+0465 <span class="comment">%</span>
+0466 <span class="comment">% %%</span>
+0467 <span class="comment">% % A_loc = [0.3,0.4]</span>
+0468 <span class="comment">% % iConnects = length(A_loc)</span>
+0469 <span class="comment">% % % interply contact points</span>
+0470 <span class="comment">% % InterPly_L = round(A_loc(1)*nContact)</span>
+0471 <span class="comment">% % InterPly_K = round(A_loc(2)*nBundle)</span>
+0472 <span class="comment">% % iPly = 1</span>
+0473 <span class="comment">% % R_ply_Name = strcat('Rply_P',num2str(iPly),'L',num2str(iConnects));</span>
+0474 <span class="comment">% % R_ply_ID1 = strcat('P',num2str(iPly),'L',num2str(nLayer),'B',num2str(InterPly_K),'C',num2str(InterPly_L));</span>
+0475 <span class="comment">% % R_ply_ID2 = strcat('P',num2str(iPly+1),'L',num2str(1),'B',num2str(InterPly_K),'C',num2str(InterPly_L));</span>
+0476 <span class="comment">% % fid=fopen(NetListID,'a');</span>
+0477 <span class="comment">% % fprintf(fid,'%s %s %s %f \n',R_ply_Name,R_ply_ID1,R_ply_ID2,R_ply)</span>
+0478 <span class="comment">% % ST = fclose(fid);</span>
+0479 <span class="comment">%</span>
+0480 <span class="comment">% %% Voltage input</span>
+0481 <span class="comment">% %% apply voltage to node 'Vin' and '0' (ground)</span>
+0482 <span class="comment">%</span>
+0483 <span class="comment">%</span>
+0484 <span class="comment">% %</span>
+0485 <span class="comment">% %             % at boundary.Y</span>
+0486 <span class="comment">% %                 Ry_ID0 = strcat('Ry0_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(0));</span>
+0487 <span class="comment">% %                 Ry0_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0488 <span class="comment">% %                 Ry0_NodeID2=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k+1),'C',num2str(l));</span>
+0489 <span class="comment">% %                 %             fprintf   Ry_ID0 NodeID1 NodeID2 Ry_Bundle</span>
+0490 <span class="comment">% %                 fid=fopen(NetListID,'a');</span>
+0491 <span class="comment">% %                 fprintf(fid,'%s %s %s %f \n',Ry_ID0,Ry0_NodeID1,Ry0_NodeID2,Ry_Bundle)</span>
+0492 <span class="comment">% %                  % at boundary. Z</span>
+0493 <span class="comment">% %                 Rz_ID0 = strcat('Rz0_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(0));</span>
+0494 <span class="comment">% %                 Rz0_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0495 <span class="comment">% %                 Rz0_NodeID2=strcat('P',num2str(i),'L',num2str(j+1),'B',num2str(k),'C',num2str(l));</span>
+0496 <span class="comment">% %                 fprintf   Rz_ID0 NodeID1 NodeID2 Rz_Bundle</span>
+0497 <span class="comment">% %                 fid=fopen(NetListID,'a');</span>
+0498 <span class="comment">% %                 fprintf(fid,'%s %s %s %f \n',Rz_ID0,Rz0_NodeID1,Rz0_NodeID2,Ry_Bundle)</span>
+0499 <span class="comment">% %             for l = 1:nContact</span>
+0500 <span class="comment">% %                 % fiber resistors. X direction</span>
+0501 <span class="comment">% %                 Rf_ID = strcat('Rf_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0502 <span class="comment">% %                 Rf_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l-1));</span>
+0503 <span class="comment">% %                 Rf_NodeID2=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0504 <span class="comment">% %                 fid=fopen(NetListID,'a');</span>
+0505 <span class="comment">% %                 fprintf(fid,'%s %s %s %f \n',Rf_ID,Rf_NodeID1,Rf_NodeID2,Rx_Bundle)</span>
+0506 <span class="comment">% %                 %             fprintf   Rf_ID NodeID1 NodeID2 Rx_Bundle</span>
+0507 <span class="comment">% %</span>
+0508 <span class="comment">% %                 % contact resistors. Y direction</span>
+0509 <span class="comment">% %                 %             if k~= nBundle</span>
+0510 <span class="comment">% %                 Ry_ID = strcat('Ry_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0511 <span class="comment">% %                 Ry_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0512 <span class="comment">% %                 Ry_NodeID2=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k+1),'C',num2str(l));</span>
+0513 <span class="comment">% %                 %             fprintf   Rf_ID NodeID1 NodeID2 Rx_Bundle</span>
+0514 <span class="comment">% %                 fid=fopen(NetListID,'a');</span>
+0515 <span class="comment">% %                 fprintf(fid,'%s %s %s %f \n',Ry_ID,Ry_NodeID1,Ry_NodeID2,Ry_Bundle)</span>
+0516 <span class="comment">% %</span>
+0517 <span class="comment">% %                 %             end</span>
+0518 <span class="comment">% %</span>
+0519 <span class="comment">% %                 % contact resistors. Z direction</span>
+0520 <span class="comment">% %                 %                 if i~= nLayer</span>
+0521 <span class="comment">% %                 Rz_ID = strcat('Rz_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0522 <span class="comment">% %                 Rz_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0523 <span class="comment">% %                 Rz_NodeID2=strcat('P',num2str(i),'L',num2str(j+1),'B',num2str(k+1),'C',num2str(l));</span>
+0524 <span class="comment">% %                 fid=fopen(NetListID,'a');</span>
+0525 <span class="comment">% %                 fprintf(fid,'%s %s %s %f \n',Rz_ID,Rz_NodeID1,Rz_NodeID2,Rz_Bundle)</span>
+0526 <span class="comment">% %</span>
+0527 <span class="comment">% %             end</span>
+0528 <span class="comment">% %         end</span>
+0529 <span class="comment">% %     end</span>
+0530 <span class="comment">% % end</span>
+0531 <span class="comment">% %NetListID='SPICE_NetList.cir'</span>
+0532 <span class="comment">% %         fid=fopen(NetListID,'a');</span>
+0533 <span class="comment">% %         fprintf(fid,'%s %s %s %s \n',Rf_ID,Rf_NodeID1,Rf_NodeID2,Rx_Bundle)</span>
+0534 <span class="comment">%</span>
+0535 <span class="comment">%</span>
+0536 <span class="comment">%</span>
+0537 <span class="comment">%</span>
+0538 <span class="comment">%</span>
+0539 <span class="comment">% %</span>
+0540 <span class="comment">% %</span>
+0541 <span class="comment">% %</span>
+0542 <span class="comment">% %             Rc_ID = strcat('Rc_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0543 <span class="comment">% %             Rc_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0544 <span class="comment">% %             Rc_NodeID2=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k+1),'C',num2str(l));</span>
+0545 <span class="comment">% %             if l ~= nContact &amp;&amp; l ~= 1</span>
+0546 <span class="comment">% %             fprintf   Rc_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle</span>
+0547 <span class="comment">% %             elseif l == nContact</span>
+0548 <span class="comment">% %                 fprintf   Rc_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle/2</span>
+0549 <span class="comment">% %             else</span>
+0550 <span class="comment">% %                 Rc_ID0  = strcat('Rc_P',num2str(i),'L',num2str(j),'B',num2str(k),'C0');</span>
+0551 <span class="comment">% %                 fprintf   Rc_ID0 Rc_NodeID1 Rc_NodeID2 Ry_Bundle/2</span>
+0552 <span class="comment">% %                 fprintf   Rc_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle</span>
+0553 <span class="comment">% %             end</span>
+0554 <span class="comment">% %             % contact resistors. Z direction</span>
+0555 <span class="comment">% %             Rz_ID = strcat('Rz_P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0556 <span class="comment">% %             Rz_NodeID1=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l-1));</span>
+0557 <span class="comment">% %             Rz_NodeID2=strcat('P',num2str(i),'L',num2str(j),'B',num2str(k),'C',num2str(l));</span>
+0558 <span class="comment">% %             if l ~= nContact &amp;&amp; l ~= 1</span>
+0559 <span class="comment">% %             fprintf   Rz_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle</span>
+0560 <span class="comment">% %             elseif l == nContact</span>
+0561 <span class="comment">% %                 fprintf   Rz_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle/2</span>
+0562 <span class="comment">% %             else</span>
+0563 <span class="comment">% %                 Rz_ID0  = strcat('Rc_P',num2str(i),'L',num2str(j),'B',num2str(k),'C0');</span>
+0564 <span class="comment">% %                 fprintf   Rc_ID0 Rc_NodeID1 Rc_NodeID2 Ry_Bundle/2</span>
+0565 <span class="comment">% %                 fprintf   Rc_ID Rc_NodeID1 Rc_NodeID2 Ry_Bundle</span>
+0566 <span class="comment">% %             end</span>
+0567 <span class="comment">% %</span>
+0568 <span class="comment">% %</span>
+0569 <span class="comment">% %</span>
+0570 <span class="comment">% %             fprintf(fid,...</span>
+0571 <span class="comment">% %             '%1.4f %d %f %2.10f %d %f %f %f\n',...</span>
+0572 <span class="comment">% %             VF,specimen,fiberLen,fiberRadius,NumContacts,beta,rho0,time1);</span>
+0573 <span class="comment">% %</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

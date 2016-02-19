@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of createnode</title>
+  <meta name="keywords" content="createnode">
+  <meta name="description" content="UNTITLED2 Summary of this function goes here">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; createnode.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>createnode
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>UNTITLED2 Summary of this function goes here</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function [ nodes ] = createnode( fiber,ref,perc,N ) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">UNTITLED2 Summary of this function goes here
+   Detailed explanation goes here</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="../../v08/@Lamina1/writeLaminaNetlist.html" class="code" title="function netlistName = writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius,fiberResistivity)">writeLaminaNetlist</a>	function NetListID = WriteNetlist_UD(Netlist_name,fibermat,fiberLen,beta,fiberRadius,rf,Rc)</li><li><a href="FiberStructure.html" class="code" title="function [fiber,VF,max_x,max_y,BoundX1,BoundX2,BoundY1,BoundY2]=FiberStructure(fiber,perc,fiberLen,beta,fiberRadius,NumBreak)">FiberStructure</a>	% fiberData=FiberStructure(fibermat,perc,fiberLen,Beta,fiberRadius,NumBreak,RBreakage)</li><li><a href="Func_RNetwork.html" class="code" title="function rho=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork</a>	%</li><li><a href="Func_RNetwork1.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork1(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork1</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="Func_RNetwork2.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork2(fibermat,ContactsPerFiber,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork2</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="Func_RNetwork_X.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_X(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_X</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="Func_RNetwork_Z.html" class="code" title="function [rho,fiber,VF,NumContacts]=Func_RNetwork_Z(fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RNetwork_Z</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="Func_RhoZ_LTspice.html" class="code" title="function rho = Func_RhoZ_LTspice(NetList,fibermat,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">Func_RhoZ_LTspice</a>	% example usage: copy the code inside " if 1==0  ... end" and run.</li><li><a href="Func_fiber.html" class="code" title="function [fiber1 VF] = Func_fiber(fibermat,fiberRadius)">Func_fiber</a>	%</li><li><a href="Hex_IM7_SEM3.html" class="code" title="">Hex_IM7_SEM3</a>	%%% Hong Yu, 09/2013</li><li><a href="RNetwork_Hex.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen]=RNetwork_Hex(fibermat,ContactsPerFiber,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_Hex</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_IMG.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen]=RNetwork_IMG(fibermat,ContactsPerFiber,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_IMG</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_Labview.html" class="code" title="function [rho,VF]=RNetwork_Labview(fibermat,ContactsPerFiber,beta,Rc)">RNetwork_Labview</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_Random.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,Res_dist]=RNetwork_Random(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_Random2.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,a_value]=RNetwork_Random2(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random2</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_Random3.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen,distances]=RNetwork_Random2(fibermat,ContactsPerFiber,beta,fiberRadius,perc,NumBreak,Rc,rf,RBreakage)">RNetwork_Random3</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_Square.html" class="code" title="function [rho,fiber,VF,NumContacts,SampleLen]=RNetwork_Square(fibermat,ContactsPerFiber,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_Square</a>	% this function is used when the input fibermat is from generated fiber data (not from SEM).</li><li><a href="RNetwork_beta_Dis.html" class="code" title="function [rho,fiber,VF,NumContacts,betas]=RNetwork_beta_Dis(fibermat,fiberLen,beta_mean,beta_dev,fiberRadius,NumBreak,Rc,rf,RBreakage)">RNetwork_beta_Dis</a>	% Important!!!  Before use, check in which direction the rho is calculated. (longitudinal or through-thickness)</li><li><a href="ResistorNetwork_COMSOL.html" class="code" title="">ResistorNetwork_COMSOL</a>	% Resistor Network Model in COMSOL</li><li><a href="TestMatlab2LTspice.html" class="code" title="">TestMatlab2LTspice</a>	% write Model head</li><li><a href="ThreeDNetwork.html" class="code" title="">ThreeDNetwork</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork2.html" class="code" title="">ThreeDNetwork2</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork4.html" class="code" title="">ThreeDNetwork4</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork5.html" class="code" title="">ThreeDNetwork5</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork6.html" class="code" title="">ThreeDNetwork6</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork7.html" class="code" title="">ThreeDNetwork7</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetworkR.html" class="code" title="function rho=ThreeDNetworkR(fibermat,perc,fiberLen,beta,fiberRadius,NumBreak,Rc,rf,RBreakage)">ThreeDNetworkR</a>	%</li><li><a href="ThreeDNetwork_Hex_IM7_Para.html" class="code" title="">ThreeDNetwork_Hex_IM7_Para</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_Hex_IM7_SEM.html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Hex_IM7_SEM2.html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM2</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Hex_IM7_SEM4.html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM4</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Hex_IM7_SEM5.html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM5</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Hex_IM7_SEM6.html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM6</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Hex_IM7_SEM[Conflict].html" class="code" title="">ThreeDNetwork_Hex_IM7_SEM[Conflict]</a>	%%% Hong Yu, 09/2013</li><li><a href="ThreeDNetwork_Square_IM7_Para.html" class="code" title="">ThreeDNetwork_Square_IM7_Para</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_hex_AS4.html" class="code" title="">ThreeDNetwork_hex_AS4</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_square_AS4.html" class="code" title="">ThreeDNetwork_square_AS4</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_square_IM7.html" class="code" title="">ThreeDNetwork_square_IM7</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_triag.html" class="code" title="">ThreeDNetwork_triag</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_triag_IM7.html" class="code" title="">ThreeDNetwork_triag_IM7</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeDNetwork_triag_IM7_para.html" class="code" title="">ThreeDNetwork_triag_IM7_para</a>	aa=[1 2 3 5 9]</li><li><a href="ThreeD_IM7_generatedFibers.html" class="code" title="">ThreeD_IM7_generatedFibers</a>	%%% Hong Yu, 09/2013</li><li><a href="WriteNetlist_UD.html" class="code" title="function NetListID = WriteNetlist_UD(Netlist_name,fibermat,fiberLen,beta,fiberRadius,rf,Rc)">WriteNetlist_UD</a>	% write Model head</li><li><a href="kirchoff.html" class="code" title="">kirchoff</a>	Script to solve a complicated KVL network</li><li><a href="writeLaminaNetlist.html" class="code" title="function writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius)">writeLaminaNetlist</a>	function NetListID = WriteNetlist_UD(Netlist_name,fibermat,fiberLen,beta,fiberRadius,rf,Rc)</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [ nodes ] = createnode( fiber,ref,perc,N )</a>
+0002 <span class="comment">%UNTITLED2 Summary of this function goes here</span>
+0003 <span class="comment">%   Detailed explanation goes here</span>
+0004 nodes=[];
+0005 k=1;
+0006 <span class="keyword">for</span> i=1:N
+0007     fiber_d=sqrt((fiber(i).center(1)-fiber(ref).center(1))^2+(fiber(i).center(2)-fiber(ref).center(2))^2);
+0008     <span class="keyword">if</span> (fiber_d&lt;fiber(i).radius+fiber(ref).radius+perc) &amp;&amp; (i~=ref) 
+0009         nodes(k)=i;
+0010         k=k+1;
+0011     <span class="keyword">end</span>
+0012 <span class="keyword">end</span>
+0013</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

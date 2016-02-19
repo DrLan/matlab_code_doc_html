@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Lamina1</title>
+  <meta name="keywords" content="Lamina1">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Lamina1</a> &gt; Lamina1.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Lamina1&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Lamina1
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Lamina1.html" class="code" title="">Lamina1</a>	</li><li><a href="writeLaminaNetlist.html" class="code" title="function netlistName = writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius,fiberResistivity)">writeLaminaNetlist</a>	function NetListID = WriteNetlist_UD(Netlist_name,fibermat,fiberLen,beta,fiberRadius,rf,Rc)</li><li><a href="../../v08/helper/writeLaminaNetlist.html" class="code" title="function writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius)">writeLaminaNetlist</a>	function NetListID = WriteNetlist_UD(Netlist_name,fibermat,fiberLen,beta,fiberRadius,rf,Rc)</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Lamina1.html" class="code" title="">Lamina1</a>	</li><li><a href="../../v08/@LaminaLib/LaminaLib.html" class="code" title="">LaminaLib</a>	</li><li><a href="../../v08/Callbacks/addLamina.html" class="code" title="function addLamina(allHandles,allData)">addLamina</a>	</li><li><a href="../../v08/Callbacks/addLamina_callback.html" class="code" title="function addLamina_callback(source,eventData,allHandles,allData)">addLamina_callback</a>	</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function obj = Lamina1(val)</a></li><li><a href="#_sub2" class="code">function resistivityTensor = clacResistivityTensor(obj)</a></li><li><a href="#_sub3" class="code">function showOnGui(obj,tableHandle)</a></li><li><a href="#_sub4" class="code">function  resistivityTensor = getResistivityTensor(obj)</a></li><li><a href="#_sub5" class="code">function xResistivity = getXResistivity(obj)</a></li><li><a href="#_sub6" class="code">function yResistivity = getYResistivity(obj)</a></li><li><a href="#_sub7" class="code">function zResistivity = getZResistivity(obj)</a></li><li><a href="#_sub8" class="code">function R = getRFromSpice(netlistName)</a></li><li><a href="#_sub9" class="code">function [Vin,data,data1]=readRaw(infile)</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 classdef <a href="Lamina1.html" class="code" title="">Lamina1</a>
+0002     <span class="comment">%% usage example:</span>
+0003     <span class="comment">% a=Fiber('AS4')</span>
+0004     <span class="comment">% b= Fiber('IM7')</span>
+0005     <span class="comment">% AS4prop =a.property</span>
+0006     properties
+0007         propertyStruct ={}
+0008     <span class="keyword">end</span>
+0009     methods
+0010         <a name="_sub0" href="#_subfunctions" class="code">function obj = Lamina1(val)</a>
+0011             obj.propertyStruct=struct;
+0012             obj.propertyStruct.name = <span class="string">'myLamina'</span>;
+0013             
+0014             obj.propertyStruct.volumeFraction = 0.5;
+0015             obj.propertyStruct.pressure = 8e5;           
+0016             obj.propertyStruct.dimension = <span class="string">'[1e-2,1e-3,1e-3]'</span>;
+0017             <span class="comment">%obj.propertyStruct.fiber = Fiber1('AS4');</span>
+0018             obj.propertyStruct.fiber = <span class="string">'AS4'</span>
+0019             obj.propertyStruct.packOrder = <span class="string">'Square'</span>;
+0020             <span class="keyword">if</span> nargin&gt;0
+0021                 obj.propertyStruct.name = val;
+0022             <span class="keyword">end</span>
+0023         <span class="keyword">end</span>
+0024         <a name="_sub1" href="#_subfunctions" class="code">function resistivityTensor = clacResistivityTensor(obj)</a>
+0025             
+0026         <span class="keyword">end</span>
+0027         
+0028         <a name="_sub2" href="#_subfunctions" class="code">function showOnGui(obj,tableHandle)</a>
+0029             tempCell = struct2cell(obj.propertyStruct);
+0030             <span class="comment">%tempCell{5}=obj.propertyStruct.fiber.propertyStruct.name;</span>
+0031             <span class="keyword">for</span> i = 1:length(tempCell)
+0032                 item = tempCell{i}
+0033                 <span class="keyword">if</span> isnumeric(item)
+0034                     tempCell{i} = mat2str(item,3)
+0035                 <span class="keyword">end</span>
+0036             <span class="keyword">end</span>
+0037             propertyUnit = {<span class="string">'string'</span>,<span class="string">'string'</span>,<span class="string">'number between 0 and 1 '</span>,<span class="string">'Pa'</span>,<span class="string">'choose one'</span>,<span class="string">'m'</span>}';
+0038             tableHandle.Data=[tempCell,propertyUnit];
+0039             tableHandle.ColumnName ={<span class="string">'Property Value'</span>,<span class="string">'Unit/Description'</span>}
+0040             colNames = {<span class="string">'Lamina Name'</span>,<span class="string">'Volume Fraction'</span>,<span class="string">'Pressure'</span>,<span class="string">'Dimension'</span>,<span class="string">'Fiber'</span>,<span class="string">'Pack Order'</span>};
+0041             tableHandle.RowName =colNames;
+0042         <span class="keyword">end</span>
+0043         <a name="_sub3" href="#_subfunctions" class="code">function  resistivityTensor = getResistivityTensor(obj)</a>
+0044             xResistivity = obj.getXResistivity;
+0045             yResistivity = obj.getYResistivity;
+0046             zResistivity =obj.getZResistivity;
+0047             resistivityTensor =[xResistivity yResistivity zResistivity];
+0048         <span class="keyword">end</span>
+0049         <a name="_sub4" href="#_subfunctions" class="code">function xResistivity = getXResistivity(obj)</a>
+0050             xResistivity =obj.propertyStruct.fiber.propertyStruct.electricalResistivity/obj.propertyStruct.volumeFraction;
+0051         <span class="keyword">end</span>
+0052         <a name="_sub5" href="#_subfunctions" class="code">function yResistivity = getYResistivity(obj)</a>
+0053             <span class="keyword">if</span> 1
+0054             yResistivity = rand()
+0055             pause(0.9)
+0056             <span class="keyword">return</span>
+0057             <span class="keyword">end</span>
+0058             yResistivity = obj.getZResistivity;         
+0059         <span class="keyword">end</span>
+0060         <a name="_sub6" href="#_subfunctions" class="code">function zResistivity = getZResistivity(obj)</a>
+0061             <span class="keyword">if</span> 1 
+0062             zResistivity = rand()
+0063             waitfor(4)
+0064             <span class="keyword">return</span>
+0065             <span class="keyword">end</span>
+0066             <span class="comment">%fibermat = get2dStructure(obj)</span>
+0067             fiberMatPath= <span class="string">'2dStructure'</span>;
+0068             fiberMatName = <span class="string">'vf_0.4_spec1.mat'</span>;
+0069             fibermat = fullfile(fiberMatPath,fiberMatName);
+0070             netlistName = <span class="string">'laminaNetlist'</span>;
+0071             fiberLength=2e-3;
+0072             beta=300;
+0073             fiberRadius=3e-6;
+0074             fiberResistivity = 1.5e-5;
+0075             obj.writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius,fiberResistivity)
+0076             R = obj.getRFromSpice(netlistName)
+0077             width = 1e-3;
+0078             thickness = 1e-3;
+0079             zResistivity = R*width*thickness/fiberLength
+0080         <span class="keyword">end</span>
+0081         
+0082     <span class="keyword">end</span>
+0083     methods(Static)
+0084         <a href="writeLaminaNetlist.html" class="code" title="function netlistName = writeLaminaNetlist(netlistName,fibermat,fiberLength,beta,fiberRadius,fiberResistivity)">writeLaminaNetlist</a>(netlistName,fibermat,fiberLength,beta,fiberRadius,fiberResistivity);
+0085         <a name="_sub7" href="#_subfunctions" class="code">function R = getRFromSpice(netlistName)</a>
+0086             filePath = <span class="string">'SPICE\'</span>
+0087             netlistId= strcat(netlistName,<span class="string">'.cir'</span>);
+0088             netlistPathName = [filePath,netlistId];
+0089             systemCMD = [<span class="string">'scad3.exe'</span>,<span class="string">' -b -ascii '</span>,netlistPathName];
+0090             p=system(systemCMD);
+0091             rawPathName = [filePath,netlistName,<span class="string">'.raw'</span>];
+0092             [current,~,~]=<a href="#_sub9" class="code" title="subfunction [Vin,data,data1]=readRaw(infile)">readRaw</a>(rawPathName);
+0093             R=1.0/abs(current);
+0094             <a name="_sub8" href="#_subfunctions" class="code">function [Vin,data,data1]=readRaw(infile)</a>
+0095                 fidin=fopen(infile,<span class="string">'r'</span>); <span class="comment">%</span>
+0096                 <span class="comment">% fidtmp=fopen(tmpfile,'w');</span>
+0097                 data1=[];
+0098                 <span class="keyword">while</span> ~feof(fidin)
+0099                     tline=fgetl(fidin);
+0100                     <span class="keyword">if</span> ~isempty(tline)
+0101                         str = <span class="string">'[^0-9 | \. | \- | \+ | \s | e | E]'</span>;
+0102                         start = regexp(tline,str, <span class="string">'once'</span>);
+0103                         <span class="keyword">if</span> isempty(start)
+0104                             <span class="comment">%% following 2 lined added</span>
+0105                             LocSpace = regexp(tline,<span class="string">'[\s]'</span>);
+0106                             <span class="keyword">if</span> LocSpace(1)~=1
+0107                                 Vin1=str2num(tline);
+0108                                 Vin=Vin1(2);
+0109                             <span class="keyword">else</span>
+0110                                 data1(end+1)=str2num(tline);
+0111                             <span class="keyword">end</span>
+0112                         <span class="keyword">end</span>
+0113                     <span class="keyword">end</span>
+0114                 <span class="keyword">end</span>
+0115                 fclose(fidin);
+0116                 <span class="comment">% data1=textscan(tmpfile);</span>
+0117                 data2 = fliplr(data1);
+0118                 data=data2(1:end-1);
+0119             <span class="keyword">end</span>
+0120         <span class="keyword">end</span>
+0121     <span class="keyword">end</span>
+0122 <span class="keyword">end</span>
+0123 
+0124 <span class="comment">%         function resistivityTensor = clacResistivityTensor(obj)</span>
+0125 <span class="comment">%         end</span>
+0126 
+0127 
+0128 <span class="comment">%         function val = get.propertyTable(obj)</span>
+0129 <span class="comment">%             struct = obj.propertyStruct;</span>
+0130 <span class="comment">%             struct.fiber = obj.propertyStruct.fiber.propertyStruct.name</span>
+0131 <span class="comment">%             val= struct2table(struct);</span>
+0132 
+0133 <span class="comment">%           function obj= set.propertyTable(obj,tableObj)</span>
+0134 <span class="comment">%              obj.propertyTable = tableObj;</span>
+0135 <span class="comment">%         end</span>
+0136 
+0137 <span class="comment">%     properties (Dependent)</span>
+0138 <span class="comment">%         propertyTable=table()</span>
+0139 <span class="comment">%     end</span>
+0140 <span class="comment">% property = struct({'Name','Diameter','Electrical Resistivity'</span>
+0141 <span class="comment">%property = struct</span>
+0142 <span class="comment">%field='name'</span>
+0143 <span class="comment">%value='as4'</span>
+0144 <span class="comment">%property = struct(field,value)</span>
+0145 <span class="comment">%property.name ='AS4'</span>
+0146 <span class="comment">%          property.Diameter = 5e-5</span>
+0147 <span class="comment">%          property.ElectricalResistivity</span>
+0148 <span class="comment">%          property.ThermalConductivity</span>
+0149 <span class="comment">%          property.EModulus</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

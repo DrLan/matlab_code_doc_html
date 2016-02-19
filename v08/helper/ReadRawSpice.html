@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ReadRawSpice</title>
+  <meta name="keywords" content="ReadRawSpice">
+  <meta name="description" content="Set Circuit Values">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ReadRawSpice.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ReadRawSpice
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>Set Circuit Values</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>This is a script file. </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> Set Circuit Values</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% Set Circuit Values</span>
+0002 R1=1000;
+0003 R2=1000;
+0004 R3=1000;
+0005 C1=1E-6;
+0006 
+0007 DT=1E-5;                         <span class="comment">%Time increment</span>
+0008 t=0:DT:0.02;                     <span class="comment">%Time vector</span>
+0009 Vin=5*(1+square(t*100*2*pi))/2;  <span class="comment">%Square wave for Vin.</span>
+0010 G1=1/R1; G2=1/R2;  G3=1/R3;  GC=C1/DT;
+0011 
+0012 <span class="comment">% Allocate memory for arrays.</span>
+0013 V1=zeros(size(t)); V2=zeros(size(t)); V3=zeros(size(t));
+0014 
+0015 <span class="comment">%Initial conditions</span>
+0016 V1(1)=0; V2(1)=0; V3(1)=0;
+0017 
+0018 A=[G1 -G1 0 1;
+0019     -G1 G1+G2+GC -GC 0;
+0020     0 -GC G3+GC 0;
+0021     1 0 0 0];
+0022 invA=inv(A);
+0023 
+0024 <span class="keyword">for</span> i=2:length(t),
+0025     Vc_t0=V2(i-1)-V3(i-1)
+0026     b=[0 Vc_t0*GC -Vc_t0*GC Vin(i)]';
+0027     x=invA*b;
+0028     V1(i)=x(1);  V2(i)=x(2);  V3(i)=x(3);
+0029 <span class="keyword">end</span>
+0030 
+0031 <span class="comment">% plot(t*1000,V1,'r',t*1000,V2,'g',t*1000,V3,'b');</span>
+0032 <span class="comment">% axis([0 20 -2 6]);</span>
+0033 <span class="comment">% grid on</span>
+0034 <span class="comment">% title('Simple RC Circuit, MatLab');</span>
+0035 <span class="comment">% xlabel('Time (mS)');</span>
+0036 <span class="comment">% legend('V1','V2','V3');</span>
+0037 <span class="comment">%</span>
+0038</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

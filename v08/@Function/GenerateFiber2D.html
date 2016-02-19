@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of GenerateFiber2D</title>
+  <meta name="keywords" content="GenerateFiber2D">
+  <meta name="description" content="% Example usage:">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">@Function</a> &gt; GenerateFiber2D.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\@Function&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>GenerateFiber2D
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Example usage:</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Example usage:</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="../../v08/helper/GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="../../v08/helper/HexPacking.html" class="code" title="function HexPacking(frow,fcolumn,VF,fiberRadius)">HexPacking</a>	% square packing</li><li><a href="../../v08/helper/RandomPacking.html" class="code" title="function PerfectFiber = RandomPacking(VF,fiberRadius)">RandomPacking</a>	</li><li><a href="../../v08/helper/SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>	% square packing</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Function.html" class="code" title="">Function</a>	</li><li><a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li><li><a href="../../v08/helper/GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>	% Example usage:</li></ul>
+<!-- crossreference -->
+
+<h2><a name="_subfunctions"></a>SUBFUNCTIONS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="#_sub1" class="code">function fiber2D = SquarePacking(Spec_Wid,Spec_Th,VF,fiberRadius);</a></li><li><a href="#_sub2" class="code">function fiber2D=HexPacking(Spec_Wid,Spec_Th,VF,fiberRadius);</a></li><li><a href="#_sub3" class="code">function RandomPacking</a></li></ul>
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)</a>
+0002 <span class="comment">%% Example usage:</span>
+0003 <span class="keyword">if</span> 0
+0004     Spec_Wid=1e-4
+0005     Spec_Th=1e-4
+0006     VF=0.5
+0007     fiberRadius=3.5e-6
+0008     PackOrder = <span class="string">'Square'</span>
+0009     fiber2D = <a href="GenerateFiber2D.html" class="code" title="function fiber2D = GenerateFiber2D(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)">GenerateFiber2D</a>(Spec_Wid,Spec_Th,VF,fiberRadius,PackOrder)
+0010 <span class="keyword">end</span>
+0011 <span class="comment">%% Beginning of code</span>
+0012 <span class="keyword">switch</span> PackOrder
+0013     <span class="keyword">case</span> <span class="string">'Hexagon'</span>
+0014         fiber2D=<a href="../../v08/helper/HexPacking.html" class="code" title="function HexPacking(frow,fcolumn,VF,fiberRadius)">HexPacking</a>(Spec_Wid,Spec_Th,VF,fiberRadius);
+0015     <span class="keyword">case</span> <span class="string">'Square'</span>
+0016          fiber2D=<a href="../../v08/helper/SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>(Spec_Wid,Spec_Th,VF,fiberRadius);
+0017     <span class="keyword">case</span> <span class="string">'Random'</span>
+0018          fiber2D=<a href="../../v08/helper/RandomPacking.html" class="code" title="function PerfectFiber = RandomPacking(VF,fiberRadius)">RandomPacking</a>(Spec_Wid,Spec_Th,VF,fiberRadius);
+0019     <span class="keyword">otherwise</span>
+0020        warning(<span class="string">'please choose one of the four packing orders: Hexagon, Square, Random'</span>)
+0021 <span class="keyword">end</span>
+0022 
+0023 <a name="_sub1" href="#_subfunctions" class="code">function fiber2D = SquarePacking(Spec_Wid,Spec_Th,VF,fiberRadius);</a>
+0024 <span class="comment">%% square packing</span>
+0025 nRow=round(Spec_Th/fiberRadius*sqrt(VF/pi));
+0026 nColumn=round(nRow*Spec_Wid/Spec_Th);
+0027 a=fiberRadius*(sqrt(pi/(VF))-2); <span class="comment">% square packingfiber= struct('x',[], 'y',[], 'radius', []);</span>
+0028 <span class="keyword">for</span> i=1:nRow
+0029     <span class="keyword">for</span> j=1:nColumn
+0030         fnum=(i-1)*nColumn+j;       
+0031         fiber.x(1,fnum)=(j-1)*(2*fiberRadius+a);
+0032         fiber.y(1,fnum)=(i-1)*(2*fiberRadius+a); <span class="comment">% square packing</span>
+0033         <span class="comment">%fiber.radius(1,fnum)=fiberRadius;</span>
+0034     <span class="keyword">end</span>
+0035 <span class="keyword">end</span>
+0036 fiber.radius=fiberRadius*ones(1,nRow*nColumn);
+0037 fiber2D=fiber;
+0038 <span class="comment">%PerfectFiber=fiber;</span>
+0039 save PerfectFiber
+0040 
+0041 <a name="_sub2" href="#_subfunctions" class="code">function fiber2D=HexPacking(Spec_Wid,Spec_Th,VF,fiberRadius);</a>
+0042 B=((nColumn-1)*sqrt(3)/2+nRow-1)*2*fiberRadius;
+0043 A=(nRow-1)*(nColumn-1)*sqrt(3)/2;
+0044 C=4*fiberRadius^2-(nRow*nColumn*pi*fiberRadius^2)/VF;
+0045 a=-2*fiberRadius+(-B+sqrt(B^2-4*A*C))/(2*A);  <span class="comment">%hex packing</span>
+0046 <span class="keyword">for</span> i=1:nRow
+0047     <span class="keyword">for</span> j=1:nColumn
+0048         fnum=(i-1)*nColumn+j;
+0049         fiber.x(1,fnum)=sqrt(3)*(j-1)*(fiberRadius+a/2);
+0050         fiber.y(1,fnum)=(1-mod(j,2))*(fiberRadius+a/2)+(i-1)*2*(fiberRadius+a/2); <span class="comment">%hex packing</span>
+0051         fiber.radius(1,fnum)=fiberRadius;
+0052     <span class="keyword">end</span>
+0053 <span class="keyword">end</span>
+0054 
+0055 <a name="_sub3" href="#_subfunctions" class="code">function RandomPacking</a>
+0056   fiber2D = <a href="../../v08/helper/SquarePacking.html" class="code" title="function PerfectFiber = SquarePacking(frow,fcolumn,VF,fiberRadius)">SquarePacking</a>(Spec_Wid,Spec_Th,VF,fiberRadius);</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

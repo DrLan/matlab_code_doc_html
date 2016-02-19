@@ -1,0 +1,51 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of ContactForce</title>
+  <meta name="keywords" content="ContactForce">
+  <meta name="description" content="% Force at each contact point.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; ContactForce.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>ContactForce
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>% Force at each contact point.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function Fc = ContactForce(VF,beta,Pressure,fiberRadius) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment">% Force at each contact point.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="../../v08/@Function/Function.html" class="code" title="">Function</a>	</li><li><a href="Interface_layer_simulation.html" class="code" title="">Interface_layer_simulation</a>	% 3D Resistor Network Modle by Hong Yu</li><li><a href="RvsPressure.html" class="code" title="">RvsPressure</a>	</li><li><a href="SIM_Convergence_Square_IM7[Conflict 1].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 1]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict 2].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 2]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict 3].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict 3]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Convergence_Square_IM7[Conflict].html" class="code" title="">SIM_Convergence_Square_IM7[Conflict]</a>	% convergence test: Rz; Square Packing; IM7</li><li><a href="SIM_Pressure_IM7.html" class="code" title="">SIM_Pressure_IM7</a>	% Statistical representation: beta</li><li><a href="SIM_beta_Dis_IM7.html" class="code" title="">SIM_beta_Dis_IM7</a>	% Statistical representation: beta</li><li><a href="Sensitivity_Study_Taguchi.html" class="code" title="">Sensitivity_Study_Taguchi</a>	% Sensitivity study of 3D Resistor Network MOdel using Taguchi Technique</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Fc = ContactForce(VF,beta,Pressure,fiberRadius)</a>
+0002 <span class="comment">%% Force at each contact point.</span>
+0003 a=fiberRadius*(sqrt(pi/VF)-2); <span class="comment">% fiber spacing</span>
+0004 Fc=Pressure*(2*fiberRadius+a)*a*beta;</pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of Interface_layer</title>
+  <meta name="keywords" content="Interface_layer">
+  <meta name="description" content="fiberRadius=3.5e-6">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../../index.html">Home</a> &gt;  <a href="../index.html">v08</a> &gt; <a href="index.html">helper</a> &gt; Interface_layer.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../../index.html"><img alt="<" border="0" src="../../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for v08\helper&nbsp;<img alt=">" border="0" src="../../right.png"></a></td></tr></table>-->
+
+<h1>Interface_layer
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>fiberRadius=3.5e-6</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="box"><strong>function Interface_layer(fiberRadius,VF,connectivity,frow,fcolumn) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> fiberRadius=3.5e-6
+ VF=0.5;
+ connectivity=0.1</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../../matlabicon.gif)">
+<li><a href="Interface_layer_simulation.html" class="code" title="">Interface_layer_simulation</a>	% 3D Resistor Network Modle by Hong Yu</li></ul>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function Interface_layer(fiberRadius,VF,connectivity,frow,fcolumn)</a>
+0002 <span class="comment">% fiberRadius=3.5e-6</span>
+0003 <span class="comment">% VF=0.5;</span>
+0004 <span class="comment">% connectivity=0.1</span>
+0005 N_connect=round(connectivity*fcolumn);
+0006 <span class="comment">% frow=2</span>
+0007 <span class="comment">% fcolumn=10</span>
+0008 rad=fiberRadius;
+0009 a=rad*(sqrt(pi/(VF))-2); <span class="comment">% square packingfiber= struct('x',[], 'y',[], 'radius', []);</span>
+0010 <span class="keyword">for</span> i=1:frow
+0011     <span class="keyword">for</span> j=1:fcolumn
+0012         fnum=(i-1)*fcolumn+j;
+0013 <span class="comment">%          fnum=(i-1)*fcolumn+j;</span>
+0014 <span class="comment">%                             fiber(fnum).center=[(j-1)*(2*rad+a) (i-1)*(2*rad+a)];</span>
+0015 <span class="comment">%         fiber(fnum).center=[(j-1)*(2*rad+2*a)+normrnd(0,a) (i-1)*(2*rad+2*a)++normrnd(0,a)];</span>
+0016 <span class="comment">%         fiber.x(fnum,1)=sqrt(3)*(j-1)*(rad+a/2);</span>
+0017 <span class="comment">%         fiber.y(fnum,1)=(1-mod(j,2))*(rad+a/2)+(i-1)*2*(rad+a/2); %hex packing</span>
+0018         up_fiber.x(1,fnum)=(j-1)*(2*rad+a);
+0019 <span class="comment">%         lower_fiber.x(1,fnum)=up_fiber.x(1,fnum);</span>
+0020         up_fiber.y(1,fnum)=(i-1)*(2*rad+a)+2.5*rad; <span class="comment">% square packing</span>
+0021 <span class="comment">%         lower_fiber.y(1,fnum)=-up_fiber.y(1,fnum);</span>
+0022 
+0023 <span class="comment">% B=((fcolumn-1)*sqrt(3)/2+frow-1)*2*rad;</span>
+0024 <span class="comment">% A=(frow-1)*(fcolumn-1)*sqrt(3)/2;</span>
+0025 <span class="comment">% C=4*rad^2-(frow*fcolumn*pi*rad^2)/VF;</span>
+0026 <span class="comment">% a=-2*rad+(-B+sqrt(B^2-4*A*C))/(2*A);  %hex packing</span>
+0027 <span class="comment">% a=fiberRadius*(sqrt(pi/(2*sqrt(3)*VF))-1);  % triangle arragement of fibers</span>
+0028 <span class="comment">% max_x=(2*a+2*rad)*(fcolumn-1);</span>
+0029 <span class="comment">% max_y=(2*a+2*rad)*(frow-1);</span>
+0030         up_fiber.radius(1,fnum)=rad;
+0031 <span class="comment">%         lower_fiber.radius(1,fnum)=rad;</span>
+0032     <span class="keyword">end</span>
+0033 <span class="keyword">end</span>
+0034 lower_fiber.x=up_fiber.x;
+0035 lower_fiber.y=-up_fiber.y;
+0036 lower_fiber.radius=up_fiber.radius;
+0037 <span class="comment">% fiber.x=[up_fiber.x lower_fiber.x];</span>
+0038 <span class="comment">% fiber.y=[up_fiber.y lower_fiber.y];</span>
+0039 <span class="comment">% fiber.radius=[up_fiber.radius lower_fiber.radius]</span>
+0040 <span class="comment">% fiber={up_fiber;lower_fiber}</span>
+0041 xlen=max(up_fiber.x);
+0042 mid_fiber.x=[];
+0043 <span class="keyword">while</span> length(mid_fiber.x)&lt;N_connect
+0044     trial_loc=xlen*rand;
+0045     test_matrix=abs(mid_fiber.x-trial_loc);
+0046     overlap_tag=sum(test_matrix&lt;2*rad);
+0047     <span class="keyword">if</span> overlap_tag==0
+0048         mid_fiber.x(end+1)=trial_loc;
+0049     <span class="keyword">end</span>
+0050 <span class="keyword">end</span>
+0051 <span class="comment">%     mid_fiber.x(i)=xlen*rand;</span>
+0052     
+0053 <span class="comment">% mid_fiber.x=xlen*rand(1,N_connect);</span>
+0054 mid_fiber.y=zeros(1,N_connect);
+0055 mid_fiber.radius=rad*ones(1,N_connect);
+0056 fiber.x=[up_fiber.x lower_fiber.x mid_fiber.x];
+0057 fiber.y=[up_fiber.y lower_fiber.y mid_fiber.y];
+0058 fiber.radius=[up_fiber.radius lower_fiber.radius mid_fiber.radius];
+0059 <span class="comment">% fibermat=fiber;</span>
+0060 save fiber
+0061 <span class="comment">% save('fiber11',fiber)</span>
+0062 <span class="comment">% fibermat fiber</span></pre></div>
+<hr><address>Generated on Thu 11-Feb-2016 12:45:32 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
